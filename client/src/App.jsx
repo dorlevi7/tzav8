@@ -4,7 +4,7 @@ function App() {
   const [name, setName] = useState("");
   const [items, setItems] = useState([]);
 
-  const API_URL = "http://localhost:5000/api/test";
+  const API_URL = "https://tzav8-backend.onrender.com/api/test";
 
   // Fetch data from server
   const fetchItems = async () => {
