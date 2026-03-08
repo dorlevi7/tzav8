@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
+
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-import MainLayout from "./layouts/MainLayout";
 import Home from "./pages/Home";
+
+import MainLayout from "./layouts/MainLayout";
 
 function App() {
   const getInitialTheme = () => {
@@ -13,6 +15,7 @@ function App() {
     const prefersDark = window.matchMedia(
       "(prefers-color-scheme: dark)",
     ).matches;
+
     return prefersDark ? "dark" : "light";
   };
 
@@ -25,10 +28,13 @@ function App() {
 
   return (
     <Routes>
+      {/* routes WITHOUT navbar */}
+      <Route path="/" element={<Navigate to="/login" />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/signup" element={<Signup />} />
+
+      {/* routes WITH navbar */}
       <Route element={<MainLayout theme={theme} setTheme={setTheme} />}>
-        <Route path="/" element={<Navigate to="/login" />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
         <Route path="/home" element={<Home />} />
       </Route>
     </Routes>
