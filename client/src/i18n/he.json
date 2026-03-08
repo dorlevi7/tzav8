@@ -22,7 +22,7 @@
     "username": "שם משתמש",
     "password": "סיסמה",
     "loginSuccess": "התחברת בהצלחה",
-    "loginError": "שגיאה בהתחברות",
+    "loginError": "שם משתמש או סיסמה שגויים",
     "signupTitle": "הרשמה",
     "signupButton": "צור חשבון",
     "haveAccount": "כבר יש לך חשבון?",
