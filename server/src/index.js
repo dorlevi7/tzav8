@@ -8,7 +8,18 @@ const authRoutes = require("./routes/authRoutes");
 const app = express();
 
 /* CORS MUST BE FIRST */
-app.use(cors());
+app.use(
+    cors({
+        origin: [
+            "http://localhost:5173",
+            "https://tzav8-client.onrender.com"
+        ],
+        methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+        credentials: true
+    })
+);
+
+app.options("*", cors());
 
 app.use(express.json());
 
