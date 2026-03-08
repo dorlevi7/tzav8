@@ -13,6 +13,7 @@
     "qualifications": "כשירויות",
     "allValid": "כל הכשירויות בתוקף"
   },
+
   "auth": {
     "logout": "התנתק",
     "loginTitle": "התחברות",
@@ -23,13 +24,45 @@
     "password": "סיסמה",
     "loginSuccess": "התחברת בהצלחה",
     "loginError": "שם משתמש או סיסמה שגויים",
+
     "signupTitle": "הרשמה",
     "signupButton": "צור חשבון",
     "haveAccount": "כבר יש לך חשבון?",
     "login": "התחברות",
+
     "signupSuccess": "החשבון נוצר בהצלחה",
     "validationError": "יש למלא את כל השדות",
     "usernameExists": "שם המשתמש כבר קיים",
-    "serverError": "שגיאת שרת"
+    "serverError": "שגיאת שרת",
+
+    "adminDetails": "פרטי מ״פ",
+    "companyDetails": "פרטי פלוגה",
+    "adminDetailsRequired": "יש למלא את פרטי המ״פ",
+    "companyDetailsRequired": "יש למלא את פרטי הפלוגה",
+
+    "firstName": "שם פרטי",
+    "lastName": "שם משפחה",
+    "rank": "דרגה",
+    "personalNumber": "מספר אישי",
+    "email": "אימייל",
+    "phone": "טלפון",
+
+    "companyName": "שם הפלוגה",
+    "companyPhone": "טלפון הפלוגה",
+    "battalionName": "שם הגדוד",
+    "battalionNumber": "מספר הגדוד"
+  },
+
+  "ranks": {
+    "secondLieutenant": "סג״ם",
+    "firstLieutenant": "סגן",
+    "captain": "סרן",
+    "major": "רס״ן",
+    "lieutenantColonel": "סא״ל",
+    "colonel": "אל״ם"
+  },
+
+  "common": {
+    "save": "שמור"
   }
 }

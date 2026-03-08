@@ -13,6 +13,7 @@
     "qualifications": "Qualifications",
     "allValid": "All qualifications are valid"
   },
+
   "auth": {
     "logout": "Logout",
     "loginTitle": "Login",
@@ -23,13 +24,45 @@
     "password": "Password",
     "loginSuccess": "Login successful",
     "loginError": "Login failed",
+
     "signupTitle": "Sign up",
     "signupButton": "Create account",
     "haveAccount": "Already have an account?",
     "login": "Login",
+
     "signupSuccess": "Account created successfully",
     "validationError": "Please fill all fields",
     "usernameExists": "Username already exists",
-    "serverError": "Server error"
+    "serverError": "Server error",
+
+    "adminDetails": "Admin details",
+    "companyDetails": "Company details",
+    "adminDetailsRequired": "Admin details are required",
+    "companyDetailsRequired": "Company details are required",
+
+    "firstName": "First name",
+    "lastName": "Last name",
+    "rank": "Rank",
+    "personalNumber": "Personal number",
+    "email": "Email",
+    "phone": "Phone",
+
+    "companyName": "Company name",
+    "companyPhone": "Company phone",
+    "battalionName": "Battalion name",
+    "battalionNumber": "Battalion number"
+  },
+
+  "ranks": {
+    "secondLieutenant": "Second Lieutenant",
+    "firstLieutenant": "First Lieutenant",
+    "captain": "Captain",
+    "major": "Major",
+    "lieutenantColonel": "Lieutenant Colonel",
+    "colonel": "Colonel"
+  },
+
+  "common": {
+    "save": "Save"
   }
 }

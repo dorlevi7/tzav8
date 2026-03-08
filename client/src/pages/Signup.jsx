@@ -1,21 +1,29 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 
 import AuthCard from "../components/AuthCard";
+import AdminDetailsModal from "../components/modals/AdminDetailsModal";
+import CompanyDetailsModal from "../components/modals/CompanyDetailsModal";
+
 import usePageTitle from "../hooks/usePageTitle";
 import { useLoading } from "../context/LoadingContext";
 
 function Signup() {
   const navigate = useNavigate();
-
   const API_URL = import.meta.env.VITE_API_URL;
 
   const { t, i18n } = useTranslation();
   const { setLoading } = useLoading();
 
-  // Update browser tab title
   usePageTitle(t("auth.signupTitle"));
+
+  const [adminDetails, setAdminDetails] = useState(null);
+  const [companyDetails, setCompanyDetails] = useState(null);
+
+  const [showAdminModal, setShowAdminModal] = useState(false);
+  const [showCompanyModal, setShowCompanyModal] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,9 +31,18 @@ function Signup() {
     const username = e.target.username.value.trim();
     const password = e.target.password.value.trim();
 
-    // validation
     if (!username || !password) {
       toast.error(t("auth.validationError"));
+      return;
+    }
+
+    if (!adminDetails) {
+      toast.error(t("auth.adminDetailsRequired"));
+      return;
+    }
+
+    if (!companyDetails) {
+      toast.error(t("auth.companyDetailsRequired"));
       return;
     }
 
@@ -40,6 +57,8 @@ function Signup() {
         body: JSON.stringify({
           username,
           password,
+          ...adminDetails,
+          ...companyDetails,
         }),
       });
 
@@ -60,7 +79,6 @@ function Signup() {
       navigate("/login");
     } catch (err) {
       console.error("Signup error:", err);
-
       toast.error(t("auth.serverError"));
     } finally {
       setLoading(false);
@@ -113,8 +131,8 @@ function Signup() {
       >
         <input
           id="username"
-          type="text"
           name="username"
+          type="text"
           placeholder={t("auth.username")}
           autoComplete="off"
           required
@@ -122,13 +140,43 @@ function Signup() {
 
         <input
           id="password"
-          type="password"
           name="password"
+          type="password"
           placeholder={t("auth.password")}
           autoComplete="new-password"
           required
         />
+
+        <button type="button" onClick={() => setShowAdminModal(true)}>
+          {adminDetails ? "✔ " : ""}
+          {t("auth.adminDetails")}
+        </button>
+
+        <button type="button" onClick={() => setShowCompanyModal(true)}>
+          {companyDetails ? "✔ " : ""}
+          {t("auth.companyDetails")}
+        </button>
       </AuthCard>
+
+      {showAdminModal && (
+        <AdminDetailsModal
+          onClose={() => setShowAdminModal(false)}
+          onSave={(data) => {
+            setAdminDetails(data);
+            setShowAdminModal(false);
+          }}
+        />
+      )}
+
+      {showCompanyModal && (
+        <CompanyDetailsModal
+          onClose={() => setShowCompanyModal(false)}
+          onSave={(data) => {
+            setCompanyDetails(data);
+            setShowCompanyModal(false);
+          }}
+        />
+      )}
     </>
   );
 }
