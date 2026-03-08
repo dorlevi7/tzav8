@@ -105,12 +105,26 @@
 
 @media (max-width: 700px) {
 
+    .home-container {
+        padding: 40px 12px;
+    }
+
+    .home-content {
+        padding: 28px 20px;
+        gap: 24px;
+    }
+
     .home-header h1 {
         font-size: 26px;
     }
 
     .dashboard-grid {
         grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .dashboard-card {
+        padding: 18px;
     }
 
     .user-card {
