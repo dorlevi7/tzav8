@@ -1,10 +1,13 @@
 .home-container {
+    width: 100%;
     min-height: calc(100vh - 80px);
-    padding: 40px 20px;
+    padding: 40px 16px;
     color: white;
 
     display: flex;
     justify-content: center;
+
+    overflow-x: hidden;
 }
 
 .home-content {
@@ -27,16 +30,22 @@
 }
 
 .dashboard-grid {
+    width: 100%;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 20px;
 }
 
 .dashboard-card {
+    width: 100%;
+
     background: rgba(20, 40, 30, 0.7);
     border-radius: 12px;
     padding: 20px;
+
     backdrop-filter: blur(10px);
+
     border: 1px solid rgba(100, 180, 100, 0.2);
     transition: 0.2s;
 }
@@ -54,8 +63,23 @@
 .dashboard-card p {
     margin-bottom: 8px;
     color: #b6c9be;
+
+    word-break: break-word;
 }
 
 .user-card {
     grid-column: span 2;
+}
+
+/* מובייל */
+@media (max-width: 700px) {
+
+    .home-header h1 {
+        font-size: 26px;
+    }
+
+    .user-card {
+        grid-column: span 1;
+    }
+
 }
