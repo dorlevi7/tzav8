@@ -1,9 +1,10 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import "../styles/navbar.css";
 
 function Navbar({ theme, setTheme }) {
   const [scrolled, setScrolled] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -18,6 +19,11 @@ function Navbar({ theme, setTheme }) {
     setTheme(theme === "light" ? "dark" : "light");
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    navigate("/login");
+  };
+
   return (
     <nav className={`navbar ${scrolled ? "scrolled" : ""}`}>
       <div className="navbar-inner">
@@ -29,12 +35,15 @@ function Navbar({ theme, setTheme }) {
           >
             {theme === "light" ? "🌙" : "☀️"}
           </button>
+
+          <button className="logout-button" onClick={handleLogout}>
+            Logout
+          </button>
         </div>
 
-        <Link to="/" className="logo">
+        <Link to="/home" className="logo">
           Tzav8
         </Link>
-        
       </div>
     </nav>
   );
