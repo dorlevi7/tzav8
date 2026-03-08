@@ -9,24 +9,14 @@
 
     padding: 18px 0;
 
-    /* צבע תואם לרקע אך כהה יותר */
-    background: rgba(22, 32, 27, 0.85);
+    background-color: rgba(22, 32, 27, 0.85);
     backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
 
     border-bottom: 1px solid var(--border-color);
-
-    transition:
-        background var(--transition-normal),
-        box-shadow var(--transition-normal);
 }
 
-/* =========================
-   Light Mode Override
-========================= */
-
 [data-theme="light"] .navbar {
-    background: rgba(253, 252, 247, 0.95);
+    background-color: rgba(253, 252, 247, 0.95);
 }
 
 /* =========================
@@ -69,7 +59,7 @@
 
 .logo:hover {
     color: var(--accent-color);
-    opacity: 0.9;
+    opacity: 2.0;
 }
 
 /* =========================

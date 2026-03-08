@@ -52,7 +52,7 @@
 
     box-shadow: var(--shadow-sm);
 
-    transition: var(--transition-normal);
+    transition: var(--transition-fast);
 }
 
 .dashboard-card:hover {

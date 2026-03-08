@@ -76,8 +76,8 @@
     --shadow-md: 0 6px 16px rgba(0, 0, 0, 0.12);
     --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.25);
 
-    --transition-fast: 0.15s ease-in-out;
-    --transition-normal: 0.25s ease-in-out;
+    --transition-fast: 2.0s ease-in-out;
+    --transition-normal: 2.0s ease-in-out;
 }
 
 /* ========================

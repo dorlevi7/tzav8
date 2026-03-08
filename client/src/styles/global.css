@@ -7,17 +7,16 @@ html {
 }
 
 body,
-.navbar,
 .auth-container,
 button,
 input,
 a {
     transition:
-        background-color 0.35s ease,
-        color 0.35s ease,
-        border-color 0.35s ease,
-        box-shadow 0.35s ease,
-        opacity 0.25s ease;
+        background-color 2.0s ease,
+        color 2.0s ease,
+        border-color 2.0s ease,
+        box-shadow 2.0s ease,
+        opacity 2.0s ease;
 }
 
 /* =========================
