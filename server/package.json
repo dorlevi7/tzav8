@@ -1,9 +1,15 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "db:init": "node scripts/initDb.js",
+    "db:tables": "node scripts/dbManager.js tables",
+    "db:describe": "node scripts/dbManager.js describe",
+    "db:select": "node scripts/dbManager.js select",
+    "db:clear": "node scripts/dbManager.js clear"
   },
   "keywords": [],
   "author": "",
