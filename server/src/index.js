@@ -7,17 +7,8 @@ const authRoutes = require("./routes/authRoutes");
 
 const app = express();
 
-app.use(cors({
-    origin: "https://tzav8-client.onrender.com",
-    credentials: true
-}));
-
-app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "https://tzav8-client.onrender.com");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-    next();
-});
+/* CORS MUST BE FIRST */
+app.use(cors());
 
 app.use(express.json());
 
