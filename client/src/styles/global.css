@@ -16,7 +16,7 @@ a {
         color 2.0s ease,
         border-color 2.0s ease,
         box-shadow 2.0s ease,
-        opacity 2.0s ease;
+        opacity 0.15s ease;
 }
 
 /* =========================
@@ -66,7 +66,7 @@ a {
 }
 
 a:hover {
-    opacity: 0.85;
+    opacity: 0.15;
 }
 
 /* =========================
@@ -128,4 +128,18 @@ button {
 
 body {
     direction: inherit;
+}
+
+/* =========================
+   Language Transition
+========================= */
+
+/* Language transition */
+
+#root {
+    transition: opacity 0.35s ease;
+}
+
+body.lang-switching #root {
+    opacity: 0;
 }

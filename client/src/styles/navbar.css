@@ -59,7 +59,7 @@
 
 .logo:hover {
     color: var(--accent-color);
-    opacity: 2.0;
+    opacity: 0.15;
 }
 
 /* =========================

@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { useTranslation } from "react-i18next";
 
 import AuthCard from "../components/AuthCard";
-import { TOAST_MESSAGES } from "../constants/toastMessages";
 
 function Login() {
   const navigate = useNavigate();
@@ -11,6 +11,8 @@ function Login() {
   const API_URL = import.meta.env.VITE_API_URL;
 
   const [error, setError] = useState("");
+
+  const { t, i18n } = useTranslation();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -42,32 +44,76 @@ function Login() {
       localStorage.setItem("user", JSON.stringify(data));
 
       // Toast success
-      toast.success(TOAST_MESSAGES.LOGIN_SUCCESS);
+      toast.success(t("auth.loginSuccess"));
 
       // Navigate to home page
       navigate("/home");
     } catch (err) {
       console.error("Login error:", err);
 
-      setError(TOAST_MESSAGES.LOGIN_ERROR);
+      setError(t("auth.loginError"));
 
-      toast.error(TOAST_MESSAGES.LOGIN_ERROR);
+      toast.error(t("auth.loginError"));
     }
   };
 
+  const toggleLanguage = () => {
+    const newLang = i18n.language === "he" ? "en" : "he";
+
+    document.body.classList.add("lang-switching");
+
+    setTimeout(() => {
+      i18n.changeLanguage(newLang);
+
+      setTimeout(() => {
+        document.body.classList.remove("lang-switching");
+      }, 50);
+    }, 350);
+  };
+
+  const nextFlag = i18n.language === "he" ? "🇺🇸" : "🇮🇱";
+
   return (
     <>
+      <button
+        onClick={toggleLanguage}
+        style={{
+          position: "fixed",
+          top: "20px",
+          right: i18n.language === "he" ? "20px" : "auto",
+          left: i18n.language === "en" ? "20px" : "auto",
+          fontSize: "18px",
+          background: "transparent",
+          border: "1px solid var(--border-color)",
+          borderRadius: "8px",
+          padding: "6px 10px",
+          cursor: "pointer",
+        }}
+      >
+        {nextFlag}
+      </button>
+
       <AuthCard
-        title="התחברות"
-        buttonText="התחבר"
-        footerText="אין לך חשבון?"
-        footerLinkText="הרשמה"
+        title={t("auth.loginTitle")}
+        buttonText={t("auth.loginButton")}
+        footerText={t("auth.noAccount")}
+        footerLinkText={t("auth.signup")}
         footerLinkTo="/signup"
         onSubmit={handleSubmit}
       >
-        <input type="text" name="username" placeholder="שם משתמש" required />
+        <input
+          type="text"
+          name="username"
+          placeholder={t("auth.username")}
+          required
+        />
 
-        <input type="password" name="password" placeholder="סיסמה" required />
+        <input
+          type="password"
+          name="password"
+          placeholder={t("auth.password")}
+          required
+        />
 
         {error && (
           <p style={{ color: "#ff6b6b", textAlign: "center" }}>{error}</p>

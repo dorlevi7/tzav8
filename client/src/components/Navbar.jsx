@@ -28,10 +28,22 @@ function Navbar({ theme, setTheme }) {
     navigate("/login");
   };
 
-  const toggleLanguage = () => {
-    const newLang = i18n.language === "he" ? "en" : "he";
+const toggleLanguage = () => {
+  const newLang = i18n.language === "he" ? "en" : "he";
+
+  // start fade-out
+  document.body.classList.add("lang-switching");
+
+  setTimeout(() => {
+    // change language (this flips RTL/LTR)
     i18n.changeLanguage(newLang);
-  };
+
+    // fade back in
+    setTimeout(() => {
+      document.body.classList.remove("lang-switching");
+    }, 50);
+  }, 350);
+};
 
   const nextFlag = i18n.language === "he" ? "🇺🇸" : "🇮🇱";
 

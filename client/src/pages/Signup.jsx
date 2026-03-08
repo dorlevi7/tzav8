@@ -1,13 +1,15 @@
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { useTranslation } from "react-i18next";
 
 import AuthCard from "../components/AuthCard";
-import { TOAST_MESSAGES } from "../constants/toastMessages";
 
 function Signup() {
   const navigate = useNavigate();
 
   const API_URL = import.meta.env.VITE_API_URL;
+
+  const { t, i18n } = useTranslation();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,7 +19,7 @@ function Signup() {
 
     // validation
     if (!username || !password) {
-      toast.error(TOAST_MESSAGES.VALIDATION_ERROR);
+      toast.error(t("auth.validationError"));
       return;
     }
 
@@ -37,53 +39,87 @@ function Signup() {
 
       if (!response.ok) {
         if (data.error === "Username already exists") {
-          toast.error(TOAST_MESSAGES.USERNAME_EXISTS);
+          toast.error(t("auth.usernameExists"));
           return;
         }
 
-        toast.error(TOAST_MESSAGES.SERVER_ERROR);
+        toast.error(t("auth.serverError"));
         return;
       }
 
-      console.log("Signup success:", data);
-
-      toast.success(TOAST_MESSAGES.SIGNUP_SUCCESS);
+      toast.success(t("auth.signupSuccess"));
 
       navigate("/login");
     } catch (err) {
       console.error("Signup error:", err);
 
-      toast.error(TOAST_MESSAGES.SERVER_ERROR);
+      toast.error(t("auth.serverError"));
     }
   };
 
-  return (
-    <AuthCard
-      title="הרשמה"
-      buttonText="צור חשבון"
-      footerText="כבר יש לך חשבון?"
-      footerLinkText="התחברות"
-      footerLinkTo="/login"
-      onSubmit={handleSubmit}
-    >
-      <input
-        id="username"
-        type="text"
-        name="username"
-        placeholder="שם משתמש"
-        autoComplete="off"
-        required
-      />
+  const toggleLanguage = () => {
+    const newLang = i18n.language === "he" ? "en" : "he";
 
-      <input
-        id="password"
-        type="password"
-        name="password"
-        placeholder="סיסמה"
-        autoComplete="new-password"
-        required
-      />
-    </AuthCard>
+    document.body.classList.add("lang-switching");
+
+    setTimeout(() => {
+      i18n.changeLanguage(newLang);
+
+      setTimeout(() => {
+        document.body.classList.remove("lang-switching");
+      }, 50);
+    }, 350);
+  };
+
+  const nextFlag = i18n.language === "he" ? "🇺🇸" : "🇮🇱";
+
+  return (
+    <>
+      <button
+        onClick={toggleLanguage}
+        style={{
+          position: "fixed",
+          top: "20px",
+          right: i18n.language === "he" ? "20px" : "auto",
+          left: i18n.language === "en" ? "20px" : "auto",
+          fontSize: "18px",
+          background: "transparent",
+          border: "1px solid var(--border-color)",
+          borderRadius: "8px",
+          padding: "6px 10px",
+          cursor: "pointer",
+        }}
+      >
+        {nextFlag}
+      </button>
+
+      <AuthCard
+        title={t("auth.signupTitle")}
+        buttonText={t("auth.signupButton")}
+        footerText={t("auth.haveAccount")}
+        footerLinkText={t("auth.login")}
+        footerLinkTo="/login"
+        onSubmit={handleSubmit}
+      >
+        <input
+          id="username"
+          type="text"
+          name="username"
+          placeholder={t("auth.username")}
+          autoComplete="off"
+          required
+        />
+
+        <input
+          id="password"
+          type="password"
+          name="password"
+          placeholder={t("auth.password")}
+          autoComplete="new-password"
+          required
+        />
+      </AuthCard>
+    </>
   );
 }
 

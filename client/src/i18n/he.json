@@ -13,7 +13,23 @@
     "qualifications": "כשירויות",
     "allValid": "כל הכשירויות בתוקף"
   },
-    "auth": {
-    "logout": "התנתק"
+  "auth": {
+    "logout": "התנתק",
+    "loginTitle": "התחברות",
+    "loginButton": "התחבר",
+    "signup": "הרשמה",
+    "noAccount": "אין לך חשבון?",
+    "username": "שם משתמש",
+    "password": "סיסמה",
+    "loginSuccess": "התחברת בהצלחה",
+    "loginError": "שגיאה בהתחברות",
+    "signupTitle": "הרשמה",
+    "signupButton": "צור חשבון",
+    "haveAccount": "כבר יש לך חשבון?",
+    "login": "התחברות",
+    "signupSuccess": "החשבון נוצר בהצלחה",
+    "validationError": "יש למלא את כל השדות",
+    "usernameExists": "שם המשתמש כבר קיים",
+    "serverError": "שגיאת שרת"
   }
 }

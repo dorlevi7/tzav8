@@ -13,7 +13,23 @@
     "qualifications": "Qualifications",
     "allValid": "All qualifications are valid"
   },
-    "auth": {
-    "logout": "Logout"
+  "auth": {
+    "logout": "Logout",
+    "loginTitle": "Login",
+    "loginButton": "Login",
+    "signup": "Sign up",
+    "noAccount": "Don't have an account?",
+    "username": "Username",
+    "password": "Password",
+    "loginSuccess": "Login successful",
+    "loginError": "Login failed",
+    "signupTitle": "Sign up",
+    "signupButton": "Create account",
+    "haveAccount": "Already have an account?",
+    "login": "Login",
+    "signupSuccess": "Account created successfully",
+    "validationError": "Please fill all fields",
+    "usernameExists": "Username already exists",
+    "serverError": "Server error"
   }
 }
