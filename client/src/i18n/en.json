@@ -1,0 +1,19 @@
+{
+  "home": {
+    "title": "Home",
+    "welcome": "Hello {{username}}",
+    "userDetails": "User Details",
+    "username": "Username",
+    "role": "Role",
+    "userId": "User ID",
+    "upcomingEvents": "Upcoming Events",
+    "noEvents": "No events",
+    "activeTasks": "Active Tasks",
+    "noTasks": "No active tasks",
+    "qualifications": "Qualifications",
+    "allValid": "All qualifications are valid"
+  },
+    "auth": {
+    "logout": "Logout"
+  }
+}

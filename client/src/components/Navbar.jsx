@@ -1,10 +1,14 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+
 import "../styles/navbar.css";
 
 function Navbar({ theme, setTheme }) {
   const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
+
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -24,10 +28,18 @@ function Navbar({ theme, setTheme }) {
     navigate("/login");
   };
 
+  const toggleLanguage = () => {
+    const newLang = i18n.language === "he" ? "en" : "he";
+    i18n.changeLanguage(newLang);
+  };
+
+  const nextFlag = i18n.language === "he" ? "🇺🇸" : "🇮🇱";
+
   return (
-    <nav className={`navbar ${scrolled ? "scrolled" : ""}`}>
+    <nav className={`navbar ${scrolled ? "scrolled" : ""}`} dir="rtl">
       <div className="navbar-inner">
         <div className="navbar-right">
+          {/* Theme toggle */}
           <button
             className="theme-toggle"
             onClick={toggleTheme}
@@ -36,8 +48,18 @@ function Navbar({ theme, setTheme }) {
             {theme === "light" ? "🌙" : "☀️"}
           </button>
 
+          {/* Language toggle */}
+          <button
+            className="lang-button"
+            onClick={toggleLanguage}
+            aria-label="Change language"
+          >
+            {nextFlag}
+          </button>
+
+          {/* Logout */}
           <button className="logout-button" onClick={handleLogout}>
-            Logout
+            {t("auth.logout")}
           </button>
         </div>
 

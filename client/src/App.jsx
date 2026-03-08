@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -11,6 +12,8 @@ import { Toaster } from "react-hot-toast";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
+  const { i18n } = useTranslation();
+
   const getInitialTheme = () => {
     const savedTheme = localStorage.getItem("theme");
     if (savedTheme) return savedTheme;
@@ -24,10 +27,17 @@ function App() {
 
   const [theme, setTheme] = useState(getInitialTheme);
 
+  // theme handling
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
     localStorage.setItem("theme", theme);
   }, [theme]);
+
+  // language direction handling (RTL / LTR)
+  useEffect(() => {
+    const direction = i18n.language === "he" ? "rtl" : "ltr";
+    document.documentElement.setAttribute("dir", direction);
+  }, [i18n.language]);
 
   return (
     <>

@@ -128,3 +128,37 @@
 .logout-button:hover {
     background: var(--card-background);
 }
+
+/* =========================
+   Language Switch
+========================= */
+
+.lang-button {
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-color);
+
+    background: transparent;
+    color: var(--text-primary);
+
+    font-size: 16px;
+    cursor: pointer;
+
+    transition:
+        background var(--transition-fast),
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast),
+        border-color var(--transition-fast);
+}
+
+.lang-button:hover {
+    background: rgba(107, 142, 35, 0.12);
+    border-color: var(--accent-color);
+    transform: translateY(-1px);
+}

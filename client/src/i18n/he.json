@@ -1,0 +1,19 @@
+{
+  "home": {
+    "title": "מסך הבית",
+    "welcome": "שלום {{username}}",
+    "userDetails": "פרטי משתמש",
+    "username": "שם משתמש",
+    "role": "תפקיד",
+    "userId": "User ID",
+    "upcomingEvents": "אירועים קרובים",
+    "noEvents": "אין אירועים כרגע",
+    "activeTasks": "משימות פעילות",
+    "noTasks": "אין משימות פעילות",
+    "qualifications": "כשירויות",
+    "allValid": "כל הכשירויות בתוקף"
+  },
+    "auth": {
+    "logout": "התנתק"
+  }
+}

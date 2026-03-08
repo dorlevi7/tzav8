@@ -1,50 +1,58 @@
 import "../styles/pages/Home.css";
 
+import { useTranslation } from "react-i18next";
+
 function Home() {
+  const { t } = useTranslation();
+
   const user = JSON.parse(localStorage.getItem("user")) || {};
 
   return (
     <div className="home-container">
       <div className="home-content">
         <div className="home-header">
-          <h1>מסך הבית</h1>
-          {user && <p className="welcome-text">שלום {user.username}</p>}
+          <h1>{t("home.title")}</h1>
+          {user && (
+            <p className="welcome-text">
+              {t("home.welcome", { username: user.username })}
+            </p>
+          )}
         </div>
 
         <div className="dashboard-grid">
           <div className="dashboard-card user-card">
-            <h3>פרטי משתמש</h3>
+            <h3>{t("home.userDetails")}</h3>
 
             {user && (
               <>
                 <p>
-                  <strong>שם משתמש:</strong> {user.username}
+                  <strong>{t("home.username")}:</strong> {user.username}
                 </p>
 
                 <p>
-                  <strong>תפקיד:</strong> {user.role}
+                  <strong>{t("home.role")}:</strong> {user.role}
                 </p>
 
                 <p>
-                  <strong>User ID:</strong> {user.id}
+                  <strong>{t("home.userId")}:</strong> {user.id}
                 </p>
               </>
             )}
           </div>
 
           <div className="dashboard-card">
-            <h3>אירועים קרובים</h3>
-            <p>אין אירועים כרגע</p>
+            <h3>{t("home.upcomingEvents")}</h3>
+            <p>{t("home.noEvents")}</p>
           </div>
 
           <div className="dashboard-card">
-            <h3>משימות פעילות</h3>
-            <p>אין משימות פעילות</p>
+            <h3>{t("home.activeTasks")}</h3>
+            <p>{t("home.noTasks")}</p>
           </div>
 
           <div className="dashboard-card">
-            <h3>כשירויות</h3>
-            <p>כל הכשירויות בתוקף</p>
+            <h3>{t("home.qualifications")}</h3>
+            <p>{t("home.allValid")}</p>
           </div>
         </div>
       </div>
