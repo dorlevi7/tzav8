@@ -17,13 +17,22 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    console.log("Login form submitted");
+
     setError("");
 
     const username = e.target.username.value;
     const password = e.target.password.value;
 
+    console.log("Username:", username);
+    console.log("Password entered:", password ? "YES" : "NO");
+
     try {
-      const response = await fetch(`${API_URL}/api/auth/login`, {
+      const url = `${API_URL}/api/auth/login`;
+
+      console.log("Sending request to:", url);
+
+      const response = await fetch(url, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -34,9 +43,14 @@ function Login() {
         }),
       });
 
+      console.log("Response status:", response.status);
+
       const data = await response.json();
 
+      console.log("Response data:", data);
+
       if (!response.ok) {
+        console.log("Login failed:", data);
         throw new Error(data.error || "Login failed");
       }
 
@@ -45,8 +59,12 @@ function Login() {
       // Save user in localStorage
       localStorage.setItem("user", JSON.stringify(data));
 
+      console.log("User saved to localStorage");
+
       // Toast success
       toast.success(TOAST_MESSAGES.LOGIN_SUCCESS);
+
+      console.log("Navigating to /home");
 
       // Navigate to home page
       navigate("/home");
@@ -55,7 +73,6 @@ function Login() {
 
       setError(TOAST_MESSAGES.LOGIN_ERROR);
 
-      // Toast error
       toast.error(TOAST_MESSAGES.LOGIN_ERROR);
     }
   };
