@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 
 import AuthCard from "../components/AuthCard";
+import usePageTitle from "../hooks/usePageTitle";
 
 function Login() {
   const navigate = useNavigate();
@@ -13,6 +14,9 @@ function Login() {
   const [error, setError] = useState("");
 
   const { t, i18n } = useTranslation();
+
+  // Update browser tab title
+  usePageTitle(t("auth.loginTitle"));
 
   const handleSubmit = async (e) => {
     e.preventDefault();

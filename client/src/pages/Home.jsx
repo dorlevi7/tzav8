@@ -1,17 +1,22 @@
 import "../styles/pages/Home.css";
 
 import { useTranslation } from "react-i18next";
+import usePageTitle from "../hooks/usePageTitle";
 
 function Home() {
   const { t } = useTranslation();
 
   const user = JSON.parse(localStorage.getItem("user")) || {};
 
+  // Update browser tab title
+  usePageTitle(t("home.title"));
+
   return (
     <div className="home-container">
       <div className="home-content">
         <div className="home-header">
           <h1>{t("home.title")}</h1>
+
           {user && (
             <p className="welcome-text">
               {t("home.welcome", { username: user.username })}
