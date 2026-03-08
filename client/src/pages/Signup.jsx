@@ -1,17 +1,28 @@
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+
 import AuthCard from "../components/AuthCard";
+import { TOAST_MESSAGES } from "../constants/toastMessages";
 
 function Signup() {
   const navigate = useNavigate();
 
+  const API_URL = import.meta.env.VITE_API_URL;
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const username = e.target.username.value;
-    const password = e.target.password.value;
+    const username = e.target.username.value.trim();
+    const password = e.target.password.value.trim();
+
+    // validation
+    if (!username || !password) {
+      toast.error(TOAST_MESSAGES.VALIDATION_ERROR);
+      return;
+    }
 
     try {
-      const response = await fetch("http://localhost:5000/api/auth/signup", {
+      const response = await fetch(`${API_URL}/api/auth/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -24,12 +35,25 @@ function Signup() {
 
       const data = await response.json();
 
+      if (!response.ok) {
+        if (data.error === "Username already exists") {
+          toast.error(TOAST_MESSAGES.USERNAME_EXISTS);
+          return;
+        }
+
+        toast.error(TOAST_MESSAGES.SERVER_ERROR);
+        return;
+      }
+
       console.log("Signup success:", data);
 
-      // redirect to login page after successful signup
+      toast.success(TOAST_MESSAGES.SIGNUP_SUCCESS);
+
       navigate("/login");
     } catch (err) {
       console.error("Signup error:", err);
+
+      toast.error(TOAST_MESSAGES.SERVER_ERROR);
     }
   };
 
@@ -48,6 +72,7 @@ function Signup() {
         name="username"
         placeholder="שם משתמש"
         autoComplete="off"
+        required
       />
 
       <input
@@ -56,6 +81,7 @@ function Signup() {
         name="password"
         placeholder="סיסמה"
         autoComplete="new-password"
+        required
       />
     </AuthCard>
   );

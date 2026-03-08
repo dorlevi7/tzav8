@@ -1,6 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import toast from "react-hot-toast";
+
 import AuthCard from "../components/AuthCard";
+import { TOAST_MESSAGES } from "../constants/toastMessages";
 
 function Login() {
   const navigate = useNavigate();
@@ -8,7 +11,7 @@ function Login() {
   const API_URL = import.meta.env.VITE_API_URL;
 
   console.log("API_URL =", API_URL);
-  
+
   const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
@@ -42,11 +45,18 @@ function Login() {
       // Save user in localStorage
       localStorage.setItem("user", JSON.stringify(data));
 
+      // Toast success
+      toast.success(TOAST_MESSAGES.LOGIN_SUCCESS);
+
       // Navigate to home page
       navigate("/home");
     } catch (err) {
       console.error("Login error:", err);
-      setError("שם משתמש או סיסמה שגויים");
+
+      setError(TOAST_MESSAGES.LOGIN_ERROR);
+
+      // Toast error
+      toast.error(TOAST_MESSAGES.LOGIN_ERROR);
     }
   };
 

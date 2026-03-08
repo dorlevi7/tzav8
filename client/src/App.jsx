@@ -7,6 +7,8 @@ import Home from "./pages/Home";
 
 import MainLayout from "./layouts/MainLayout";
 
+import { Toaster } from "react-hot-toast";
+
 function App() {
   const getInitialTheme = () => {
     const savedTheme = localStorage.getItem("theme");
@@ -27,17 +29,27 @@ function App() {
   }, [theme]);
 
   return (
-    <Routes>
-      {/* routes WITHOUT navbar */}
-      <Route path="/" element={<Navigate to="/login" />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/signup" element={<Signup />} />
+    <>
+      {/* Toast system */}
+      <Toaster
+        position="top-center"
+        toastOptions={{
+          duration: 3000,
+        }}
+      />
 
-      {/* routes WITH navbar */}
-      <Route element={<MainLayout theme={theme} setTheme={setTheme} />}>
-        <Route path="/home" element={<Home />} />
-      </Route>
-    </Routes>
+      <Routes>
+        {/* routes WITHOUT navbar */}
+        <Route path="/" element={<Navigate to="/login" />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+
+        {/* routes WITH navbar */}
+        <Route element={<MainLayout theme={theme} setTheme={setTheme} />}>
+          <Route path="/home" element={<Home />} />
+        </Route>
+      </Routes>
+    </>
   );
 }
 
