@@ -9,8 +9,22 @@
 }
 
 html,
-body {
+body,
+#root {
     height: 100%;
+}
+
+/* Smooth theme transition */
+
+html,
+body,
+button,
+input {
+    transition:
+        background-color 0.35s ease,
+        color 0.35s ease,
+        border-color 0.35s ease,
+        box-shadow 0.35s ease;
 }
 
 /* =========================
@@ -25,10 +39,16 @@ body {
     direction: rtl;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+}
 
+/* =========================
+   App Root Layout
+========================= */
+
+#root {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 /* =========================
@@ -44,6 +64,7 @@ h6 {
     margin: 0;
     font-weight: var(--font-weight-bold);
     color: var(--text-primary);
+    letter-spacing: -0.3px;
 }
 
 h2 {
@@ -57,7 +78,7 @@ p {
 }
 
 /* =========================
-   Buttons
+   Buttons (Premium Military)
 ========================= */
 
 button {
@@ -67,44 +88,76 @@ button {
 
     padding: 12px var(--spacing-md);
     border-radius: var(--border-radius);
-    border: none;
+
+    border: 1px solid transparent;
 
     background-color: var(--accent-color);
     color: var(--color-white);
 
     cursor: pointer;
-    transition: var(--transition-normal);
+
+    transition:
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast),
+        background var(--transition-fast),
+        border-color var(--transition-fast);
 }
 
 button:hover {
+    background: var(--accent-hover);
     transform: translateY(-2px);
     box-shadow: var(--shadow-md);
 }
 
 button:active {
     transform: translateY(0);
-    box-shadow: var(--shadow-sm);
+}
+
+/* Secondary style support (future use) */
+button.secondary {
+    background: transparent;
+    border-color: var(--border-color);
+    color: var(--text-primary);
+}
+
+button.secondary:hover {
+    background: rgba(255, 255, 255, 0.04);
 }
 
 /* =========================
-   Inputs
+   Inputs (Dark & Light Optimized)
 ========================= */
 
 input {
     font-family: var(--font-family);
     font-size: var(--font-size-base);
 
-    padding: 12px;
-    border-radius: var(--border-radius);
+    padding: 12px 14px;
+    border-radius: var(--border-radius-sm);
     border: 1px solid var(--border-color);
 
-    transition: var(--transition-fast);
+    background: rgba(255, 255, 255, 0.02);
+    color: var(--text-primary);
+
+    transition:
+        border-color var(--transition-fast),
+        box-shadow var(--transition-fast),
+        background var(--transition-fast);
+}
+
+[data-theme="light"] input {
+    background: var(--card-background);
+}
+
+input::placeholder {
+    color: var(--text-muted);
 }
 
 input:focus {
     outline: none;
     border-color: var(--accent-color);
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+    box-shadow: 0 0 0 3px rgba(107, 142, 35, 0.25);
+    background: rgba(255, 255, 255, 0.05);
 }
 
 /* =========================
@@ -115,10 +168,11 @@ a {
     color: var(--accent-color);
     text-decoration: none;
     font-weight: var(--font-weight-medium);
+    transition: opacity var(--transition-fast);
 }
 
 a:hover {
-    text-decoration: underline;
+    opacity: 0.8;
 }
 
 /* =========================

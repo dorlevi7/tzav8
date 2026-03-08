@@ -1,4 +1,26 @@
 /* =========================
+   Smooth Theme Transition
+========================= */
+
+html {
+    scroll-behavior: smooth;
+}
+
+body,
+.navbar,
+.auth-container,
+button,
+input,
+a {
+    transition:
+        background-color 0.35s ease,
+        color 0.35s ease,
+        border-color 0.35s ease,
+        box-shadow 0.35s ease,
+        opacity 0.25s ease;
+}
+
+/* =========================
    Global Reset
 ========================= */
 
@@ -8,7 +30,6 @@
     box-sizing: border-box;
 }
 
-/* Remove default margin */
 body,
 h1,
 h2,
@@ -23,30 +44,30 @@ ol {
     padding: 0;
 }
 
-/* Remove list styling */
 ul,
 ol {
     list-style: none;
 }
 
-/* Images responsive by default */
 img {
     max-width: 100%;
     display: block;
 }
 
 /* =========================
-   Links
+   Links (Military Ready)
 ========================= */
 
 a {
     color: var(--accent-color);
     text-decoration: none;
-    transition: var(--transition-fast);
+    font-weight: var(--font-weight-medium);
+    transition: color var(--transition-fast),
+        opacity var(--transition-fast);
 }
 
 a:hover {
-    text-decoration: underline;
+    opacity: 0.85;
 }
 
 /* =========================
@@ -61,12 +82,11 @@ select {
 }
 
 button {
-    background: none;
-    border: none;
+    cursor: pointer;
 }
 
 /* =========================
-   Scrollbar (Modern Look)
+   Scrollbar (Military Styled)
 ========================= */
 
 ::-webkit-scrollbar {
@@ -74,12 +94,13 @@ button {
 }
 
 ::-webkit-scrollbar-track {
-    background: var(--color-navy-900);
+    background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--color-navy-700);
-    border-radius: 4px;
+    background: var(--border-color);
+    border-radius: 6px;
+    transition: background var(--transition-fast);
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -96,4 +117,12 @@ button {
 
 .full-width {
     width: 100%;
+}
+
+.text-muted {
+    color: var(--text-muted);
+}
+
+.text-center {
+    text-align: center;
 }

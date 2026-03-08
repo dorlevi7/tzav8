@@ -1,27 +1,18 @@
-import "../styles/pages/Login.css";
 import { Link } from "react-router-dom";
+import AuthCard from "../components/AuthCard";
 
 function Login() {
   return (
-    <div className="auth-page">
-      <div className="login-container">
-        <h2 className="auth-title">התחברות</h2>
-
-        <form>
-          <input type="text" placeholder="שם משתמש" className="auth-input" />
-
-          <input type="password" placeholder="סיסמה" className="auth-input" />
-
-          <button type="submit" className="auth-button">
-            התחבר
-          </button>
-        </form>
-
-        <p className="auth-footer">
-          אין לך חשבון? <Link to="/signup">הרשמה</Link>
-        </p>
-      </div>
-    </div>
+    <AuthCard
+      title="התחברות"
+      buttonText="התחבר"
+      footerText="אין לך חשבון?"
+      footerLinkText="הרשמה"
+      footerLinkTo="/signup"
+    >
+      <input type="text" name="username" placeholder="שם משתמש" />
+      <input type="password" name="password" placeholder="סיסמה" />
+    </AuthCard>
   );
 }
 
