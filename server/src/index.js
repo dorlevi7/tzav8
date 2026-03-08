@@ -1,17 +1,15 @@
 // index.js
+
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
 
-const pool = require("./db");
-const testRoutes = require("./routes/test.routes");
+const pool = require("../config/db");
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
-
-app.use("/api/test", testRoutes);
 
 app.get("/", (req, res) => {
     res.send("Tzav8 backend running");
@@ -25,6 +23,6 @@ app.listen(PORT, async () => {
         console.log("✅ Database connected");
         console.log(`🚀 Server running on port ${PORT}`);
     } catch (err) {
-        console.error("❌ Database connection failed", err);
+        console.error("❌ Database connection failed", err.message);
     }
 });
