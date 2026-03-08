@@ -10,29 +10,18 @@ function Login() {
 
   const API_URL = import.meta.env.VITE_API_URL;
 
-  console.log("API_URL =", API_URL);
-
   const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    console.log("Login form submitted");
 
     setError("");
 
     const username = e.target.username.value;
     const password = e.target.password.value;
 
-    console.log("Username:", username);
-    console.log("Password entered:", password ? "YES" : "NO");
-
     try {
-      const url = `${API_URL}/api/auth/login`;
-
-      console.log("Sending request to:", url);
-
-      const response = await fetch(url, {
+      const response = await fetch(`${API_URL}/api/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -43,28 +32,17 @@ function Login() {
         }),
       });
 
-      console.log("Response status:", response.status);
-
       const data = await response.json();
 
-      console.log("Response data:", data);
-
       if (!response.ok) {
-        console.log("Login failed:", data);
         throw new Error(data.error || "Login failed");
       }
-
-      console.log("Login success:", data);
 
       // Save user in localStorage
       localStorage.setItem("user", JSON.stringify(data));
 
-      console.log("User saved to localStorage");
-
       // Toast success
       toast.success(TOAST_MESSAGES.LOGIN_SUCCESS);
-
-      console.log("Navigating to /home");
 
       // Navigate to home page
       navigate("/home");
