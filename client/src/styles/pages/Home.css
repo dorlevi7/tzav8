@@ -109,8 +109,12 @@
         font-size: 26px;
     }
 
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+
     .user-card {
-        grid-column: span 1;
+        grid-column: auto;
     }
 
 }
