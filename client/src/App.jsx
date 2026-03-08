@@ -8,6 +8,7 @@ import Home from "./pages/Home";
 import MainLayout from "./layouts/MainLayout";
 
 import { Toaster } from "react-hot-toast";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   const getInitialTheme = () => {
@@ -46,7 +47,14 @@ function App() {
 
         {/* routes WITH navbar */}
         <Route element={<MainLayout theme={theme} setTheme={setTheme} />}>
-          <Route path="/home" element={<Home />} />
+          <Route
+            path="/home"
+            element={
+              <ProtectedRoute>
+                <Home />
+              </ProtectedRoute>
+            }
+          />
         </Route>
       </Routes>
     </>

@@ -1,7 +1,7 @@
 import "../styles/pages/Home.css";
 
 function Home() {
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user = JSON.parse(localStorage.getItem("user")) || {};
 
   return (
     <div className="home-container">
