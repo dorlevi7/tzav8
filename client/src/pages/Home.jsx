@@ -1,15 +1,30 @@
 import "../styles/pages/Home.css";
 
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
+
 import usePageTitle from "../hooks/usePageTitle";
+import { useLoading } from "../context/LoadingContext";
 
 function Home() {
   const { t } = useTranslation();
+  const { setLoading } = useLoading();
 
   const user = JSON.parse(localStorage.getItem("user")) || {};
 
   // Update browser tab title
   usePageTitle(t("home.title"));
+
+  // Simulate initial data loading
+  useEffect(() => {
+    setLoading(true);
+
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 400); // short delay to simulate loading
+
+    return () => clearTimeout(timer);
+  }, [setLoading]);
 
   return (
     <div className="home-container">

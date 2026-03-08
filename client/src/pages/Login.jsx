@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 
 import AuthCard from "../components/AuthCard";
 import usePageTitle from "../hooks/usePageTitle";
+import { useLoading } from "../context/LoadingContext";
 
 function Login() {
   const navigate = useNavigate();
@@ -14,6 +15,7 @@ function Login() {
   const [error, setError] = useState("");
 
   const { t, i18n } = useTranslation();
+  const { setLoading } = useLoading();
 
   // Update browser tab title
   usePageTitle(t("auth.loginTitle"));
@@ -25,6 +27,8 @@ function Login() {
 
     const username = e.target.username.value;
     const password = e.target.password.value;
+
+    setLoading(true);
 
     try {
       const response = await fetch(`${API_URL}/api/auth/login`, {
@@ -56,8 +60,9 @@ function Login() {
       console.error("Login error:", err);
 
       setError(t("auth.loginError"));
-
       toast.error(t("auth.loginError"));
+    } finally {
+      setLoading(false);
     }
   };
 

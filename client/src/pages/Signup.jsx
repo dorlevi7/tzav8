@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 
 import AuthCard from "../components/AuthCard";
 import usePageTitle from "../hooks/usePageTitle";
+import { useLoading } from "../context/LoadingContext";
 
 function Signup() {
   const navigate = useNavigate();
@@ -11,6 +12,7 @@ function Signup() {
   const API_URL = import.meta.env.VITE_API_URL;
 
   const { t, i18n } = useTranslation();
+  const { setLoading } = useLoading();
 
   // Update browser tab title
   usePageTitle(t("auth.signupTitle"));
@@ -26,6 +28,8 @@ function Signup() {
       toast.error(t("auth.validationError"));
       return;
     }
+
+    setLoading(true);
 
     try {
       const response = await fetch(`${API_URL}/api/auth/signup`, {
@@ -58,6 +62,8 @@ function Signup() {
       console.error("Signup error:", err);
 
       toast.error(t("auth.serverError"));
+    } finally {
+      setLoading(false);
     }
   };
 
