@@ -1,0 +1,81 @@
+:root {
+    /* ========================
+     Core Palette (Military SaaS)
+  ======================== */
+
+    --color-navy-900: #0b1324;
+    --color-navy-800: #111c35;
+    --color-navy-700: #1b2a4a;
+
+    --color-blue-600: #2563eb;
+    --color-blue-500: #3b82f6;
+    --color-blue-100: #dbeafe;
+
+    --color-gray-900: #0f172a;
+    --color-gray-700: #334155;
+    --color-gray-500: #64748b;
+    --color-gray-300: #cbd5e1;
+    --color-gray-100: #f1f5f9;
+
+    --color-white: #ffffff;
+    --color-danger: #dc2626;
+    --color-success: #16a34a;
+
+    /* ========================
+     Semantic Variables
+  ======================== */
+
+    --primary-color: var(--color-navy-800);
+    --accent-color: var(--color-blue-600);
+    --background-color: linear-gradient(135deg,
+            var(--color-navy-900),
+            var(--color-navy-700));
+    --card-background: var(--color-white);
+
+    --text-primary: var(--color-gray-900);
+    --text-secondary: var(--color-gray-700);
+    --text-muted: var(--color-gray-500);
+
+    --border-color: var(--color-gray-300);
+
+    /* ========================
+     Typography
+  ======================== */
+
+    --font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+
+    --font-size-xs: 12px;
+    --font-size-sm: 14px;
+    --font-size-base: 15px;
+    --font-size-lg: 18px;
+    --font-size-title: 28px;
+
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-bold: 600;
+
+    /* ========================
+     Spacing
+  ======================== */
+
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 28px;
+    --spacing-xl: 40px;
+
+    /* ========================
+     Layout
+  ======================== */
+
+    --border-radius-sm: 6px;
+    --border-radius: 10px;
+    --border-radius-lg: 16px;
+
+    --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --shadow-md: 0 10px 25px rgba(0, 0, 0, 0.15);
+    --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.25);
+
+    --transition-fast: 0.15s ease-in-out;
+    --transition-normal: 0.25s ease-in-out;
+}

@@ -1,0 +1,62 @@
+.signup-container {
+    width: 400px;
+    max-width: 90%;
+
+    background: var(--card-background);
+    padding: var(--spacing-xl);
+    border-radius: var(--border-radius-lg);
+
+    box-shadow: var(--shadow-lg);
+
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+
+    animation: fadeIn 0.4s ease-in-out;
+}
+
+/* Title */
+.signup-container h2 {
+    text-align: center;
+    font-size: var(--font-size-title);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--spacing-sm);
+}
+
+/* Inputs */
+.signup-container input {
+    width: 100%;
+}
+
+/* Button */
+.signup-container button {
+    width: 100%;
+    margin-top: var(--spacing-sm);
+}
+
+/* Footer text */
+.signup-container p {
+    text-align: center;
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+}
+
+.auth-page {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
