@@ -39,6 +39,11 @@ function Navbar({ theme, setTheme }) {
     <nav className={`navbar ${scrolled ? "scrolled" : ""}`} dir="rtl">
       <div className="navbar-inner">
         <div className="navbar-right">
+          {/* Logout */}
+          <button className="logout-button" onClick={handleLogout}>
+            {t("auth.logout")}
+          </button>
+
           {/* Theme toggle */}
           <button
             className="theme-toggle"
@@ -55,11 +60,6 @@ function Navbar({ theme, setTheme }) {
             aria-label="Change language"
           >
             {nextFlag}
-          </button>
-
-          {/* Logout */}
-          <button className="logout-button" onClick={handleLogout}>
-            {t("auth.logout")}
           </button>
         </div>
 
