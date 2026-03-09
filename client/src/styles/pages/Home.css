@@ -89,13 +89,13 @@
 }
 
 .dashboard-card h3 {
-    margin-bottom: 15px;
+    margin-bottom: 0px;
     font-size: var(--font-size-lg);
     color: var(--primary-color);
 }
 
 .dashboard-card p {
-    margin-bottom: 8px;
+    margin-bottom: 0px;
     color: var(--text-secondary);
     word-break: break-word;
 }
