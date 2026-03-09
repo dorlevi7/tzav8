@@ -262,4 +262,7 @@
         display: flex;
     }
 
+                .navbar-right {
+                    flex-direction: row-reverse;
+                }
 }
