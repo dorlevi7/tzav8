@@ -6,6 +6,8 @@ import "../styles/navbar.css";
 
 function Navbar({ theme, setTheme }) {
   const [scrolled, setScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   const navigate = useNavigate();
 
   const { t, i18n } = useTranslation();
@@ -31,14 +33,11 @@ function Navbar({ theme, setTheme }) {
   const toggleLanguage = () => {
     const newLang = i18n.language === "he" ? "en" : "he";
 
-    // start fade-out
     document.body.classList.add("lang-switching");
 
     setTimeout(() => {
-      // change language (this flips RTL/LTR)
       i18n.changeLanguage(newLang);
 
-      // fade back in
       setTimeout(() => {
         document.body.classList.remove("lang-switching");
       }, 50);
@@ -51,8 +50,8 @@ function Navbar({ theme, setTheme }) {
     <nav className={`navbar ${scrolled ? "scrolled" : ""}`} dir="rtl">
       <div className="navbar-inner">
         <div className="navbar-right">
-          {/* Logout */}
-          <button className="logout-button" onClick={handleLogout}>
+          {/* Logout (desktop) */}
+          <button className="logout-button desktop-only" onClick={handleLogout}>
             {t("auth.logout")}
           </button>
 
@@ -74,19 +73,41 @@ function Navbar({ theme, setTheme }) {
             {nextFlag}
           </button>
 
-          {/* Add Personnel Management Button */}
+          {/* Personnel Management (desktop) */}
           <Link
             to="/personnel-management"
-            className="personnel-management-button"
+            className="personnel-management-button desktop-only"
           >
             {t("navbar.personnelManagement")}
           </Link>
+
+          {/* Mobile menu button */}
+          <button
+            className="mobile-menu-button"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          >
+            ☰
+          </button>
         </div>
 
         <Link to="/home" className="logo">
           Tzav8
         </Link>
       </div>
+
+      {/* Mobile dropdown */}
+      {mobileMenuOpen && (
+        <div className="mobile-dropdown">
+          <Link
+            to="/personnel-management"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            {t("navbar.personnelManagement")}
+          </Link>
+
+          <button onClick={handleLogout}>{t("auth.logout")}</button>
+        </div>
+      )}
     </nav>
   );
 }

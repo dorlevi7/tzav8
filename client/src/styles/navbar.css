@@ -73,6 +73,41 @@
 }
 
 /* =========================
+   Mobile Menu
+========================= */
+
+.mobile-menu-button {
+    display: none;
+
+    width: 40px;
+    height: 40px;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-color);
+
+    background: transparent;
+    color: var(--text-primary);
+
+    font-size: 20px;
+    cursor: pointer;
+
+    transition: var(--transition-fast);
+}
+
+.mobile-menu-button:hover {
+    background: rgba(107, 142, 35, 0.12);
+}
+
+/* hide desktop elements on mobile */
+
+.desktop-only {
+    display: inline-flex;
+}
+
+/* =========================
    Theme Toggle
 ========================= */
 
@@ -161,4 +196,70 @@
     background: rgba(107, 142, 35, 0.12);
     border-color: var(--accent-color);
     transform: translateY(-1px);
+}
+
+/* =========================
+   Mobile Dropdown
+========================= */
+
+.mobile-dropdown {
+
+    position: absolute;
+    top: 70px;
+    right: 20px;
+
+    background: var(--card-background);
+
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+
+    box-shadow: var(--shadow-md);
+
+    padding: 12px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    z-index: 2000;
+}
+
+.mobile-dropdown a,
+.mobile-dropdown button {
+
+    background: transparent;
+    border: none;
+
+    color: var(--text-primary);
+
+    text-align: right;
+
+    padding: 6px 8px;
+
+    cursor: pointer;
+
+    font-size: 14px;
+
+    transition: var(--transition-fast);
+}
+
+.mobile-dropdown a:hover,
+.mobile-dropdown button:hover {
+    color: var(--accent-color);
+}
+
+/* =========================
+   Mobile Navbar
+========================= */
+
+@media (max-width: 700px) {
+
+    .desktop-only {
+        display: none;
+    }
+
+    .mobile-menu-button {
+        display: flex;
+    }
+
 }
