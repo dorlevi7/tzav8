@@ -9,7 +9,6 @@ function Navbar({ theme, setTheme }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navigate = useNavigate();
-
   const { t, i18n } = useTranslation();
 
   useEffect(() => {
@@ -20,6 +19,17 @@ function Navbar({ theme, setTheme }) {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  /* Prevent scrolling when mobile menu is open */
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.classList.add("menu-open");
+    } else {
+      document.body.classList.remove("menu-open");
+    }
+
+    return () => document.body.classList.remove("menu-open");
+  }, [mobileMenuOpen]);
 
   const toggleTheme = () => {
     setTheme(theme === "light" ? "dark" : "light");
@@ -47,68 +57,88 @@ function Navbar({ theme, setTheme }) {
   const nextFlag = i18n.language === "he" ? "🇺🇸" : "🇮🇱";
 
   return (
-    <nav className={`navbar ${scrolled ? "scrolled" : ""}`} dir="rtl">
-      <div className="navbar-inner">
-        <div className="navbar-right">
-          {/* Logout (desktop) */}
-          <button className="logout-button desktop-only" onClick={handleLogout}>
-            {t("auth.logout")}
-          </button>
-
-          {/* Theme toggle */}
-          <button
-            className="theme-toggle"
-            onClick={toggleTheme}
-            aria-label="Toggle theme"
-          >
-            {theme === "light" ? "🌙" : "☀️"}
-          </button>
-
-          {/* Language toggle */}
-          <button
-            className="lang-button"
-            onClick={toggleLanguage}
-            aria-label="Change language"
-          >
-            {nextFlag}
-          </button>
-
-          {/* Personnel Management (desktop) */}
-          <Link
-            to="/personnel-management"
-            className="personnel-management-button desktop-only"
-          >
-            {t("navbar.personnelManagement")}
-          </Link>
-
-          {/* Mobile menu button */}
-          <button
-            className="mobile-menu-button"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          >
-            ☰
-          </button>
-        </div>
-
-        <Link to="/home" className="logo">
-          Tzav8
-        </Link>
-      </div>
-
-      {/* Mobile dropdown */}
+    <>
+      {/* Overlay when mobile menu is open */}
       {mobileMenuOpen && (
-        <div className="mobile-dropdown">
-          <Link
-            to="/personnel-management"
-            onClick={() => setMobileMenuOpen(false)}
-          >
-            {t("navbar.personnelManagement")}
-          </Link>
-
-          <button onClick={handleLogout}>{t("auth.logout")}</button>
-        </div>
+        <div
+          className="mobile-overlay"
+          onClick={() => setMobileMenuOpen(false)}
+        />
       )}
-    </nav>
+
+      <nav className={`navbar ${scrolled ? "scrolled" : ""}`} dir="rtl">
+        <div className="navbar-inner">
+          <div className="navbar-right">
+            {/* Logout (desktop) */}
+            <button
+              className="logout-button desktop-only"
+              onClick={handleLogout}
+            >
+              {t("auth.logout")}
+            </button>
+
+            {/* Theme toggle */}
+            <button
+              className="theme-toggle"
+              onClick={toggleTheme}
+              aria-label="Toggle theme"
+            >
+              {theme === "light" ? "🌙" : "☀️"}
+            </button>
+
+            {/* Language toggle */}
+            <button
+              className="lang-button"
+              onClick={toggleLanguage}
+              aria-label="Change language"
+            >
+              {nextFlag}
+            </button>
+
+            {/* Personnel Management (desktop) */}
+            <Link
+              to="/personnel-management"
+              className="personnel-management-button desktop-only"
+            >
+              {t("navbar.personnelManagement")}
+            </Link>
+
+            {/* Mobile menu button */}
+            <button
+              className="mobile-menu-button"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            >
+              ☰
+            </button>
+          </div>
+
+          <Link to="/home" className="logo">
+            Tzav8
+          </Link>
+        </div>
+
+        {/* Mobile dropdown */}
+        {mobileMenuOpen && (
+          <div className="mobile-dropdown">
+            <Link
+              to="/personnel-management"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              {t("navbar.personnelManagement")}
+            </Link>
+
+            <button
+              onClick={() => {
+                setMobileMenuOpen(false);
+                handleLogout();
+              }}
+            >
+              {t("auth.logout")}
+            </button>
+          </div>
+        )}
+      </nav>
+    </>
   );
 }
 
