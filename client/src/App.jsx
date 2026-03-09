@@ -5,7 +5,10 @@ import { useTranslation } from "react-i18next";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Home from "./pages/Home";
-import PersonnelManagement from "./pages/PersonnelManagement"; // דאג להוסיף את ה־import כאן
+import PersonnelManagement from "./pages/PersonnelManagement";
+
+import CompanyHQManagement from "./pages/CompanyHQManagement";
+import PlatoonsManagement from "./pages/PlatoonsManagement";
 
 import MainLayout from "./layouts/MainLayout";
 
@@ -80,11 +83,32 @@ function App() {
               </ProtectedRoute>
             }
           />
+
           <Route
             path="/personnel-management"
             element={
               <ProtectedRoute>
                 <PersonnelManagement />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Company HQ Management */}
+          <Route
+            path="/personnel/company-hq"
+            element={
+              <ProtectedRoute>
+                <CompanyHQManagement />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Platoons Management */}
+          <Route
+            path="/personnel/platoons"
+            element={
+              <ProtectedRoute>
+                <PlatoonsManagement />
               </ProtectedRoute>
             }
           />

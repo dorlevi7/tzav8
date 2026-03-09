@@ -91,5 +91,20 @@
     "squads": "כיתות",
     "squadDesc": "יצירת כיתות בתוך מחלקות",
     "createSquad": "צור כיתה"
-  }
+  },
+
+"platoonsManagement": {
+  "title": "ניהול כ״א מחלקות",
+  "platoon": "מחלקה {{number}}",
+  "createPlatoon": "הוסף מחלקה",
+  "noPlatoons": "אין מחלקות בפלוגה",
+
+  "platoonName": "שם המחלקה",
+
+  "platoonDetails": "פרטי מחלקה",
+  "commanderDetails": "פרטי מ״מ",
+
+  "platoonNumber": "מספר מחלקה",
+  "platoonNumberAuto": "מספר המחלקה נקבע אוטומטית"
+}
 }

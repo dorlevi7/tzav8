@@ -2,12 +2,15 @@ import "../styles/pages/PersonnelManagement.css";
 
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+
 import usePageTitle from "../hooks/usePageTitle";
 import { useLoading } from "../context/LoadingContext";
 
 function PersonnelManagement() {
   const { t } = useTranslation();
   const { setLoading } = useLoading();
+  const navigate = useNavigate();
 
   usePageTitle(t("personnelManagement.title"));
 
@@ -34,9 +37,19 @@ function PersonnelManagement() {
             <h3>{t("personnelManagement.platoons")}</h3>
 
             <div className="card-actions">
-              <button className="primary-button">{t("common.manage")}</button>
+              <button
+                className="primary-button"
+                onClick={() => navigate("/personnel/platoons")}
+              >
+                {t("common.manage")}
+              </button>
 
-              <button className="secondary-button">{t("common.view")}</button>
+              <button
+                className="secondary-button"
+                onClick={() => navigate("/personnel/platoons/view")}
+              >
+                {t("common.view")}
+              </button>
             </div>
           </div>
 
@@ -45,9 +58,19 @@ function PersonnelManagement() {
             <h3>{t("personnelManagement.companyHQ")}</h3>
 
             <div className="card-actions">
-              <button className="primary-button">{t("common.manage")}</button>
+              <button
+                className="primary-button"
+                onClick={() => navigate("/personnel/company-hq")}
+              >
+                {t("common.manage")}
+              </button>
 
-              <button className="secondary-button">{t("common.view")}</button>
+              <button
+                className="secondary-button"
+                onClick={() => navigate("/personnel/company-hq/view")}
+              >
+                {t("common.view")}
+              </button>
             </div>
           </div>
         </div>

@@ -27,6 +27,8 @@ async function init() {
 
                 phone VARCHAR(20),
 
+                platoons_count INTEGER NOT NULL DEFAULT 0,
+
                 created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
                 updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
             );

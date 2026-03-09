@@ -91,5 +91,20 @@
     "squads": "Squads",
     "squadDesc": "Create squads inside platoons",
     "createSquad": "Create Squad"
-  }
+  },
+
+"platoonsManagement": {
+  "title": "Platoon Personnel Management",
+  "platoon": "Platoon {{number}}",
+  "createPlatoon": "Add Platoon",
+  "noPlatoons": "No platoons in this company",
+
+  "platoonName": "Platoon name",
+
+  "platoonDetails": "Platoon details",
+  "commanderDetails": "Commander details",
+
+  "platoonNumber": "Platoon number",
+  "platoonNumberAuto": "Platoon number (automatic)"
+}
 }
