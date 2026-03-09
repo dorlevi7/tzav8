@@ -130,7 +130,9 @@
 
   "noSergeant": "אין סמל מחלקה",
   "noCommanders": "אין מפקדי כיתה במחלקה",
-  "noSoldiers": "אין חיילים במחלקה"
+  "noSoldiers": "אין חיילים במחלקה",
+  "platoonCommander": "מפקד המחלקה (מ״מ)",
+"noPlatoonCommander": "אין מפקד מחלקה"
 }
 
 }

@@ -30,7 +30,6 @@ async function createPlatoon(data) {
 
         /* =========================
            1. Get current platoons_count
-           (LOCK company row)
         ========================= */
 
         const companyResult = await client.query(
@@ -51,7 +50,7 @@ async function createPlatoon(data) {
         const platoonNumber = platoonsCount + 1;
 
         /* =========================
-           2. Create Platoon Commander (user)
+           2. Create Platoon Commander
         ========================= */
 
         const passwordHash = await bcrypt.hash(password, 10);
@@ -177,7 +176,42 @@ async function getPlatoonsByCompany(companyId) {
     return result.rows;
 }
 
+/* =========================
+   GET SINGLE PLATOON
+========================= */
+
+async function getPlatoonById(platoonId) {
+
+    const result = await pool.query(
+        `
+        SELECT
+            p.id,
+            p.number,
+            p.name,
+            u.id AS commander_id,
+            u.first_name,
+            u.last_name,
+            u.rank,
+            u.personal_number,
+            u.email,
+            u.phone
+        FROM platoons p
+        LEFT JOIN users u
+            ON p.commander_id = u.id
+        WHERE p.id = $1
+        `,
+        [platoonId]
+    );
+
+    if (result.rows.length === 0) {
+        return null;
+    }
+
+    return result.rows[0];
+}
+
 module.exports = {
     createPlatoon,
-    getPlatoonsByCompany
+    getPlatoonsByCompany,
+    getPlatoonById
 };

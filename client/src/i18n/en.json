@@ -130,7 +130,9 @@
 
   "noSergeant": "No platoon sergeant assigned",
   "noCommanders": "No squad commanders in this platoon",
-  "noSoldiers": "No soldiers in this platoon"
+  "noSoldiers": "No soldiers in this platoon",
+  "platoonCommander": "Platoon Commander",
+"noPlatoonCommander": "No platoon commander"
 }
 
 }

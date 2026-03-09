@@ -75,7 +75,37 @@ async function getPlatoonsByCompany(req, res) {
     }
 }
 
+/* =========================
+   Get single platoon
+========================= */
+
+async function getPlatoonById(req, res) {
+    try {
+
+        const { platoonId } = req.params;
+
+        const platoon = await platoonService.getPlatoonById(platoonId);
+
+        if (!platoon) {
+            return res.status(404).json({
+                error: "Platoon not found"
+            });
+        }
+
+        return res.json(platoon);
+
+    } catch (err) {
+
+        console.error("Get platoon error:", err);
+
+        return res.status(500).json({
+            error: "Server error"
+        });
+    }
+}
+
 module.exports = {
     createPlatoon,
-    getPlatoonsByCompany
+    getPlatoonsByCompany,
+    getPlatoonById
 };

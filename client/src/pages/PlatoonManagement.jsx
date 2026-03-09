@@ -26,18 +26,37 @@ function PlatoonManagement() {
   const { platoonId } = useParams();
 
   const [modalType, setModalType] = useState(null);
+  const [platoon, setPlatoon] = useState(null);
+
+  const API_URL = import.meta.env.VITE_API_URL;
 
   usePageTitle(t("platoonManagement.title"));
 
+  /* =========================
+     Load platoon data
+  ========================= */
+
   useEffect(() => {
-    setLoading(true);
+    loadPlatoon();
+  }, [platoonId]);
 
-    const timer = setTimeout(() => {
+  const loadPlatoon = async () => {
+    try {
+      setLoading(true);
+
+      const response = await fetch(
+        `${API_URL}/api/platoons/platoon/${platoonId}`,
+      );
+
+      const data = await response.json();
+
+      setPlatoon(data);
+    } catch (err) {
+      console.error("Failed to load platoon:", err);
+    } finally {
       setLoading(false);
-    }, 400);
-
-    return () => clearTimeout(timer);
-  }, [setLoading]);
+    }
+  };
 
   const closeModal = () => setModalType(null);
 
@@ -113,6 +132,27 @@ function PlatoonManagement() {
                 </button>
               </div>
             </div>
+          </div>
+
+          {/* Platoon Commander (מ״מ) */}
+          <div className="dashboard-card">
+            <div className="card-header">
+              <h3>{t("platoonManagement.platoonCommander")}</h3>
+            </div>
+
+            {!platoon?.commander_id ? (
+              <div className="table-placeholder">
+                {t("platoonManagement.noPlatoonCommander")}
+              </div>
+            ) : (
+              <div className="person-row">
+                <span className="rank">{t(`ranks.${platoon.rank}`)} </span>
+
+                <span className="name">
+                  {platoon.first_name} {platoon.last_name}
+                </span>
+              </div>
+            )}
           </div>
 
           {/* Platoon Sergeant */}
