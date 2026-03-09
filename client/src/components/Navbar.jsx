@@ -11,6 +11,7 @@ function Navbar({ theme, setTheme }) {
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
 
+  /* Detect scroll for navbar shadow */
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 10);
@@ -20,7 +21,7 @@ function Navbar({ theme, setTheme }) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  /* Prevent scrolling when mobile menu is open */
+  /* Lock scroll + activate blur when menu open */
   useEffect(() => {
     if (mobileMenuOpen) {
       document.body.classList.add("menu-open");
@@ -56,20 +57,17 @@ function Navbar({ theme, setTheme }) {
 
   const nextFlag = i18n.language === "he" ? "🇺🇸" : "🇮🇱";
 
+  const closeMenu = () => setMobileMenuOpen(false);
+
   return (
     <>
-      {/* Overlay when mobile menu is open */}
-      {mobileMenuOpen && (
-        <div
-          className="mobile-overlay"
-          onClick={() => setMobileMenuOpen(false)}
-        />
-      )}
+      {/* Dark overlay when mobile menu is open */}
+      {mobileMenuOpen && <div className="mobile-overlay" onClick={closeMenu} />}
 
       <nav className={`navbar ${scrolled ? "scrolled" : ""}`} dir="rtl">
         <div className="navbar-inner">
           <div className="navbar-right">
-            {/* Logout (desktop) */}
+            {/* Logout (desktop only) */}
             <button
               className="logout-button desktop-only"
               onClick={handleLogout}
@@ -95,7 +93,7 @@ function Navbar({ theme, setTheme }) {
               {nextFlag}
             </button>
 
-            {/* Personnel Management (desktop) */}
+            {/* Personnel management (desktop only) */}
             <Link
               to="/personnel-management"
               className="personnel-management-button desktop-only"
@@ -103,15 +101,17 @@ function Navbar({ theme, setTheme }) {
               {t("navbar.personnelManagement")}
             </Link>
 
-            {/* Mobile menu button */}
+            {/* Mobile hamburger */}
             <button
               className="mobile-menu-button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label="Open menu"
             >
               ☰
             </button>
           </div>
 
+          {/* Logo */}
           <Link to="/home" className="logo">
             Tzav8
           </Link>
@@ -120,16 +120,13 @@ function Navbar({ theme, setTheme }) {
         {/* Mobile dropdown */}
         {mobileMenuOpen && (
           <div className="mobile-dropdown">
-            <Link
-              to="/personnel-management"
-              onClick={() => setMobileMenuOpen(false)}
-            >
+            <Link to="/personnel-management" onClick={closeMenu}>
               {t("navbar.personnelManagement")}
             </Link>
 
             <button
               onClick={() => {
-                setMobileMenuOpen(false);
+                closeMenu();
                 handleLogout();
               }}
             >

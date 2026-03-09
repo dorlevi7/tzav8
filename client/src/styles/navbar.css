@@ -5,7 +5,7 @@
 .navbar {
     position: sticky;
     top: 0;
-    z-index: 1000;
+    z-index: 3000;
 
     padding: 18px 0;
 
@@ -201,17 +201,16 @@
 }
 
 /* =========================
-   Overlay (NEW)
+   Overlay (Mobile Menu)
 ========================= */
 
 .mobile-overlay {
     position: fixed;
     inset: 0;
 
-    background: rgba(0, 0, 0, 0.35);
-    backdrop-filter: blur(4px);
+    background: rgba(0, 0, 0, 0.55);
 
-    z-index: 1500;
+    z-index: 2000;
 }
 
 /* =========================
@@ -237,8 +236,7 @@
     flex-direction: column;
     gap: 10px;
 
-    z-index: 2000;
-    /* מעל ה-overlay */
+    z-index: 4000;
 }
 
 .mobile-dropdown a,
@@ -286,7 +284,20 @@
 }
 
 /* =========================
-   Disable scroll when menu open (NEW)
+   Blur Background When Menu Open
+========================= */
+
+body.menu-open #root {
+    filter: blur(10px);
+    transition: filter 0.25s ease;
+}
+
+body.menu-open .navbar {
+    filter: none;
+}
+
+/* =========================
+   Disable scroll when menu open
 ========================= */
 
 body.menu-open {
