@@ -68,7 +68,9 @@
   },
 
   "common": {
-    "save": "Save"
+    "save": "Save",
+    "manage": "Manage",
+    "view": "View"
   },
 
   "navbar": {

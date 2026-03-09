@@ -68,15 +68,17 @@
   },
 
   "common": {
-    "save": "שמור"
+    "save": "שמור",
+    "manage": "נהל",
+    "view": "צפה"
   },
 
   "navbar": {
-    "personnelManagement": "ניהול כוח אדם"
+    "personnelManagement": "כ״א"
   },
 
   "personnelManagement": {
-    "title": "ניהול כוח אדם",
+    "title": "ניהול כח אדם",
 
     "companyHQ": "מפקדת פלוגה",
     "companyHQDesc": "ניהול בעלי תפקידים פלוגתיים (סמ״פ, רס״פ, חובש וכו׳)",

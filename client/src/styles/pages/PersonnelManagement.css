@@ -76,13 +76,18 @@
 
     border-radius: var(--border-radius-lg);
 
-    padding: 15px;
+    padding: 20px;
 
     border: 1px solid var(--border-color);
 
     box-shadow: var(--shadow-sm);
 
     text-align: center;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
 
     transition:
         background-color var(--transition-fast),
@@ -97,25 +102,23 @@
 }
 
 .dashboard-card h3 {
-    margin-bottom: 15px;
-
     font-size: var(--font-size-lg);
     font-weight: var(--font-weight-bold);
-
     color: var(--primary-color);
 }
 
-.dashboard-card p {
-    margin-bottom: 12px;
+/* =========================
+   Card Actions (NEW)
+========================= */
 
-    font-size: var(--font-size-base);
-
-    color: var(--text-secondary);
-
-    word-break: break-word;
+.card-actions {
+    display: flex;
+    gap: 12px;
 }
 
-.dashboard-card button {
+/* Primary button */
+
+.primary-button {
     padding: var(--spacing-sm) var(--spacing-md);
 
     border-radius: var(--border-radius);
@@ -133,13 +136,34 @@
         transform var(--transition-fast);
 }
 
-.dashboard-card button:hover {
+.primary-button:hover {
     background-color: var(--accent-hover);
     transform: translateY(-2px);
 }
 
-.dashboard-card button:active {
-    transform: translateY(0);
+/* Secondary button */
+
+.secondary-button {
+    padding: var(--spacing-sm) var(--spacing-md);
+
+    border-radius: var(--border-radius);
+
+    background-color: transparent;
+
+    border: 1px solid var(--border-color);
+
+    color: var(--text-primary);
+
+    cursor: pointer;
+
+    transition:
+        background-color var(--transition-fast),
+        transform var(--transition-fast);
+}
+
+.secondary-button:hover {
+    background-color: var(--background-color);
+    transform: translateY(-2px);
 }
 
 /* =========================
@@ -167,7 +191,7 @@
     }
 
     .dashboard-card {
-        padding: 15px;
+        padding: 18px;
     }
 
 }

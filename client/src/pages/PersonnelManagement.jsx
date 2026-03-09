@@ -1,4 +1,4 @@
-import "../styles/pages/PersonnelManagement.css"; // ייבוא הקובץ החדש
+import "../styles/pages/PersonnelManagement.css";
 
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
@@ -21,38 +21,39 @@ function PersonnelManagement() {
     return () => clearTimeout(timer);
   }, [setLoading]);
 
-return (
-  <div className="personnel-management-container">
-    <div className="personnel-management-content">
-      <div className="personnel-management-header">
-        <h1>{t("personnelManagement.title")}</h1>
-      </div>
-
-      <div className="dashboard-grid">
-        {/* Company HQ */}
-        <div className="dashboard-card">
-          <h3>{t("personnelManagement.companyHQ")}</h3>
-          <p className="text-muted">{t("personnelManagement.companyHQDesc")}</p>
-          <button>{t("personnelManagement.addCompanyRole")}</button>
+  return (
+    <div className="personnel-management-container">
+      <div className="personnel-management-content">
+        <div className="personnel-management-header">
+          <h1>{t("personnelManagement.title")}</h1>
         </div>
 
-        {/* Platoons */}
-        <div className="dashboard-card">
-          <h3>{t("personnelManagement.platoons")}</h3>
-          <p className="text-muted">{t("personnelManagement.platoonDesc")}</p>
-          <button>{t("personnelManagement.createPlatoon")}</button>
-        </div>
+        <div className="dashboard-grid">
+          {/* Platoons */}
+          <div className="dashboard-card">
+            <h3>{t("personnelManagement.platoons")}</h3>
 
-        {/* Squads */}
-        <div className="dashboard-card">
-          <h3>{t("personnelManagement.squads")}</h3>
-          <p className="text-muted">{t("personnelManagement.squadDesc")}</p>
-          <button>{t("personnelManagement.createSquad")}</button>
+            <div className="card-actions">
+              <button className="primary-button">{t("common.manage")}</button>
+
+              <button className="secondary-button">{t("common.view")}</button>
+            </div>
+          </div>
+
+          {/* Company HQ */}
+          <div className="dashboard-card">
+            <h3>{t("personnelManagement.companyHQ")}</h3>
+
+            <div className="card-actions">
+              <button className="primary-button">{t("common.manage")}</button>
+
+              <button className="secondary-button">{t("common.view")}</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-);
+  );
 }
 
 export default PersonnelManagement;
