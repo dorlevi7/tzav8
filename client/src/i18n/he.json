@@ -131,8 +131,45 @@
   "noSergeant": "אין סמל מחלקה",
   "noCommanders": "אין מפקדי כיתה במחלקה",
   "noSoldiers": "אין חיילים במחלקה",
+
   "platoonCommander": "מפקד המחלקה (מ״מ)",
-"noPlatoonCommander": "אין מפקד מחלקה"
+  "noPlatoonCommander": "אין מפקד מחלקה",
+
+  "squads": "כיתות",
+  "squad": "כיתה",
+  "createSquad": "צור כיתה",
+  "noSquads": "אין כיתות במחלקה",
+
+  "squadDetails": "פרטי כיתה",
+  "squadName": "שם כיתה",
+  "squadDetailsRequired": "יש להזין פרטי כיתה",
+
+  "commanderDetails": "פרטי מ״כ",
+  "commanderDetailsRequired": "יש להזין פרטי מ״כ",
+
+  "squadCreated": "הכיתה נוצרה בהצלחה"
+},
+
+"createSquad": {
+  "title": "יצירת כיתה",
+
+  "squadDetails": "פרטי כיתה",
+  "squadNumber": "מספר כיתה",
+  "squadName": "שם כיתה",
+  "squadDetailsRequired": "יש להזין פרטי כיתה",
+
+  "commander": "מפקד כיתה",
+  "commanderDetails": "פרטי מ״כ",
+  "commanderDetailsRequired": "יש להזין פרטי מ״כ",
+  "addCommander": "הוסף מפקד כיתה",
+  "noCommander": "אין מפקד כיתה",
+
+  "soldiers": "חיילים",
+  "addSoldier": "הוסף חייל",
+  "noSoldiers": "אין חיילים",
+
+  "createSquad": "צור כיתה",
+  "squadCreated": "הכיתה נוצרה בהצלחה"
 }
 
 }

@@ -2,6 +2,28 @@ const pool = require("../../config/db");
 const bcrypt = require("bcrypt");
 
 /* =========================
+   GET PLATOON INFO
+========================= */
+
+async function getPlatoonInfo(platoonId) {
+
+    const result = await pool.query(
+        `
+        SELECT company_id, number
+        FROM platoons
+        WHERE id = $1
+        `,
+        [platoonId]
+    );
+
+    if (result.rows.length === 0) {
+        throw new Error("Platoon not found");
+    }
+
+    return result.rows[0];
+}
+
+/* =========================
    CREATE PLATOON
 ========================= */
 
@@ -10,10 +32,8 @@ async function createPlatoon(data) {
     const {
         companyId,
         platoonName,
-
         username,
         password,
-
         firstName,
         lastName,
         rank,
@@ -27,10 +47,6 @@ async function createPlatoon(data) {
     try {
 
         await client.query("BEGIN");
-
-        /* =========================
-           1. Get current platoons_count
-        ========================= */
 
         const companyResult = await client.query(
             `
@@ -48,10 +64,6 @@ async function createPlatoon(data) {
 
         const platoonsCount = companyResult.rows[0].platoons_count;
         const platoonNumber = platoonsCount + 1;
-
-        /* =========================
-           2. Create Platoon Commander
-        ========================= */
 
         const passwordHash = await bcrypt.hash(password, 10);
 
@@ -92,10 +104,6 @@ async function createPlatoon(data) {
 
         const commanderId = userResult.rows[0].id;
 
-        /* =========================
-           3. Create Platoon
-        ========================= */
-
         await client.query(
             `
             INSERT INTO platoons
@@ -114,10 +122,6 @@ async function createPlatoon(data) {
                 commanderId
             ]
         );
-
-        /* =========================
-           4. Update platoons_count
-        ========================= */
 
         await client.query(
             `
@@ -207,11 +211,270 @@ async function getPlatoonById(platoonId) {
         return null;
     }
 
+    const platoon = result.rows[0];
+
+    const commander = platoon.commander_id
+        ? {
+            id: platoon.commander_id,
+            first_name: platoon.first_name,
+            last_name: platoon.last_name,
+            rank: platoon.rank,
+            personal_number: platoon.personal_number,
+            email: platoon.email,
+            phone: platoon.phone
+        }
+        : null;
+
+    const personnelResult = await pool.query(
+        `
+        SELECT
+            id,
+            first_name,
+            last_name,
+            rank,
+            position_level,
+            squad
+        FROM users
+        WHERE platoon = $1
+        ORDER BY position_level, squad
+        `,
+        [platoon.number]
+    );
+
+    const personnel = personnelResult.rows;
+
+    /* platoon sergeant */
+
+    const sergeant =
+        personnel.find(
+            (p) =>
+                p.position_level === "platoon" &&
+                p.id !== platoon.commander_id
+        ) || null;
+
+    /* squad commanders */
+
+    const commanders = personnel.filter(
+        (p) =>
+            p.position_level === "squad" &&
+            p.squad !== null
+    );
+
+    /* soldiers */
+
+    const soldiers = personnel.filter(
+        (p) =>
+            p.position_level === "squad" &&
+            p.squad === null
+    );
+
+    return {
+        id: platoon.id,
+        number: platoon.number,
+        name: platoon.name,
+
+        commander,
+        sergeant,
+        commanders,
+        soldiers
+    };
+}
+
+/* =========================
+   ADD PLATOON SERGEANT
+========================= */
+
+async function addSergeant(platoonId, data) {
+
+    const {
+        username,
+        password,
+        firstName,
+        lastName,
+        rank,
+        personalNumber,
+        email,
+        phone
+    } = data;
+
+    const platoonInfo = await getPlatoonInfo(platoonId);
+
+    const companyId = platoonInfo.company_id;
+    const platoonNumber = platoonInfo.number;
+
+    const passwordHash = await bcrypt.hash(password, 10);
+
+    const result = await pool.query(
+        `
+        INSERT INTO users
+        (
+            username,
+            password_hash,
+            first_name,
+            last_name,
+            rank,
+            personal_number,
+            email,
+            phone,
+            role,
+            company_id,
+            position_level,
+            platoon,
+            squad
+        )
+        VALUES ($1,$2,$3,$4,$5,$6,$7,$8,'soldier',$9,'platoon',$10,NULL)
+        RETURNING id
+        `,
+        [
+            username,
+            passwordHash,
+            firstName,
+            lastName,
+            rank,
+            personalNumber,
+            email,
+            phone,
+            companyId,
+            platoonNumber
+        ]
+    );
+
+    return result.rows[0];
+}
+
+/* =========================
+   ADD SQUAD COMMANDER
+========================= */
+
+async function addCommander(platoonId, data) {
+
+    const {
+        username,
+        password,
+        firstName,
+        lastName,
+        rank,
+        personalNumber,
+        email,
+        phone,
+        squad
+    } = data;
+
+    const platoonInfo = await getPlatoonInfo(platoonId);
+
+    const companyId = platoonInfo.company_id;
+    const platoonNumber = platoonInfo.number;
+
+    const passwordHash = await bcrypt.hash(password, 10);
+
+    const result = await pool.query(
+        `
+        INSERT INTO users
+        (
+            username,
+            password_hash,
+            first_name,
+            last_name,
+            rank,
+            personal_number,
+            email,
+            phone,
+            role,
+            company_id,
+            position_level,
+            platoon,
+            squad
+        )
+        VALUES ($1,$2,$3,$4,$5,$6,$7,$8,'soldier',$9,'squad',$10,$11)
+        RETURNING id
+        `,
+        [
+            username,
+            passwordHash,
+            firstName,
+            lastName,
+            rank,
+            personalNumber,
+            email,
+            phone,
+            companyId,
+            platoonNumber,
+            squad
+        ]
+    );
+
+    return result.rows[0];
+}
+
+/* =========================
+   ADD SOLDIER
+========================= */
+
+async function addSoldier(platoonId, data) {
+
+    const {
+        username,
+        password,
+        firstName,
+        lastName,
+        rank,
+        personalNumber,
+        email,
+        phone,
+        squad
+    } = data;
+
+    const platoonInfo = await getPlatoonInfo(platoonId);
+
+    const companyId = platoonInfo.company_id;
+    const platoonNumber = platoonInfo.number;
+
+    const passwordHash = await bcrypt.hash(password, 10);
+
+    const result = await pool.query(
+        `
+        INSERT INTO users
+        (
+            username,
+            password_hash,
+            first_name,
+            last_name,
+            rank,
+            personal_number,
+            email,
+            phone,
+            role,
+            company_id,
+            position_level,
+            platoon,
+            squad
+        )
+        VALUES ($1,$2,$3,$4,$5,$6,$7,$8,'soldier',$9,'squad',$10,$11)
+        RETURNING id
+        `,
+        [
+            username,
+            passwordHash,
+            firstName,
+            lastName,
+            rank,
+            personalNumber,
+            email,
+            phone,
+            companyId,
+            platoonNumber,
+            squad
+        ]
+    );
+
     return result.rows[0];
 }
 
 module.exports = {
     createPlatoon,
     getPlatoonsByCompany,
-    getPlatoonById
+    getPlatoonById,
+    addSergeant,
+    addCommander,
+    addSoldier
 };

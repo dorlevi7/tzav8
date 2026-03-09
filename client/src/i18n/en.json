@@ -131,8 +131,40 @@
   "noSergeant": "No platoon sergeant assigned",
   "noCommanders": "No squad commanders in this platoon",
   "noSoldiers": "No soldiers in this platoon",
+
   "platoonCommander": "Platoon Commander",
-"noPlatoonCommander": "No platoon commander"
+  "noPlatoonCommander": "No platoon commander",
+
+  "createSquad": "Create Squad",
+  "squads": "Squads",
+  "squad": "Squad",
+  "noSquads": "No squads in this platoon",
+
+  "squadDetails": "Squad Details",
+  "squadName": "Squad Name",
+  "commanderDetails": "Commander Details"
+},
+
+"createSquad": {
+  "title": "Create Squad",
+
+  "squadDetails": "Squad Details",
+  "squadNumber": "Squad Number",
+  "squadName": "Squad Name",
+  "squadDetailsRequired": "Squad details are required",
+
+  "commander": "Squad Commander",
+  "commanderDetails": "Commander Details",
+  "commanderDetailsRequired": "Commander details are required",
+  "addCommander": "Add Commander",
+  "noCommander": "No squad commander",
+
+  "soldiers": "Soldiers",
+  "addSoldier": "Add Soldier",
+  "noSoldiers": "No soldiers",
+
+  "createSquad": "Create Squad",
+  "squadCreated": "Squad created successfully"
 }
 
 }

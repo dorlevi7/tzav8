@@ -8,6 +8,16 @@ router.post("/create", platoonController.createPlatoon);
 /* Get single platoon */
 router.get("/platoon/:platoonId", platoonController.getPlatoonById);
 
+/* =========================
+   Add personnel to platoon
+========================= */
+
+router.post("/platoon/:platoonId/sergeant", platoonController.addSergeant);
+
+router.post("/platoon/:platoonId/commander", platoonController.addCommander);
+
+router.post("/platoon/:platoonId/soldier", platoonController.addSoldier);
+
 /* Get all platoons for company */
 router.get("/:companyId", platoonController.getPlatoonsByCompany);
 

@@ -66,8 +66,8 @@ async function run() {
                 if (!target) return console.log("Provide table name");
                 validateTableName(target);
 
-                await pool.query(`DROP TABLE IF EXISTS "${target}"`);
-                console.log(`${target} dropped`);
+                await pool.query(`DROP TABLE IF EXISTS "${target}" CASCADE`);
+                console.log(`${target} dropped (cascade)`);
                 break;
             }
 

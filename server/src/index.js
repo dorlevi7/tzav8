@@ -5,7 +5,8 @@ require("dotenv").config();
 const pool = require("../config/db");
 
 const authRoutes = require("./routes/authRoutes");
-const platoonRoutes = require("./routes/platoonRoutes"); // NEW
+const platoonRoutes = require("./routes/platoonRoutes");
+const squadRoutes = require("./routes/squadRoutes"); // NEW
 
 const app = express();
 
@@ -35,7 +36,8 @@ app.use(express.json());
 =============================== */
 
 app.use("/api/auth", authRoutes);
-app.use("/api/platoons", platoonRoutes); // NEW
+app.use("/api/platoons", platoonRoutes);
+app.use("/api/squads", squadRoutes); // NEW
 
 /* ===============================
    Root test route
