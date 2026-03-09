@@ -49,7 +49,7 @@ async function createUser(data) {
         const companyId = companyResult.rows[0].id;
 
         /* =========================
-           2. Create Admin User
+           2. Create Admin User (Company level)
         ========================= */
 
         const userResult = await client.query(
@@ -65,9 +65,12 @@ async function createUser(data) {
                 email,
                 phone,
                 role,
-                company_id
+                company_id,
+                position_level,
+                platoon,
+                squad
             )
-            VALUES ($1,$2,$3,$4,$5,$6,$7,$8,'admin',$9)
+            VALUES ($1,$2,$3,$4,$5,$6,$7,$8,'admin',$9,'company',NULL,NULL)
             RETURNING id, username, role
             `,
             [
@@ -132,7 +135,10 @@ async function loginUser(username, password) {
         companyId: user.company_id,
         firstName: user.first_name,
         lastName: user.last_name,
-        rank: user.rank
+        rank: user.rank,
+        positionLevel: user.position_level,
+        platoon: user.platoon,
+        squad: user.squad
     };
 }
 

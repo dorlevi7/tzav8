@@ -37,32 +37,40 @@ async function init() {
         =============================== */
 
         await pool.query(`
-            CREATE TABLE IF NOT EXISTS users (
+        CREATE TABLE IF NOT EXISTS users (
 
-                id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+            id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
 
-                username VARCHAR(50) NOT NULL UNIQUE,
-                password_hash TEXT NOT NULL,
+            username VARCHAR(50) NOT NULL UNIQUE,
+            password_hash TEXT NOT NULL,
 
-                first_name VARCHAR(50),
-                last_name VARCHAR(50),
-                rank VARCHAR(50),
-                personal_number VARCHAR(20),
+            first_name VARCHAR(50),
+            last_name VARCHAR(50),
+            rank VARCHAR(50),
+            personal_number VARCHAR(20),
 
-                email VARCHAR(100),
-                phone VARCHAR(20),
+            email VARCHAR(100),
+            phone VARCHAR(20),
 
-                role VARCHAR(20) NOT NULL DEFAULT 'soldier',
+            role VARCHAR(20) NOT NULL DEFAULT 'soldier',
 
-                company_id UUID REFERENCES companies(id),
+            company_id UUID REFERENCES companies(id),
 
-                is_active BOOLEAN NOT NULL DEFAULT TRUE,
+            position_level VARCHAR(20) NOT NULL,
 
-                created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-                updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+            platoon VARCHAR(100),
+            squad VARCHAR(100),
 
-                CONSTRAINT role_check CHECK (role IN ('admin','soldier'))
-            );
+            is_active BOOLEAN NOT NULL DEFAULT TRUE,
+
+            created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+            updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+
+            CONSTRAINT role_check CHECK (role IN ('admin','soldier')),
+
+            CONSTRAINT level_check CHECK (position_level IN ('company','platoon','squad'))
+
+        );
         `);
 
         /* ===============================
