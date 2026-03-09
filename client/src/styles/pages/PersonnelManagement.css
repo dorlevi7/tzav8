@@ -1,0 +1,173 @@
+/* =========================
+   Layout for Personnel Management
+========================= */
+
+.personnel-management-container {
+    width: 100%;
+    min-height: 90%;
+    padding: 60px 16px;
+
+    display: flex;
+    justify-content: center;
+
+    background-color: var(--background-color);
+    color: var(--text-primary);
+
+    transition:
+        background-color var(--transition-fast),
+        color var(--transition-fast);
+
+    overflow-x: hidden;
+}
+
+/* wrapper כמו home-content */
+.personnel-management-content {
+    width: 100%;
+    max-width: 1100px;
+
+    background-color: var(--card-background);
+
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-lg);
+
+    box-shadow: var(--shadow-sm);
+
+    padding: 40px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+
+    transition:
+        background-color var(--transition-fast),
+        border-color var(--transition-fast);
+}
+
+.personnel-management-header {
+    text-align: center;
+}
+
+.personnel-management-header h1 {
+    font-size: var(--font-size-title);
+    color: var(--primary-color);
+}
+
+/* =========================
+   Dashboard Grid
+========================= */
+
+.dashboard-grid {
+    width: 100%;
+
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+
+    gap: 20px;
+}
+
+/* =========================
+   Dashboard Cards
+========================= */
+
+.dashboard-card {
+    width: 100%;
+
+    background-color: var(--background-color);
+
+    border-radius: var(--border-radius-lg);
+
+    padding: 15px;
+
+    border: 1px solid var(--border-color);
+
+    box-shadow: var(--shadow-sm);
+
+    text-align: center;
+
+    transition:
+        background-color var(--transition-fast),
+        border-color var(--transition-fast),
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast);
+}
+
+.dashboard-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+}
+
+.dashboard-card h3 {
+    margin-bottom: 15px;
+
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+
+    color: var(--primary-color);
+}
+
+.dashboard-card p {
+    margin-bottom: 12px;
+
+    font-size: var(--font-size-base);
+
+    color: var(--text-secondary);
+
+    word-break: break-word;
+}
+
+.dashboard-card button {
+    padding: var(--spacing-sm) var(--spacing-md);
+
+    border-radius: var(--border-radius);
+
+    background-color: var(--accent-color);
+
+    color: var(--color-white);
+
+    border: none;
+
+    cursor: pointer;
+
+    transition:
+        background-color var(--transition-fast),
+        transform var(--transition-fast);
+}
+
+.dashboard-card button:hover {
+    background-color: var(--accent-hover);
+    transform: translateY(-2px);
+}
+
+.dashboard-card button:active {
+    transform: translateY(0);
+}
+
+/* =========================
+   Responsiveness
+========================= */
+
+@media (max-width: var(--bp-mobile)) {
+
+    .personnel-management-container {
+        padding: 20px 12px;
+    }
+
+    .personnel-management-content {
+        padding: 18px 20px;
+        gap: 14px;
+    }
+
+    .personnel-management-header h1 {
+        font-size: 26px;
+    }
+
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .dashboard-card {
+        padding: 15px;
+    }
+
+}

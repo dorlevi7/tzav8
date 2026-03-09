@@ -69,5 +69,25 @@
 
   "common": {
     "save": "Save"
+  },
+
+  "navbar": {
+    "personnelManagement": "Personnel Management"
+  },
+
+  "personnelManagement": {
+    "title": "Personnel Management",
+
+    "companyHQ": "Company Headquarters",
+    "companyHQDesc": "Manage company level roles (XO, company sergeant, medic, etc.)",
+    "addCompanyRole": "Add Role",
+
+    "platoons": "Platoons",
+    "platoonDesc": "Create platoons and assign platoon commander and sergeant",
+    "createPlatoon": "Create Platoon",
+
+    "squads": "Squads",
+    "squadDesc": "Create squads inside platoons",
+    "createSquad": "Create Squad"
   }
 }

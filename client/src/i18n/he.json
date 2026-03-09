@@ -69,5 +69,25 @@
 
   "common": {
     "save": "שמור"
+  },
+
+  "navbar": {
+    "personnelManagement": "ניהול כוח אדם"
+  },
+
+  "personnelManagement": {
+    "title": "ניהול כוח אדם",
+
+    "companyHQ": "מפקדת פלוגה",
+    "companyHQDesc": "ניהול בעלי תפקידים פלוגתיים (סמ״פ, רס״פ, חובש וכו׳)",
+    "addCompanyRole": "הוסף בעל תפקיד",
+
+    "platoons": "מחלקות",
+    "platoonDesc": "יצירת מחלקות ומינוי מ״מ וסמל",
+    "createPlatoon": "צור מחלקה",
+
+    "squads": "כיתות",
+    "squadDesc": "יצירת כיתות בתוך מחלקות",
+    "createSquad": "צור כיתה"
   }
 }
