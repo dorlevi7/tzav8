@@ -18,32 +18,32 @@ function PlatoonsManagement() {
   usePageTitle(t("platoonsManagement.title"));
 
   useEffect(() => {
-    setLoading(true);
-
-    const timer = setTimeout(() => {
-      setLoading(false);
-
-      /* לדוגמה: אם אין מחלקות */
-      setPlatoons([]);
-    }, 400);
-
-    return () => clearTimeout(timer);
-  }, [setLoading]);
+    loadPlatoons();
+  }, []);
 
   /* ========================
-     Save new platoon
+     LOAD PLATOONS FROM SERVER
   ======================== */
 
-  const handleSavePlatoon = (data) => {
-    const newPlatoon = {
-      id: Date.now(),
-      number: data.number,
-      name: data.name,
-      commander: data.commander,
-      sergeant: data.sergeant,
-    };
+  const loadPlatoons = async () => {
+    try {
+      setLoading(true);
 
-    setPlatoons([...platoons, newPlatoon]);
+      const user = JSON.parse(localStorage.getItem("user"));
+      const companyId = user?.companyId;
+
+      const response = await fetch(
+        `http://localhost:5000/api/platoons/${companyId}`,
+      );
+
+      const data = await response.json();
+
+      setPlatoons(data);
+    } catch (err) {
+      console.error("Failed to load platoons:", err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   /* ========================
@@ -118,8 +118,8 @@ function PlatoonsManagement() {
         <CreatePlatoonModal
           nextPlatoonNumber={nextPlatoonNumber}
           onClose={() => setShowCreateModal(false)}
-          onSave={(data) => {
-            handleSavePlatoon(data);
+          onSave={() => {
+            loadPlatoons(); // רק מרענן את הרשימה
             setShowCreateModal(false);
           }}
         />

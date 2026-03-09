@@ -16,6 +16,8 @@ function PlatoonCommanderModal({ onClose, onSave }) {
   const { t } = useTranslation();
 
   const [form, setForm] = useState({
+    username: "",
+    password: "",
     firstName: "",
     lastName: "",
     rank: "",
@@ -39,13 +41,35 @@ function PlatoonCommanderModal({ onClose, onSave }) {
   };
 
   const handleSubmit = () => {
-    if (!form.firstName || !form.lastName || !form.rank) return;
+    if (
+      !form.username ||
+      !form.password ||
+      !form.firstName ||
+      !form.lastName ||
+      !form.rank
+    )
+      return;
 
     onSave(form);
   };
 
   return (
     <Modal title={t("platoonsManagement.commanderDetails")} onClose={onClose}>
+      <input
+        name="username"
+        placeholder={t("auth.username")}
+        value={form.username}
+        onChange={handleChange}
+      />
+
+      <input
+        type="password"
+        name="password"
+        placeholder={t("auth.password")}
+        value={form.password}
+        onChange={handleChange}
+      />
+
       <input
         name="firstName"
         placeholder={t("auth.firstName")}

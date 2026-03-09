@@ -60,7 +60,7 @@ async function init() {
 
             position_level VARCHAR(20) NOT NULL,
 
-            platoon VARCHAR(100),
+            platoon INTEGER,
             squad VARCHAR(100),
 
             is_active BOOLEAN NOT NULL DEFAULT TRUE,
@@ -73,6 +73,30 @@ async function init() {
             CONSTRAINT level_check CHECK (position_level IN ('company','platoon','squad'))
 
         );
+        `);
+
+        /* ===============================
+           Platoons table
+        =============================== */
+
+        await pool.query(`
+            CREATE TABLE IF NOT EXISTS platoons (
+
+                id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+
+                company_id UUID NOT NULL REFERENCES companies(id) ON DELETE CASCADE,
+
+                number INTEGER NOT NULL,
+                name VARCHAR(100),
+
+                commander_id UUID REFERENCES users(id),
+
+                created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+                updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+
+                UNIQUE(company_id, number)
+
+            );
         `);
 
         /* ===============================
