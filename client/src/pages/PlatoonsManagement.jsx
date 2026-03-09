@@ -15,6 +15,8 @@ function PlatoonsManagement() {
   const [platoons, setPlatoons] = useState([]);
   const [showCreateModal, setShowCreateModal] = useState(false);
 
+  const API_URL = import.meta.env.VITE_API_URL;
+
   usePageTitle(t("platoonsManagement.title"));
 
   useEffect(() => {
@@ -32,9 +34,7 @@ function PlatoonsManagement() {
       const user = JSON.parse(localStorage.getItem("user"));
       const companyId = user?.companyId;
 
-      const response = await fetch(
-        `http://localhost:5000/api/platoons/${companyId}`,
-      );
+      const response = await fetch(`${API_URL}/api/platoons/${companyId}`);
 
       const data = await response.json();
 
@@ -119,7 +119,7 @@ function PlatoonsManagement() {
           nextPlatoonNumber={nextPlatoonNumber}
           onClose={() => setShowCreateModal(false)}
           onSave={() => {
-            loadPlatoons(); // רק מרענן את הרשימה
+            loadPlatoons();
             setShowCreateModal(false);
           }}
         />
