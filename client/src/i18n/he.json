@@ -59,13 +59,21 @@
   },
 
   "ranks": {
-    "secondLieutenant": "סג״ם",
-    "firstLieutenant": "סגן",
-    "captain": "סרן",
-    "major": "רס״ן",
-    "lieutenantColonel": "סא״ל",
-    "colonel": "אל״ם"
-  },
+  "sergeant": "סמל",
+  "staffSergeant": "סמל ראשון (סמ״ר)",
+  "sergeantFirstClass": "רב סמל (רס״ל)",
+  "masterSergeant": "רב סמל ראשון (רס״ר)",
+  "seniorMasterSergeant": "רב סמל מתקדם (רס״מ)",
+  "chiefMasterSergeant": "רב סמל בכיר (רס״ב)",
+  "warrantOfficer": "רב נגד (רנ״ג)",
+
+  "secondLieutenant": "סג״ם",
+  "firstLieutenant": "סגן",
+  "captain": "סרן",
+  "major": "רס״ן",
+  "lieutenantColonel": "סא״ל",
+  "colonel": "אל״ם"
+},
 
   "common": {
     "save": "שמור",

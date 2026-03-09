@@ -59,13 +59,21 @@
   },
 
   "ranks": {
-    "secondLieutenant": "Second Lieutenant",
-    "firstLieutenant": "First Lieutenant",
-    "captain": "Captain",
-    "major": "Major",
-    "lieutenantColonel": "Lieutenant Colonel",
-    "colonel": "Colonel"
-  },
+  "sergeant": "Sergeant",
+  "staffSergeant": "Staff Sergeant",
+  "sergeantFirstClass": "Sergeant First Class",
+  "masterSergeant": "Master Sergeant",
+  "seniorMasterSergeant": "Senior Master Sergeant",
+  "chiefMasterSergeant": "Chief Master Sergeant",
+  "warrantOfficer": "Warrant Officer",
+
+  "secondLieutenant": "Second Lieutenant",
+  "firstLieutenant": "First Lieutenant",
+  "captain": "Captain",
+  "major": "Major",
+  "lieutenantColonel": "Lieutenant Colonel",
+  "colonel": "Colonel"
+},
 
   "common": {
     "save": "Save",
