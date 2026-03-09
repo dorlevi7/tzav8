@@ -106,5 +106,23 @@
 
   "platoonNumber": "מספר מחלקה",
   "platoonNumberAuto": "מספר המחלקה נקבע אוטומטית"
+},
+
+"platoonManagement": {
+  "title": "ניהול מחלקה",
+
+  "addPersonnel": "הוספת כוח אדם",
+  "addSergeant": "הוסף סמל מחלקה",
+  "addCommander": "הוסף מפקד כיתה",
+  "addSoldier": "הוסף חייל",
+
+  "sergeant": "סמל מחלקה",
+  "commanders": "מפקדי כיתה (מ״כ)",
+  "soldiers": "חיילים",
+
+  "noSergeant": "אין סמל מחלקה",
+  "noCommanders": "אין מפקדי כיתה במחלקה",
+  "noSoldiers": "אין חיילים במחלקה"
 }
+
 }

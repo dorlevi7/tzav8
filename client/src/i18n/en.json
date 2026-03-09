@@ -106,5 +106,23 @@
 
   "platoonNumber": "Platoon number",
   "platoonNumberAuto": "Platoon number (automatic)"
+},
+
+"platoonManagement": {
+  "title": "Platoon Management",
+
+  "addPersonnel": "Add Personnel",
+  "addSergeant": "Add Platoon Sergeant",
+  "addCommander": "Add Squad Commander",
+  "addSoldier": "Add Soldier",
+
+  "sergeant": "Platoon Sergeant",
+  "commanders": "Squad Commanders",
+  "soldiers": "Soldiers",
+
+  "noSergeant": "No platoon sergeant assigned",
+  "noCommanders": "No squad commanders in this platoon",
+  "noSoldiers": "No soldiers in this platoon"
 }
+
 }

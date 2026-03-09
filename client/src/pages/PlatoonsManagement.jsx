@@ -2,6 +2,7 @@ import "../styles/pages/PersonnelManagement.css";
 
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 import usePageTitle from "../hooks/usePageTitle";
 import { useLoading } from "../context/LoadingContext";
@@ -11,6 +12,7 @@ import CreatePlatoonModal from "../components/modals/CreatePlatoonModal";
 function PlatoonsManagement() {
   const { t } = useTranslation();
   const { setLoading } = useLoading();
+  const navigate = useNavigate();
 
   const [platoons, setPlatoons] = useState([]);
   const [showCreateModal, setShowCreateModal] = useState(false);
@@ -88,11 +90,21 @@ function PlatoonsManagement() {
                   {platoon.name && <p>{platoon.name}</p>}
 
                   <div className="card-actions">
-                    <button className="primary-button">
+                    <button
+                      className="primary-button"
+                      onClick={() =>
+                        navigate(`/personnel/platoons/${platoon.id}`)
+                      }
+                    >
                       {t("common.manage")}
                     </button>
 
-                    <button className="secondary-button">
+                    <button
+                      className="secondary-button"
+                      onClick={() =>
+                        navigate(`/personnel/platoons/${platoon.id}/view`)
+                      }
+                    >
                       {t("common.view")}
                     </button>
                   </div>

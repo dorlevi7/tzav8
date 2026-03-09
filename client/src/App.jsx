@@ -9,6 +9,7 @@ import PersonnelManagement from "./pages/PersonnelManagement";
 
 import CompanyHQManagement from "./pages/CompanyHQManagement";
 import PlatoonsManagement from "./pages/PlatoonsManagement";
+import PlatoonManagement from "./pages/PlatoonManagement";
 
 import MainLayout from "./layouts/MainLayout";
 
@@ -109,6 +110,16 @@ function App() {
             element={
               <ProtectedRoute>
                 <PlatoonsManagement />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Platoon Management */}
+          <Route
+            path="/personnel/platoons/:platoonId"
+            element={
+              <ProtectedRoute>
+                <PlatoonManagement />
               </ProtectedRoute>
             }
           />
