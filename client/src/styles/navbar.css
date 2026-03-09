@@ -73,7 +73,7 @@
 }
 
 /* =========================
-   Mobile Menu
+   Mobile Menu Button
 ========================= */
 
 .mobile-menu-button {
@@ -129,7 +129,6 @@
     transition:
         background var(--transition-fast),
         transform var(--transition-fast),
-        box-shadow var(--transition-fast),
         border-color var(--transition-fast);
 }
 
@@ -190,7 +189,6 @@
     transition:
         background var(--transition-fast),
         transform var(--transition-fast),
-        box-shadow var(--transition-fast),
         border-color var(--transition-fast);
 }
 
@@ -201,16 +199,19 @@
 }
 
 /* =========================
-   Overlay (Mobile Menu)
+   Overlay (Blur Background)
 ========================= */
 
 .mobile-overlay {
     position: fixed;
     inset: 0;
 
-    background: rgba(0, 0, 0, 0.55);
+    background: rgba(0, 0, 0, 0.45);
 
-    z-index: 2000;
+    /* blur what is behind it */
+    backdrop-filter: blur(10px);
+
+    z-index: 1500;
 }
 
 /* =========================
@@ -281,19 +282,6 @@
         flex-direction: row-reverse;
     }
 
-}
-
-/* =========================
-   Blur Background When Menu Open
-========================= */
-
-body.menu-open #root {
-    filter: blur(10px);
-    transition: filter 0.25s ease;
-}
-
-body.menu-open .navbar {
-    filter: none;
 }
 
 /* =========================
