@@ -27,13 +27,19 @@ function App() {
 
   const [theme, setTheme] = useState(getInitialTheme);
 
-  // theme handling
+  /* ========================
+     Theme handling
+  ======================== */
+
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
     localStorage.setItem("theme", theme);
   }, [theme]);
 
-  // language direction handling (RTL / LTR)
+  /* ========================
+     Language direction (RTL / LTR)
+  ======================== */
+
   useEffect(() => {
     const direction = i18n.language === "he" ? "rtl" : "ltr";
     document.documentElement.setAttribute("dir", direction);
@@ -52,8 +58,16 @@ function App() {
       <Routes>
         {/* routes WITHOUT navbar */}
         <Route path="/" element={<Navigate to="/login" />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
+
+        <Route
+          path="/login"
+          element={<Login theme={theme} setTheme={setTheme} />}
+        />
+
+        <Route
+          path="/signup"
+          element={<Signup theme={theme} setTheme={setTheme} />}
+        />
 
         {/* routes WITH navbar */}
         <Route element={<MainLayout theme={theme} setTheme={setTheme} />}>

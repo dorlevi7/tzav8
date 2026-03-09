@@ -10,7 +10,7 @@ import CompanyDetailsModal from "../components/modals/CompanyDetailsModal";
 import usePageTitle from "../hooks/usePageTitle";
 import { useLoading } from "../context/LoadingContext";
 
-function Signup() {
+function Signup({ theme, setTheme }) {
   const navigate = useNavigate();
   const API_URL = import.meta.env.VITE_API_URL;
 
@@ -85,6 +85,18 @@ function Signup() {
     }
   };
 
+  /* ========================
+     Theme Toggle
+  ======================== */
+
+  const toggleTheme = () => {
+    setTheme(theme === "light" ? "dark" : "light");
+  };
+
+  /* ========================
+     Language Toggle
+  ======================== */
+
   const toggleLanguage = () => {
     const newLang = i18n.language === "he" ? "en" : "he";
 
@@ -103,19 +115,39 @@ function Signup() {
 
   return (
     <>
+      {/* Theme button */}
       <button
-        onClick={toggleLanguage}
+        onClick={toggleTheme}
         style={{
           position: "fixed",
           top: "20px",
-          right: i18n.language === "he" ? "20px" : "auto",
-          left: i18n.language === "en" ? "20px" : "auto",
+          left: "70px",
           fontSize: "18px",
           background: "transparent",
           border: "1px solid var(--border-color)",
           borderRadius: "8px",
           padding: "6px 10px",
           cursor: "pointer",
+          zIndex: 1000,
+        }}
+      >
+        {theme === "light" ? "🌙" : "☀️"}
+      </button>
+
+      {/* Language button */}
+      <button
+        onClick={toggleLanguage}
+        style={{
+          position: "fixed",
+          top: "20px",
+          left: "20px",
+          fontSize: "18px",
+          background: "transparent",
+          border: "1px solid var(--border-color)",
+          borderRadius: "8px",
+          padding: "6px 10px",
+          cursor: "pointer",
+          zIndex: 1000,
         }}
       >
         {nextFlag}

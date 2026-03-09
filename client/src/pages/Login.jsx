@@ -7,7 +7,7 @@ import AuthCard from "../components/AuthCard";
 import usePageTitle from "../hooks/usePageTitle";
 import { useLoading } from "../context/LoadingContext";
 
-function Login() {
+function Login({ theme, setTheme }) {
   const navigate = useNavigate();
 
   const API_URL = import.meta.env.VITE_API_URL;
@@ -51,10 +51,8 @@ function Login() {
       // Save user in localStorage
       localStorage.setItem("user", JSON.stringify(data));
 
-      // Toast success
       toast.success(t("auth.loginSuccess"));
 
-      // Navigate to home page
       navigate("/home");
     } catch (err) {
       console.error("Login error:", err);
@@ -65,6 +63,18 @@ function Login() {
       setLoading(false);
     }
   };
+
+  /* ========================
+     Theme Toggle (same logic as Navbar)
+  ======================== */
+
+  const toggleTheme = () => {
+    setTheme(theme === "light" ? "dark" : "light");
+  };
+
+  /* ========================
+     Language Toggle
+  ======================== */
 
   const toggleLanguage = () => {
     const newLang = i18n.language === "he" ? "en" : "he";
@@ -84,13 +94,31 @@ function Login() {
 
   return (
     <>
+      {/* Theme button */}
+      <button
+        onClick={toggleTheme}
+        style={{
+          position: "fixed",
+          top: "20px",
+          left: "70px",
+          fontSize: "18px",
+          background: "transparent",
+          border: "1px solid var(--border-color)",
+          borderRadius: "8px",
+          padding: "6px 10px",
+          cursor: "pointer",
+        }}
+      >
+        {theme === "light" ? "🌙" : "☀️"}
+      </button>
+
+      {/* Language button */}
       <button
         onClick={toggleLanguage}
         style={{
           position: "fixed",
           top: "20px",
-          right: i18n.language === "he" ? "20px" : "auto",
-          left: i18n.language === "en" ? "20px" : "auto",
+          left: "20px",
           fontSize: "18px",
           background: "transparent",
           border: "1px solid var(--border-color)",
