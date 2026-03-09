@@ -3,9 +3,14 @@
     "title": "Home",
     "welcome": "Hello {{username}}",
     "userDetails": "User Details",
+
     "username": "Username",
+    "name": "Name",
+    "rank": "Rank",
     "role": "Role",
+    "companyId": "Company ID",
     "userId": "User ID",
+
     "upcomingEvents": "Upcoming Events",
     "noEvents": "No events",
     "activeTasks": "Active Tasks",

@@ -1,21 +1,106 @@
 const pool = require("../../config/db");
 const bcrypt = require("bcrypt");
 
-async function createUser(username, password) {
+/* =========================
+   SIGNUP
+   ========================= */
 
-    const passwordHash = await bcrypt.hash(password, 10);
+async function createUser(data) {
 
-    const result = await pool.query(
-        `
-        INSERT INTO users (username, password_hash)
-        VALUES ($1, $2)
-        RETURNING id, username, role
-        `,
-        [username, passwordHash]
-    );
+    const {
+        username,
+        password,
 
-    return result.rows[0];
+        firstName,
+        lastName,
+        rank,
+        personalNumber,
+        email,
+        phone,
+
+        companyName,
+        battalionName,
+        battalionNumber,
+        companyPhone
+    } = data;
+
+    const client = await pool.connect();
+
+    try {
+
+        await client.query("BEGIN");
+
+        const passwordHash = await bcrypt.hash(password, 10);
+
+        /* =========================
+           1. Create Company
+        ========================= */
+
+        const companyResult = await client.query(
+            `
+            INSERT INTO companies
+            (company_name, battalion_name, battalion_number, phone)
+            VALUES ($1,$2,$3,$4)
+            RETURNING id
+            `,
+            [companyName, battalionName, battalionNumber, companyPhone]
+        );
+
+        const companyId = companyResult.rows[0].id;
+
+        /* =========================
+           2. Create Admin User
+        ========================= */
+
+        const userResult = await client.query(
+            `
+            INSERT INTO users
+            (
+                username,
+                password_hash,
+                first_name,
+                last_name,
+                rank,
+                personal_number,
+                email,
+                phone,
+                role,
+                company_id
+            )
+            VALUES ($1,$2,$3,$4,$5,$6,$7,$8,'admin',$9)
+            RETURNING id, username, role
+            `,
+            [
+                username,
+                passwordHash,
+                firstName,
+                lastName,
+                rank,
+                personalNumber,
+                email,
+                phone,
+                companyId
+            ]
+        );
+
+        await client.query("COMMIT");
+
+        return userResult.rows[0];
+
+    } catch (err) {
+
+        await client.query("ROLLBACK");
+        throw err;
+
+    } finally {
+
+        client.release();
+    }
 }
+
+/* =========================
+   LOGIN
+   ========================= */
 
 async function loginUser(username, password) {
 
@@ -43,7 +128,11 @@ async function loginUser(username, password) {
     return {
         id: user.id,
         username: user.username,
-        role: user.role
+        role: user.role,
+        companyId: user.company_id,
+        firstName: user.first_name,
+        lastName: user.last_name,
+        rank: user.rank
     };
 }
 

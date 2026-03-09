@@ -3,9 +3,14 @@
     "title": "מסך הבית",
     "welcome": "שלום {{username}}",
     "userDetails": "פרטי משתמש",
+
     "username": "שם משתמש",
+    "name": "שם",
+    "rank": "דרגה",
     "role": "תפקיד",
+    "companyId": "מזהה פלוגה",
     "userId": "User ID",
+
     "upcomingEvents": "אירועים קרובים",
     "noEvents": "אין אירועים כרגע",
     "activeTasks": "משימות פעילות",

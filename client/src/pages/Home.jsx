@@ -12,19 +12,22 @@ function Home() {
 
   const user = JSON.parse(localStorage.getItem("user")) || {};
 
-  // Update browser tab title
   usePageTitle(t("home.title"));
 
-  // Simulate initial data loading
   useEffect(() => {
     setLoading(true);
 
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 400); // short delay to simulate loading
+    }, 400);
 
     return () => clearTimeout(timer);
   }, [setLoading]);
+
+  const fullName =
+    user.firstName && user.lastName
+      ? `${user.firstName} ${user.lastName}`
+      : user.username;
 
   return (
     <div className="home-container">
@@ -34,7 +37,7 @@ function Home() {
 
           {user && (
             <p className="welcome-text">
-              {t("home.welcome", { username: user.username })}
+              {t("home.welcome", { username: fullName })}
             </p>
           )}
         </div>
@@ -46,11 +49,21 @@ function Home() {
             {user && (
               <>
                 <p>
-                  <strong>{t("home.username")}:</strong> {user.username}
+                  <strong>{t("home.name")}:</strong> {fullName}
+                </p>
+
+                <p>
+                  <strong>{t("home.rank")}:</strong>{" "}
+                  {user.rank ? t(`ranks.${user.rank}`) : "-"}
                 </p>
 
                 <p>
                   <strong>{t("home.role")}:</strong> {user.role}
+                </p>
+
+                <p>
+                  <strong>{t("home.companyId")}:</strong>{" "}
+                  {user.companyId || "-"}
                 </p>
 
                 <p>

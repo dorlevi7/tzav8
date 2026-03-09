@@ -5,52 +5,96 @@ const pool = require("../config/db");
 async function init() {
     try {
 
-        // Enable UUID generation
-        await pool.query(`
-      CREATE EXTENSION IF NOT EXISTS "pgcrypto";
-    `);
-
-        // Create users table
-        await pool.query(`
-      CREATE TABLE IF NOT EXISTS users (
-        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-        username VARCHAR(50) NOT NULL UNIQUE,
-        password_hash TEXT NOT NULL,
-        role VARCHAR(20) NOT NULL DEFAULT 'soldier',
-        is_active BOOLEAN NOT NULL DEFAULT TRUE,
-        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-        updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-        CONSTRAINT role_check CHECK (role IN ('admin', 'soldier'))
-      );
-    `);
-
-        // Auto-update updated_at column
-        await pool.query(`
-      CREATE OR REPLACE FUNCTION update_updated_at_column()
-      RETURNS TRIGGER AS $$
-      BEGIN
-        NEW.updated_at = NOW();
-        RETURN NEW;
-      END;
-      $$ LANGUAGE plpgsql;
-    `);
+        /* ===============================
+           Enable UUID generation
+        =============================== */
 
         await pool.query(`
-      DO $$
-      BEGIN
-        IF NOT EXISTS (
-          SELECT 1
-          FROM pg_trigger
-          WHERE tgname = 'set_updated_at'
-        ) THEN
-          CREATE TRIGGER set_updated_at
-          BEFORE UPDATE ON users
-          FOR EACH ROW
-          EXECUTE FUNCTION update_updated_at_column();
-        END IF;
-      END
-      $$;
-    `);
+            CREATE EXTENSION IF NOT EXISTS "pgcrypto";
+        `);
+
+        /* ===============================
+           Companies table
+        =============================== */
+
+        await pool.query(`
+            CREATE TABLE IF NOT EXISTS companies (
+                id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+
+                company_name VARCHAR(100) NOT NULL,
+                battalion_name VARCHAR(100),
+                battalion_number VARCHAR(20),
+
+                phone VARCHAR(20),
+
+                created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+                updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+            );
+        `);
+
+        /* ===============================
+           Users table
+        =============================== */
+
+        await pool.query(`
+            CREATE TABLE IF NOT EXISTS users (
+
+                id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+
+                username VARCHAR(50) NOT NULL UNIQUE,
+                password_hash TEXT NOT NULL,
+
+                first_name VARCHAR(50),
+                last_name VARCHAR(50),
+                rank VARCHAR(50),
+                personal_number VARCHAR(20),
+
+                email VARCHAR(100),
+                phone VARCHAR(20),
+
+                role VARCHAR(20) NOT NULL DEFAULT 'soldier',
+
+                company_id UUID REFERENCES companies(id),
+
+                is_active BOOLEAN NOT NULL DEFAULT TRUE,
+
+                created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+                updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+
+                CONSTRAINT role_check CHECK (role IN ('admin','soldier'))
+            );
+        `);
+
+        /* ===============================
+           update_updated_at trigger
+        =============================== */
+
+        await pool.query(`
+            CREATE OR REPLACE FUNCTION update_updated_at_column()
+            RETURNS TRIGGER AS $$
+            BEGIN
+                NEW.updated_at = NOW();
+                RETURN NEW;
+            END;
+            $$ LANGUAGE plpgsql;
+        `);
+
+        await pool.query(`
+            DO $$
+            BEGIN
+                IF NOT EXISTS (
+                    SELECT 1
+                    FROM pg_trigger
+                    WHERE tgname = 'set_updated_at'
+                ) THEN
+                    CREATE TRIGGER set_updated_at
+                    BEFORE UPDATE ON users
+                    FOR EACH ROW
+                    EXECUTE FUNCTION update_updated_at_column();
+                END IF;
+            END
+            $$;
+        `);
 
         console.log("Database initialized successfully");
         process.exit(0);
