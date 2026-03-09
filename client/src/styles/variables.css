@@ -99,6 +99,13 @@
     --text-muted: var(--color-gray-500);
 
     --border-color: var(--color-gray-300);
+
+    /* ========================
+       Alias variables (UI Components)
+    ======================== */
+
+    --card-bg: var(--card-background);
+    --text-color: var(--text-primary);
 }
 
 /* ========================
@@ -120,6 +127,13 @@
     --text-muted: #88948c;
 
     --border-color: rgba(255, 255, 255, 0.08);
+
+    /* ========================
+       Alias variables (UI Components)
+    ======================== */
+
+    --card-bg: var(--card-background);
+    --text-color: var(--text-primary);
 }
 
 /* ========================
