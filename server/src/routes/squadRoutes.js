@@ -9,4 +9,10 @@ const squadController = require("../controllers/squadController");
 
 router.get("/platoon/:platoonId", squadController.getSquadsByPlatoon);
 
+/* =========================
+   Create squad
+========================= */
+
+router.post("/create", squadController.createSquad);
+
 module.exports = router;
