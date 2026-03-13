@@ -16,6 +16,8 @@ import MainLayout from "./layouts/MainLayout";
 import { Toaster } from "react-hot-toast";
 import ProtectedRoute from "./components/ProtectedRoute";
 
+import DatabaseViewer from "./pages/DatabaseViewer";
+
 function App() {
   const { i18n } = useTranslation();
 
@@ -120,6 +122,16 @@ function App() {
             element={
               <ProtectedRoute>
                 <PlatoonManagement />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Database Debug Viewer */}
+          <Route
+            path="/db-debug"
+            element={
+              <ProtectedRoute>
+                <DatabaseViewer />
               </ProtectedRoute>
             }
           />

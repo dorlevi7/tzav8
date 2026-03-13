@@ -11,6 +11,9 @@ function Navbar({ theme, setTheme }) {
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
 
+  // Detect development mode (Vite)
+  const isDev = import.meta.env.DEV;
+
   /* Detect scroll for navbar shadow */
   useEffect(() => {
     const handleScroll = () => {
@@ -101,6 +104,16 @@ function Navbar({ theme, setTheme }) {
               {t("navbar.personnelManagement")}
             </Link>
 
+            {/* DB debug (development only) */}
+            {isDev && (
+              <Link
+                to="/db-debug"
+                className="personnel-management-button desktop-only"
+              >
+                🗄 DB
+              </Link>
+            )}
+
             {/* Mobile hamburger */}
             <button
               className="mobile-menu-button"
@@ -123,6 +136,13 @@ function Navbar({ theme, setTheme }) {
             <Link to="/personnel-management" onClick={closeMenu}>
               {t("navbar.personnelManagement")}
             </Link>
+
+            {/* DB debug in mobile menu (development only) */}
+            {isDev && (
+              <Link to="/db-debug" onClick={closeMenu}>
+                🗄 DB Debug
+              </Link>
+            )}
 
             <button
               onClick={() => {

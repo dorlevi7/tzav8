@@ -1,0 +1,88 @@
+.db-debug-container {
+    padding: 20px;
+}
+
+/* Title */
+
+.db-title {
+    margin-bottom: 10px;
+    text-align: right;
+}
+
+/* Tables buttons on top */
+
+.db-tables-top {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+}
+
+/* Buttons */
+
+.db-table-button {
+    padding: 6px 14px;
+    border-radius: 16px;
+    border: none;
+
+    background: #6f8f2f;
+    color: white;
+
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.db-table-button:hover {
+    background: #5e7727;
+}
+
+/* Table wrapper */
+
+.db-table-wrapper {
+    overflow-x: auto;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+}
+
+/* Table */
+
+.db-table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 12px;
+}
+
+/* Header */
+
+.db-table th {
+    border: 1px solid #ddd;
+    padding: 6px 8px;
+
+    background: #f2f2f2;
+    font-weight: 600;
+}
+
+/* Cells */
+
+.db-table td {
+    border: 1px solid #ddd;
+    padding: 5px 8px;
+
+    max-width: 160px;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Zebra rows */
+
+.db-table tbody tr:nth-child(even) {
+    background: #fafafa;
+}
+
+/* Hover */
+
+.db-table tbody tr:hover {
+    background: #eef2e5;
+}

@@ -9,6 +9,7 @@ const platoonRoutes = require("./routes/platoonRoutes");
 const squadRoutes = require("./routes/squadRoutes"); // NEW
 
 const app = express();
+const dbRoutes = require("./routes/dbRoutes");
 
 /* ===============================
    CORS MUST BE FIRST
@@ -38,6 +39,8 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/platoons", platoonRoutes);
 app.use("/api/squads", squadRoutes); // NEW
+
+app.use("/api/db", dbRoutes);
 
 /* ===============================
    Root test route
