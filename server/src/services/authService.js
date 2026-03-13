@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 
 /* =========================
    SIGNUP
-   ========================= */
+========================= */
 
 async function createUser(data) {
 
@@ -49,7 +49,7 @@ async function createUser(data) {
         const companyId = companyResult.rows[0].id;
 
         /* =========================
-           2. Create Admin User (Company level)
+           2. Create Admin User (Company Commander)
         ========================= */
 
         const userResult = await client.query(
@@ -67,8 +67,8 @@ async function createUser(data) {
                 role,
                 company_id,
                 position_level,
-                platoon,
-                squad
+                platoon_id,
+                squad_id
             )
             VALUES ($1,$2,$3,$4,$5,$6,$7,$8,'admin',$9,'company',NULL,NULL)
             RETURNING id, username, role
@@ -103,7 +103,7 @@ async function createUser(data) {
 
 /* =========================
    LOGIN
-   ========================= */
+========================= */
 
 async function loginUser(username, password) {
 
@@ -137,8 +137,8 @@ async function loginUser(username, password) {
         lastName: user.last_name,
         rank: user.rank,
         positionLevel: user.position_level,
-        platoon: user.platoon,
-        squad: user.squad
+        platoonId: user.platoon_id,
+        squadId: user.squad_id
     };
 }
 

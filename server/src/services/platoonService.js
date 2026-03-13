@@ -9,7 +9,7 @@ async function getPlatoonInfo(platoonId) {
 
     const result = await pool.query(
         `
-        SELECT company_id, number
+        SELECT id, company_id, number
         FROM platoons
         WHERE id = $1
         `,
@@ -48,6 +48,8 @@ async function createPlatoon(data) {
 
         await client.query("BEGIN");
 
+        /* Lock company row */
+
         const companyResult = await client.query(
             `
             SELECT platoons_count
@@ -67,6 +69,8 @@ async function createPlatoon(data) {
 
         const passwordHash = await bcrypt.hash(password, 10);
 
+        /* Create commander user */
+
         const userResult = await client.query(
             `
             INSERT INTO users
@@ -82,10 +86,10 @@ async function createPlatoon(data) {
                 role,
                 company_id,
                 position_level,
-                platoon,
-                squad
+                platoon_id,
+                squad_id
             )
-            VALUES ($1,$2,$3,$4,$5,$6,$7,$8,'soldier',$9,'platoon',$10,NULL)
+            VALUES ($1,$2,$3,$4,$5,$6,$7,$8,'soldier',$9,'platoon',NULL,NULL)
             RETURNING id
             `,
             [
@@ -97,14 +101,15 @@ async function createPlatoon(data) {
                 personalNumber,
                 email,
                 phone,
-                companyId,
-                platoonNumber
+                companyId
             ]
         );
 
         const commanderId = userResult.rows[0].id;
 
-        await client.query(
+        /* Create platoon */
+
+        const platoonResult = await client.query(
             `
             INSERT INTO platoons
             (
@@ -114,6 +119,7 @@ async function createPlatoon(data) {
                 commander_id
             )
             VALUES ($1,$2,$3,$4)
+            RETURNING id
             `,
             [
                 companyId,
@@ -122,6 +128,21 @@ async function createPlatoon(data) {
                 commanderId
             ]
         );
+
+        const platoonId = platoonResult.rows[0].id;
+
+        /* Update commander with platoon_id */
+
+        await client.query(
+            `
+            UPDATE users
+            SET platoon_id = $1
+            WHERE id = $2
+            `,
+            [platoonId, commanderId]
+        );
+
+        /* Update company platoon counter */
 
         await client.query(
             `
@@ -138,6 +159,7 @@ async function createPlatoon(data) {
         await client.query("COMMIT");
 
         return {
+            platoonId,
             platoonNumber,
             commanderId
         };
@@ -225,6 +247,8 @@ async function getPlatoonById(platoonId) {
         }
         : null;
 
+    /* Get platoon personnel */
+
     const personnelResult = await pool.query(
         `
         SELECT
@@ -233,12 +257,12 @@ async function getPlatoonById(platoonId) {
             last_name,
             rank,
             position_level,
-            squad
+            squad_id
         FROM users
-        WHERE platoon = $1
-        ORDER BY position_level, squad
+        WHERE platoon_id = $1
+        ORDER BY position_level
         `,
-        [platoon.number]
+        [platoonId]
     );
 
     const personnel = personnelResult.rows;
@@ -257,7 +281,7 @@ async function getPlatoonById(platoonId) {
     const commanders = personnel.filter(
         (p) =>
             p.position_level === "squad" &&
-            p.squad !== null
+            p.squad_id !== null
     );
 
     /* soldiers */
@@ -265,14 +289,13 @@ async function getPlatoonById(platoonId) {
     const soldiers = personnel.filter(
         (p) =>
             p.position_level === "squad" &&
-            p.squad === null
+            p.squad_id === null
     );
 
     return {
         id: platoon.id,
         number: platoon.number,
         name: platoon.name,
-
         commander,
         sergeant,
         commanders,
@@ -299,9 +322,6 @@ async function addSergeant(platoonId, data) {
 
     const platoonInfo = await getPlatoonInfo(platoonId);
 
-    const companyId = platoonInfo.company_id;
-    const platoonNumber = platoonInfo.number;
-
     const passwordHash = await bcrypt.hash(password, 10);
 
     const result = await pool.query(
@@ -319,8 +339,8 @@ async function addSergeant(platoonId, data) {
             role,
             company_id,
             position_level,
-            platoon,
-            squad
+            platoon_id,
+            squad_id
         )
         VALUES ($1,$2,$3,$4,$5,$6,$7,$8,'soldier',$9,'platoon',$10,NULL)
         RETURNING id
@@ -334,8 +354,8 @@ async function addSergeant(platoonId, data) {
             personalNumber,
             email,
             phone,
-            companyId,
-            platoonNumber
+            platoonInfo.company_id,
+            platoonId
         ]
     );
 
@@ -357,13 +377,10 @@ async function addCommander(platoonId, data) {
         personalNumber,
         email,
         phone,
-        squad
+        squadId
     } = data;
 
     const platoonInfo = await getPlatoonInfo(platoonId);
-
-    const companyId = platoonInfo.company_id;
-    const platoonNumber = platoonInfo.number;
 
     const passwordHash = await bcrypt.hash(password, 10);
 
@@ -382,8 +399,8 @@ async function addCommander(platoonId, data) {
             role,
             company_id,
             position_level,
-            platoon,
-            squad
+            platoon_id,
+            squad_id
         )
         VALUES ($1,$2,$3,$4,$5,$6,$7,$8,'soldier',$9,'squad',$10,$11)
         RETURNING id
@@ -397,9 +414,9 @@ async function addCommander(platoonId, data) {
             personalNumber,
             email,
             phone,
-            companyId,
-            platoonNumber,
-            squad
+            platoonInfo.company_id,
+            platoonId,
+            squadId
         ]
     );
 
@@ -421,13 +438,10 @@ async function addSoldier(platoonId, data) {
         personalNumber,
         email,
         phone,
-        squad
+        squadId
     } = data;
 
     const platoonInfo = await getPlatoonInfo(platoonId);
-
-    const companyId = platoonInfo.company_id;
-    const platoonNumber = platoonInfo.number;
 
     const passwordHash = await bcrypt.hash(password, 10);
 
@@ -446,8 +460,8 @@ async function addSoldier(platoonId, data) {
             role,
             company_id,
             position_level,
-            platoon,
-            squad
+            platoon_id,
+            squad_id
         )
         VALUES ($1,$2,$3,$4,$5,$6,$7,$8,'soldier',$9,'squad',$10,$11)
         RETURNING id
@@ -461,9 +475,9 @@ async function addSoldier(platoonId, data) {
             personalNumber,
             email,
             phone,
-            companyId,
-            platoonNumber,
-            squad
+            platoonInfo.company_id,
+            platoonId,
+            squadId
         ]
     );
 

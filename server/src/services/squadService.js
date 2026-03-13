@@ -80,16 +80,15 @@ async function createSquad({
            Hash password
         ========================= */
 
-        const hashedPassword = await bcrypt.hash(password, 10); // Hash the password
+        const hashedPassword = await bcrypt.hash(password, 10);
 
         /* =========================
-           Create commander
+           Get company for platoon
         ========================= */
 
-        // Need to fetch the companyId and platoonNumber for the new squad's commander
-        const platoonInfo = await pool.query(
+        const platoonInfo = await client.query(
             `
-            SELECT company_id, number
+            SELECT company_id
             FROM platoons
             WHERE id = $1
             `,
@@ -97,7 +96,10 @@ async function createSquad({
         );
 
         const companyId = platoonInfo.rows[0].company_id;
-        const platoonNumber = platoonInfo.rows[0].number;
+
+        /* =========================
+           Create squad commander
+        ========================= */
 
         await client.query(
             `
@@ -114,10 +116,10 @@ async function createSquad({
                 role,
                 company_id,
                 position_level,
-                platoon,
-                squad
+                platoon_id,
+                squad_id
             )
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, 'soldier', $9, 'squad', $10, $11)
+            VALUES ($1,$2,$3,$4,$5,$6,$7,$8,'soldier',$9,'squad',$10,$11)
             `,
             [
                 username,
@@ -128,9 +130,9 @@ async function createSquad({
                 personalNumber,
                 email,
                 phone,
-                companyId,        // Use the companyId from the platoon
-                platoonNumber,    // Use the platoonNumber from the platoon
-                squadId           // Use the squadId of the newly created squad
+                companyId,
+                platoonId,
+                squadId
             ]
         );
 
