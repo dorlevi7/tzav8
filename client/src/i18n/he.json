@@ -59,6 +59,7 @@
   },
 
   "ranks": {
+  "corporal": "רב\"ט",
   "sergeant": "סמל",
   "staffSergeant": "סמל ראשון (סמ״ר)",
   "sergeantFirstClass": "רב סמל (רס״ל)",
@@ -170,6 +171,13 @@
 
   "createSquad": "צור כיתה",
   "squadCreated": "הכיתה נוצרה בהצלחה"
+},
+
+"companyHQManagement": {
+  "title": "ניהול כ״א מפקדת הפלוגה",
+  "staffOfficers": "קציני מטה",
+  "hqSoldiers": "חיילי מפקדה",
+  "description": "ניהול כוח האדם במפקדת הפלוגה ובעלי התפקידים בפלוגה"
 }
 
 }

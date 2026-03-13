@@ -59,6 +59,7 @@
   },
 
   "ranks": {
+  "corporal": "Corporal",
   "sergeant": "Sergeant",
   "staffSergeant": "Staff Sergeant",
   "sergeantFirstClass": "Sergeant First Class",
@@ -165,6 +166,14 @@
 
   "createSquad": "Create Squad",
   "squadCreated": "Squad created successfully"
+},
+
+"companyHQManagement": {
+  "title": "Company HQ Personnel Management",
+  "staffOfficers": "Staff Officers",
+  "hqSoldiers": "HQ Soldiers",
+  "description": "Manage headquarters personnel and company staff roles"
+
 }
 
 }
