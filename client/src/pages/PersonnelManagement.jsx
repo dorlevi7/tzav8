@@ -52,10 +52,7 @@ function PersonnelManagement() {
                 {t("common.manage")}
               </button>
 
-              <button
-                className="secondary-button"
-                onClick={() => navigate("/personnel/platoons/view")}
-              >
+              <button className="secondary-button" disabled>
                 {t("common.view")}
               </button>
             </div>
@@ -73,10 +70,7 @@ function PersonnelManagement() {
                 {t("common.manage")}
               </button>
 
-              <button
-                className="secondary-button"
-                onClick={() => navigate("/personnel/company-hq/view")}
-              >
+              <button className="secondary-button" disabled>
                 {t("common.view")}
               </button>
             </div>

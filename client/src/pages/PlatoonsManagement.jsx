@@ -106,12 +106,7 @@ function PlatoonsManagement() {
                       {t("common.manage")}
                     </button>
 
-                    <button
-                      className="secondary-button"
-                      onClick={() =>
-                        navigate(`/personnel/platoons/${platoon.id}/view`)
-                      }
-                    >
+                    <button className="secondary-button" disabled>
                       {t("common.view")}
                     </button>
                   </div>
