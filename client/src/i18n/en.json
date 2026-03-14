@@ -143,7 +143,7 @@
 
   "createSquad": "Create Squad",
   "squads": "Squads",
-  "squad": "Squad",
+  "squad": "Squad {{number}}",
   "noSquads": "No squads in this platoon",
 
   "squadDetails": "Squad Details",

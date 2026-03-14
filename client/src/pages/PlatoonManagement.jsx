@@ -174,7 +174,7 @@ function PlatoonManagement() {
             ) : (
               <div className="person-row">
                 <span className="rank">
-                  {t(`ranks.${platoon.commander.rank}`)}
+                  {t(`ranks.${platoon.commander.rank}`)}{" "}
                 </span>
 
                 <span className="name">
@@ -193,7 +193,7 @@ function PlatoonManagement() {
             {platoon?.sergeant ? (
               <div className="person-row">
                 <span className="rank">
-                  {t(`ranks.${platoon.sergeant.rank}`)}
+                  {t(`ranks.${platoon.sergeant.rank}`)}{" "}
                 </span>
 
                 <span className="name">
@@ -217,7 +217,7 @@ function PlatoonManagement() {
               squads.map((squad) => (
                 <div key={squad.id} className="person-row">
                   <span className="name">
-                    {t("platoonManagement.squad")} {squad.number}
+                    {t("platoonManagement.squad", { number: squad.number })}
                   </span>
 
                   <button

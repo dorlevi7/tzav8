@@ -142,7 +142,7 @@
   "noPlatoonCommander": "אין מפקד מחלקה",
 
   "squads": "כיתות",
-  "squad": "כיתה",
+  "squad": "כיתה {{number}}",
   "createSquad": "צור כיתה",
   "noSquads": "אין כיתות במחלקה",
 
