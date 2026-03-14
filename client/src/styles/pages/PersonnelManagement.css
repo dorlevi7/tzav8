@@ -4,11 +4,12 @@
 
 .personnel-management-container {
     width: 100%;
-    min-height: 90%;
+    min-height: 100vh;
     padding: 60px 16px;
 
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
 
     background-color: var(--background-color);
     color: var(--text-primary);
@@ -23,7 +24,8 @@
 /* wrapper כמו home-content */
 .personnel-management-content {
     width: 100%;
-    max-width: 1100px;
+        max-width: 1100px;
+        box-sizing: border-box;
 
     background-color: var(--card-background);
 
@@ -214,6 +216,96 @@
 }
 
 /* =========================
+   Personnel Sections
+========================= */
+
+.person-section {
+    width: 100%;
+
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+
+    background-color: var(--card-background);
+
+    padding: 14px 16px;
+    margin-bottom: 12px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* מרכז אופקית */
+    justify-content: center;
+
+    text-align: center;
+
+    gap: 10px;
+
+    transition:
+        background-color var(--transition-fast),
+        border-color var(--transition-fast),
+        box-shadow var(--transition-fast);
+}
+
+.person-section:hover {
+    box-shadow: var(--shadow-sm);
+}
+
+/* =========================
+   Squads Layout
+========================= */
+
+.squads-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 16px;
+}
+
+.squads-list {
+    display: flex;
+    flex-direction: column;
+
+    gap: 12px;
+
+    width: 100%;
+    align-items: center;
+}
+
+.squad-row {
+    width: 260px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 10px 14px;
+
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+
+    background-color: var(--background-color);
+
+    gap: 10px;
+
+    transition:
+        box-shadow var(--transition-fast),
+        transform var(--transition-fast);
+}
+
+.squad-row:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
+.create-squad {
+    margin-top: 10px;
+
+    display: flex;
+    justify-content: center;
+}
+
+/* =========================
    Responsiveness
 ========================= */
 
@@ -245,4 +337,5 @@
         flex-direction: column;
         gap: 10px;
     }
+    
 }

@@ -63,7 +63,7 @@ function CompanyHQManagement() {
         </div>
 
         {/* Back button at bottom */}
-        <div style={{ marginTop: "30px", textAlign: "center" }}>
+        <div style={{ marginTop: "0px", textAlign: "center" }}>
           <button className="secondary-button" onClick={() => navigate(-1)}>
             ← {t("common.back")}
           </button>
