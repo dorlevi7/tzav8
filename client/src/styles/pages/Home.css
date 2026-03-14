@@ -1,6 +1,5 @@
 .home-container {
     width: 100%;
-    min-height: 100vh;
     padding: 60px 16px;
 
     display: flex;
@@ -112,6 +111,8 @@
 
     .home-container {
         padding: 20px 12px;
+
+            min-height: 100vh;
     }
 
     .home-content {
