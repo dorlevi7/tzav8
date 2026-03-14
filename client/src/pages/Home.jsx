@@ -1,4 +1,3 @@
-import "../styles/pages/Home.css";
 
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
@@ -39,61 +38,63 @@ function Home() {
 
   return (
     <div className="page-container">
-      <div className="home-content">
-        <div className="home-header">
-          <h1>{t("home.title")}</h1>
+      <div className="page-content">
+        <div className="page-header">
+          <h1 className="page-title">{t("home.title")}</h1>
 
           {user && (
-            <p className="welcome-text">
+            <p className="page-subtitle">
               {t("home.welcome", { username: fullName })}
             </p>
           )}
         </div>
 
-        <div className="dashboard-grid">
-          <div className="dashboard-card user-card">
-            <h3>{t("home.userDetails")}</h3>
+        <div className="page-section">
+          <div className="cards-grid">
+            <div className="card user-card">
+              <h3>{t("home.userDetails")}</h3>
 
-            {user && (
-              <>
-                <p>
-                  <strong>{t("home.name")}:</strong> {fullName}
-                </p>
+              {user && (
+                <>
+                  <p>
+                    <strong>{t("home.name")}:</strong> {fullName}
+                  </p>
 
-                <p>
-                  <strong>{t("home.rank")}:</strong>{" "}
-                  {user.rank ? t(`ranks.${user.rank}`) : "-"}
-                </p>
+                  <p>
+                    <strong>{t("home.rank")}:</strong>{" "}
+                    {user.rank ? t(`ranks.${user.rank}`) : "-"}
+                  </p>
 
-                <p>
-                  <strong>{t("home.role")}:</strong> {user.role}
-                </p>
+                  <p>
+                    <strong>{t("home.role")}:</strong> {user.role}
+                  </p>
 
-                <p>
-                  <strong>{t("home.companyId")}:</strong>{" "}
-                  {user.companyId || "-"}
-                </p>
+                  <p>
+                    <strong>{t("home.companyId")}:</strong>{" "}
+                    {user.companyId || "-"}
+                  </p>
 
-                <p>
-                  <strong>{t("home.userId")}:</strong> {user.id}
-                </p>
-              </>
-            )}
-          </div>
+                  <p>
+                    <strong>{t("home.userId")}:</strong> {user.id}
+                  </p>
+                </>
+              )}
+            </div>
 
-          <div className="dashboard-card">
-            <h3>{t("home.upcomingEvents")}</h3>
-            <p>{t("home.noEvents")}</p>
-          </div>
+            <div className="card">
+              <h3>{t("home.upcomingEvents")}</h3>
+              <p>{t("home.noEvents")}</p>
+            </div>
 
-          <div className="dashboard-card">
-            <h3>{t("home.activeTasks")}</h3>
-            <p>{t("home.noTasks")}</p>
-          </div>
+            <div className="card">
+              <h3>{t("home.activeTasks")}</h3>
+              <p>{t("home.noTasks")}</p>
+            </div>
 
-          <div className="dashboard-card">
-            <h3>{t("home.qualifications")}</h3>
-            <p>{t("home.allValid")}</p>
+            <div className="card">
+              <h3>{t("home.qualifications")}</h3>
+              <p>{t("home.allValid")}</p>
+            </div>
           </div>
         </div>
       </div>
