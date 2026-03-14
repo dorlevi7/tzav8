@@ -276,14 +276,15 @@
     display: flex;
     flex-direction: column;
 
-    gap: 12px;
+    gap: 8px;
 
     width: 100%;
     align-items: center;
 }
 
 .squad-row {
-    width: 260px;
+    width: 100%;
+    max-width: 320px;
 
     display: flex;
     justify-content: space-between;
@@ -297,6 +298,8 @@
     background-color: var(--background-color);
 
     gap: 10px;
+
+    box-sizing: border-box;
 
     transition:
         box-shadow var(--transition-fast),
