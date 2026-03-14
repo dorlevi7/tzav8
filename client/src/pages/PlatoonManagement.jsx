@@ -39,49 +39,33 @@ function PlatoonManagement() {
   usePageTitle(t("platoonManagement.title"));
 
   /* =========================
-     Load platoon data
+     Load all data
   ========================= */
 
   useEffect(() => {
-    loadPlatoon();
-    loadSquads();
+    loadAllData();
   }, [platoonId]);
 
-  const loadPlatoon = async () => {
+  const loadAllData = async () => {
     try {
       setLoading(true);
+      setSquadsLoaded(false);
 
-      const response = await fetch(
-        `${API_URL}/api/platoons/platoon/${platoonId}`,
-      );
+      const [platoonRes, squadsRes] = await Promise.all([
+        fetch(`${API_URL}/api/platoons/platoon/${platoonId}`),
+        fetch(`${API_URL}/api/squads/platoon/${platoonId}`),
+      ]);
 
-      const data = await response.json();
+      const platoonData = await platoonRes.json();
+      const squadsData = await squadsRes.json();
 
-      setPlatoon(data);
+      setPlatoon(platoonData);
+      setSquads(squadsData);
     } catch (err) {
-      console.error("Failed to load platoon:", err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  /* =========================
-     Load squads
-  ========================= */
-
-  const loadSquads = async () => {
-    try {
-      const response = await fetch(
-        `${API_URL}/api/squads/platoon/${platoonId}`,
-      );
-
-      const data = await response.json();
-
-      setSquads(data);
-    } catch (err) {
-      console.error("Failed to load squads:", err);
+      console.error("Failed to load platoon data:", err);
     } finally {
       setSquadsLoaded(true);
+      setLoading(false);
     }
   };
 
@@ -115,7 +99,7 @@ function PlatoonManagement() {
       }
 
       closeModal();
-      await loadPlatoon();
+      await loadAllData();
     } catch (err) {
       console.error("Save personnel error:", err);
     } finally {
@@ -132,7 +116,7 @@ function PlatoonManagement() {
         }
       : null;
 
-      if (!platoon) {
+      if (!platoon || !squadsLoaded) {
         return null;
       }
 
@@ -272,7 +256,7 @@ function PlatoonManagement() {
           platoonId={platoonId}
           nextSquadNumber={squads.length + 1}
           onClose={() => setShowCreateSquad(false)}
-          onSave={() => loadSquads()}
+          onSave={() => loadAllData()}
         />
       )}
     </>
