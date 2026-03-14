@@ -6,7 +6,7 @@
     height: 100%;
 
     /* Dark overlay */
-    background: rgba(20, 25, 35, 0.6);
+    background: rgba(20, 25, 35, 0.25);
 
     /* Blur the page behind */
     backdrop-filter: blur(8px);
@@ -23,10 +23,12 @@
 .loader-spinner {
     width: 55px;
     height: 55px;
-    border: 6px solid rgba(255, 255, 255, 0.15);
+    border: 6px solid rgba(255, 255, 255, 0.35);
     border-top: 6px solid var(--primary-color);
     border-radius: 50%;
     animation: spin 0.9s linear infinite;
+
+    box-shadow: 0 0 12px var(--primary-color);
 }
 
 @keyframes spin {
