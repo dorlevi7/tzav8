@@ -9,7 +9,7 @@ import { useLoading } from "../context/LoadingContext";
 
 function PersonnelManagement() {
   const { t } = useTranslation();
-  const { setLoading } = useLoading();
+  const { loading, setLoading } = useLoading();
   const navigate = useNavigate();
 
   usePageTitle(t("personnelManagement.title"));
@@ -23,6 +23,14 @@ function PersonnelManagement() {
 
     return () => clearTimeout(timer);
   }, [setLoading]);
+
+  /* ========================
+     Don't render screen while loading
+  ======================== */
+
+  if (loading) {
+    return null;
+  }
 
   return (
     <div className="personnel-management-container">

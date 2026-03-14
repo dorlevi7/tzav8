@@ -79,7 +79,8 @@
   "common": {
     "save": "Save",
     "manage": "Manage",
-    "view": "View"
+    "view": "View",
+    "back": "Back"
   },
 
   "navbar": {

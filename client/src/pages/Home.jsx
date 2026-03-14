@@ -8,7 +8,7 @@ import { useLoading } from "../context/LoadingContext";
 
 function Home() {
   const { t } = useTranslation();
-  const { setLoading } = useLoading();
+  const { loading, setLoading } = useLoading();
 
   const user = JSON.parse(localStorage.getItem("user")) || {};
 
@@ -28,6 +28,14 @@ function Home() {
     user.firstName && user.lastName
       ? `${user.firstName} ${user.lastName}`
       : user.username;
+
+  /* ========================
+     Don't render screen while loading
+  ======================== */
+
+  if (loading) {
+    return null;
+  }
 
   return (
     <div className="home-container">

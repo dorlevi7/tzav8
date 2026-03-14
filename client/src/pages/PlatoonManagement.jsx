@@ -32,6 +32,7 @@ function PlatoonManagement() {
 
   const [platoon, setPlatoon] = useState(null);
   const [squads, setSquads] = useState([]);
+  const [squadsLoaded, setSquadsLoaded] = useState(false);
 
   const API_URL = import.meta.env.VITE_API_URL;
 
@@ -79,6 +80,8 @@ function PlatoonManagement() {
       setSquads(data);
     } catch (err) {
       console.error("Failed to load squads:", err);
+    } finally {
+      setSquadsLoaded(true);
     }
   };
 
@@ -128,6 +131,10 @@ function PlatoonManagement() {
           role: "sergeant",
         }
       : null;
+
+      if (!platoon) {
+        return null;
+      }
 
   return (
     <>
@@ -213,30 +220,37 @@ function PlatoonManagement() {
               <h3>{t("platoonManagement.squads")}</h3>
             </div>
 
-            {squads.length ? (
-              squads.map((squad) => (
-                <div key={squad.id} className="person-row">
-                  <span className="name">
-                    {t("platoonManagement.squad", { number: squad.number })}
-                  </span>
+            {squads.length
+              ? squads.map((squad) => (
+                  <div key={squad.id} className="person-row">
+                    <span className="name">
+                      {t("platoonManagement.squad", { number: squad.number })}
+                    </span>
 
-                  <button
-                    className="secondary-button"
-                    onClick={() =>
-                      navigate(
-                        `/personnel/platoons/${platoonId}/squads/${squad.id}`,
-                      )
-                    }
-                  >
-                    {t("common.manage")}
-                  </button>
-                </div>
-              ))
-            ) : (
-              <div className="table-placeholder">
-                {t("platoonManagement.noSquads")}
-              </div>
-            )}
+                    <button
+                      className="primary-button"
+                      onClick={() =>
+                        navigate(
+                          `/personnel/platoons/${platoonId}/squads/${squad.id}`,
+                        )
+                      }
+                    >
+                      {t("common.manage")}
+                    </button>
+                  </div>
+                ))
+              : squadsLoaded && (
+                  <div className="table-placeholder">
+                    {t("platoonManagement.noSquads")}
+                  </div>
+                )}
+          </div>
+
+          {/* Back button */}
+          <div style={{ marginTop: "30px", textAlign: "center" }}>
+            <button className="secondary-button" onClick={() => navigate(-1)}>
+              ← {t("common.back")}
+            </button>
           </div>
         </div>
       </div>

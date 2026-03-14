@@ -11,7 +11,7 @@ import CreatePlatoonModal from "../components/modals/CreatePlatoonModal";
 
 function PlatoonsManagement() {
   const { t } = useTranslation();
-  const { setLoading } = useLoading();
+  const { loading, setLoading } = useLoading();
   const navigate = useNavigate();
 
   const [platoons, setPlatoons] = useState([]);
@@ -37,7 +37,6 @@ function PlatoonsManagement() {
       const companyId = user?.companyId;
 
       const response = await fetch(`${API_URL}/api/platoons/${companyId}`);
-
       const data = await response.json();
 
       setPlatoons(data);
@@ -54,6 +53,14 @@ function PlatoonsManagement() {
 
   const nextPlatoonNumber = platoons.length + 1;
 
+  /* ========================
+     Don't render screen while loading
+  ======================== */
+
+  if (loading) {
+    return null;
+  }
+
   return (
     <>
       <div className="personnel-management-container">
@@ -62,7 +69,7 @@ function PlatoonsManagement() {
             <h1>{t("platoonsManagement.title")}</h1>
           </div>
 
-          {/* אם אין מחלקות */}
+          {/* No platoons */}
           {platoons.length === 0 && (
             <div className="empty-state">
               <p>{t("platoonsManagement.noPlatoons")}</p>
@@ -76,7 +83,7 @@ function PlatoonsManagement() {
             </div>
           )}
 
-          {/* אם יש מחלקות */}
+          {/* Platoons list */}
           {platoons.length > 0 && (
             <div className="dashboard-grid">
               {platoons.map((platoon) => (
@@ -111,7 +118,7 @@ function PlatoonsManagement() {
                 </div>
               ))}
 
-              {/* כרטיס הוספת מחלקה */}
+              {/* Add platoon card */}
               <div className="dashboard-card add-card">
                 <button
                   className="primary-button"
@@ -122,6 +129,13 @@ function PlatoonsManagement() {
               </div>
             </div>
           )}
+
+          {/* Back button */}
+          <div style={{ marginTop: "30px", textAlign: "center" }}>
+            <button className="secondary-button" onClick={() => navigate(-1)}>
+              ← {t("common.back")}
+            </button>
+          </div>
         </div>
       </div>
 

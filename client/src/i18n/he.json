@@ -79,7 +79,8 @@
   "common": {
     "save": "שמור",
     "manage": "נהל",
-    "view": "צפה"
+    "view": "צפה",
+    "back": "חזרה"
   },
 
   "navbar": {
