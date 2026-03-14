@@ -87,7 +87,7 @@
   },
 
   "personnelManagement": {
-    "title": "Personnel Management",
+    "title": "Platoon Personnel Management",
 
     "companyHQ": "Company Headquarters",
     "companyHQDesc": "Manage company level roles (XO, company sergeant, medic, etc.)",
@@ -111,7 +111,12 @@
   "platoonName": "Platoon name",
 
   "platoonDetails": "Platoon details",
+  "platoonDetailsRequired": "Platoon details are required",
+
   "commanderDetails": "Commander details",
+  "commanderDetailsRequired": "Commander details are required",
+
+  "platoonCreated": "Platoon created successfully",
 
   "platoonNumber": "Platoon number",
   "platoonNumberAuto": "Platoon number (automatic)"
