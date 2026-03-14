@@ -1,6 +1,6 @@
 import "../styles/pages/PersonnelManagement.css";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
@@ -12,17 +12,44 @@ function PersonnelManagement() {
   const { loading, setLoading } = useLoading();
   const navigate = useNavigate();
 
+  const [summary, setSummary] = useState({
+    total_soldiers: 0,
+    total_platoons: 0,
+    total_squads: 0,
+  });
+
+  const API_URL = import.meta.env.VITE_API_URL;
+
   usePageTitle(t("personnelManagement.title"));
 
   useEffect(() => {
-    setLoading(true);
+    loadSummary();
+  }, []);
 
-    const timer = setTimeout(() => {
+  /* ========================
+     Load company summary
+  ======================== */
+
+  const loadSummary = async () => {
+    try {
+      setLoading(true);
+
+      const user = JSON.parse(localStorage.getItem("user"));
+      const companyId = user?.companyId;
+
+      const response = await fetch(
+        `${API_URL}/api/platoons/${companyId}/summary`,
+      );
+
+      const data = await response.json();
+
+      setSummary(data);
+    } catch (err) {
+      console.error("Failed to load personnel summary:", err);
+    } finally {
       setLoading(false);
-    }, 400);
-
-    return () => clearTimeout(timer);
-  }, [setLoading]);
+    }
+  };
 
   /* ========================
      Don't render screen while loading
@@ -38,6 +65,37 @@ function PersonnelManagement() {
         <div className="personnel-management-header">
           <h1>{t("personnelManagement.title")}</h1>
         </div>
+
+        {/* ========================
+           Summary / General Info
+        ======================== */}
+
+        <div className="personnel-summary">
+          <div className="summary-item">
+            <span className="summary-label">
+              {t("personnelManagement.totalSoldiers")}
+            </span>
+            <span className="summary-value">{summary.total_soldiers}</span>
+          </div>
+
+          <div className="summary-item">
+            <span className="summary-label">
+              {t("personnelManagement.totalPlatoons")}
+            </span>
+            <span className="summary-value">{summary.total_platoons}</span>
+          </div>
+
+          <div className="summary-item">
+            <span className="summary-label">
+              {t("personnelManagement.totalSquads")}
+            </span>
+            <span className="summary-value">{summary.total_squads}</span>
+          </div>
+        </div>
+
+        {/* ========================
+           Navigation Cards
+        ======================== */}
 
         <div className="dashboard-grid">
           {/* Platoons */}

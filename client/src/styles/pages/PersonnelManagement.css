@@ -167,6 +167,53 @@
 }
 
 /* =========================
+   Personnel Summary
+========================= */
+
+.personnel-summary {
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+
+    padding: 18px 20px;
+
+    background-color: var(--background-color);
+
+    border-radius: var(--border-radius-lg);
+
+    border: 1px solid var(--border-color);
+
+    box-shadow: var(--shadow-sm);
+
+    transition:
+        background-color var(--transition-fast),
+        border-color var(--transition-fast);
+}
+
+.summary-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+
+    min-width: 120px;
+}
+
+.summary-label {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+}
+
+.summary-value {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+
+    color: var(--primary-color);
+}
+
+/* =========================
    Responsiveness
 ========================= */
 
@@ -194,4 +241,8 @@
         padding: 18px;
     }
 
+    .personnel-summary {
+        flex-direction: column;
+        gap: 10px;
+    }
 }

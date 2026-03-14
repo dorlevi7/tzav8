@@ -87,21 +87,25 @@
     "personnelManagement": "PM"
   },
 
-  "personnelManagement": {
-    "title": "Platoon Personnel Management",
+"personnelManagement": {
+  "title": "Platoon Personnel Management",
 
-    "companyHQ": "Company Headquarters",
-    "companyHQDesc": "Manage company level roles (XO, company sergeant, medic, etc.)",
-    "addCompanyRole": "Add Role",
+  "companyHQ": "Company Headquarters",
+  "companyHQDesc": "Manage company level roles (XO, company sergeant, medic, etc.)",
+  "addCompanyRole": "Add Role",
 
-    "platoons": "Platoons",
-    "platoonDesc": "Create platoons and assign platoon commander and sergeant",
-    "createPlatoon": "Create Platoon",
+  "platoons": "Platoons",
+  "platoonDesc": "Create platoons and assign platoon commander and sergeant",
+  "createPlatoon": "Create Platoon",
 
-    "squads": "Squads",
-    "squadDesc": "Create squads inside platoons",
-    "createSquad": "Create Squad"
-  },
+  "squads": "Squads",
+  "squadDesc": "Create squads inside platoons",
+  "createSquad": "Create Squad",
+
+  "totalSoldiers": "Total Strength",
+  "totalPlatoons": "Total Platoons",
+  "totalSquads": "Total Squads"
+},
 
 "platoonsManagement": {
   "title": "Platoon Personnel Management",
@@ -135,21 +139,32 @@
   "commanders": "Squad Commanders",
   "soldiers": "Soldiers",
 
-  "noSergeant": "No platoon sergeant assigned",
-  "noCommanders": "No squad commanders in this platoon",
-  "noSoldiers": "No soldiers in this platoon",
+  "noSergeant": "No platoon sergeant",
+  "noCommanders": "No squad commanders in platoon",
+  "noSoldiers": "No soldiers in platoon",
 
   "platoonCommander": "Platoon Commander",
   "noPlatoonCommander": "No platoon commander",
 
-  "createSquad": "Create Squad",
   "squads": "Squads",
   "squad": "Squad {{number}}",
-  "noSquads": "No squads in this platoon",
+  "createSquad": "Create Squad",
+  "noSquads": "No squads in platoon",
+
+  "totalSoldiers": "Total Soldiers",
+  "totalSquads": "Total Squads",
+  "totalCommanders": "Squad Commanders",
 
   "squadDetails": "Squad Details",
   "squadName": "Squad Name",
-  "commanderDetails": "Commander Details"
+  "squadDetailsRequired": "Squad details are required",
+
+  "commanderDetails": "Squad Commander Details",
+  "commanderDetailsRequired": "Commander details are required",
+
+  "squadCreated": "Squad created successfully",
+
+  "platoonStructure": "Platoon Structure"
 },
 
 "createSquad": {

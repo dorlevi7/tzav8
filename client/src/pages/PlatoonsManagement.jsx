@@ -15,6 +15,12 @@ function PlatoonsManagement() {
   const navigate = useNavigate();
 
   const [platoons, setPlatoons] = useState([]);
+  const [summary, setSummary] = useState({
+    total_soldiers: 0,
+    total_platoons: 0,
+    total_squads: 0,
+  });
+
   const [showCreateModal, setShowCreateModal] = useState(false);
 
   const API_URL = import.meta.env.VITE_API_URL;
@@ -22,24 +28,31 @@ function PlatoonsManagement() {
   usePageTitle(t("platoonsManagement.title"));
 
   useEffect(() => {
-    loadPlatoons();
+    loadData();
   }, []);
 
   /* ========================
-     LOAD PLATOONS FROM SERVER
+     LOAD ALL DATA
   ======================== */
 
-  const loadPlatoons = async () => {
+  const loadData = async () => {
     try {
       setLoading(true);
 
       const user = JSON.parse(localStorage.getItem("user"));
       const companyId = user?.companyId;
 
-      const response = await fetch(`${API_URL}/api/platoons/${companyId}`);
-      const data = await response.json();
+      /* platoons */
+      const platoonsRes = await fetch(`${API_URL}/api/platoons/${companyId}`);
+      const platoonsData = await platoonsRes.json();
+      setPlatoons(platoonsData);
 
-      setPlatoons(data);
+      /* summary */
+      const summaryRes = await fetch(
+        `${API_URL}/api/platoons/${companyId}/summary`,
+      );
+      const summaryData = await summaryRes.json();
+      setSummary(summaryData);
     } catch (err) {
       console.error("Failed to load platoons:", err);
     } finally {
@@ -69,7 +82,37 @@ function PlatoonsManagement() {
             <h1>{t("platoonsManagement.title")}</h1>
           </div>
 
-          {/* No platoons */}
+          {/* ========================
+             Summary
+          ======================== */}
+
+          <div className="personnel-summary">
+            <div className="summary-item">
+              <span className="summary-label">
+                {t("personnelManagement.totalSoldiers")}
+              </span>
+              <span className="summary-value">{summary.total_soldiers}</span>
+            </div>
+
+            <div className="summary-item">
+              <span className="summary-label">
+                {t("personnelManagement.totalPlatoons")}
+              </span>
+              <span className="summary-value">{summary.total_platoons}</span>
+            </div>
+
+            <div className="summary-item">
+              <span className="summary-label">
+                {t("personnelManagement.totalSquads")}
+              </span>
+              <span className="summary-value">{summary.total_squads}</span>
+            </div>
+          </div>
+
+          {/* ========================
+             No platoons
+          ======================== */}
+
           {platoons.length === 0 && (
             <div className="empty-state">
               <p>{t("platoonsManagement.noPlatoons")}</p>
@@ -83,7 +126,10 @@ function PlatoonsManagement() {
             </div>
           )}
 
-          {/* Platoons list */}
+          {/* ========================
+             Platoons list
+          ======================== */}
+
           {platoons.length > 0 && (
             <div className="dashboard-grid">
               {platoons.map((platoon) => (
@@ -114,6 +160,7 @@ function PlatoonsManagement() {
               ))}
 
               {/* Add platoon card */}
+
               <div className="dashboard-card add-card">
                 <button
                   className="primary-button"
@@ -126,6 +173,7 @@ function PlatoonsManagement() {
           )}
 
           {/* Back button */}
+
           <div style={{ marginTop: "30px", textAlign: "center" }}>
             <button className="secondary-button" onClick={() => navigate(-1)}>
               ← {t("common.back")}
@@ -135,12 +183,13 @@ function PlatoonsManagement() {
       </div>
 
       {/* Create Platoon Modal */}
+
       {showCreateModal && (
         <CreatePlatoonModal
           nextPlatoonNumber={nextPlatoonNumber}
           onClose={() => setShowCreateModal(false)}
           onSave={() => {
-            loadPlatoons();
+            loadData();
             setShowCreateModal(false);
           }}
         />

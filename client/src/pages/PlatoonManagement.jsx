@@ -116,9 +116,22 @@ function PlatoonManagement() {
         }
       : null;
 
-      if (!platoon || !squadsLoaded) {
-        return null;
-      }
+  /* =========================
+     Platoon Summary
+  ========================= */
+
+  const totalSoldiers =
+    (platoon?.soldiers?.length || 0) +
+    (platoon?.commanders?.length || 0) +
+    (platoon?.sergeant ? 1 : 0) +
+    (platoon?.commander ? 1 : 0);
+
+  const totalSquads = squads.length;
+  const totalCommanders = platoon?.commanders?.length || 0;
+
+  if (!platoon || !squadsLoaded) {
+    return null;
+  }
 
   return (
     <>
@@ -129,85 +142,87 @@ function PlatoonManagement() {
             <h1>{t("platoonManagement.title")}</h1>
           </div>
 
-          {/* Add Buttons */}
-          <div className="dashboard-card">
-            <div className="card-header">
-              <h3>{t("platoonManagement.addPersonnel")}</h3>
+          {/* ========================
+             Platoon Summary
+          ======================== */}
 
-              <div className="card-actions">
-                <button
-                  className="primary-button"
-                  onClick={() => setModalType("sergeant")}
-                >
-                  {t("platoonManagement.addSergeant")}
-                </button>
+          <div className="personnel-summary">
+            <div className="summary-item">
+              <span className="summary-label">
+                {t("platoonManagement.totalSoldiers")}
+              </span>
+              <span className="summary-value">{totalSoldiers}</span>
+            </div>
 
-                <button
-                  className="primary-button"
-                  onClick={() => setShowCreateSquad(true)}
-                >
-                  {t("platoonManagement.createSquad")}
-                </button>
-              </div>
+            <div className="summary-item">
+              <span className="summary-label">
+                {t("platoonManagement.totalSquads")}
+              </span>
+              <span className="summary-value">{totalSquads}</span>
+            </div>
+
+            <div className="summary-item">
+              <span className="summary-label">
+                {t("platoonManagement.totalCommanders")}
+              </span>
+              <span className="summary-value">{totalCommanders}</span>
             </div>
           </div>
 
-          {/* Platoon Commander */}
+          {/* Platoon Structure */}
           <div className="dashboard-card">
             <div className="card-header">
-              <h3>{t("platoonManagement.platoonCommander")}</h3>
+              <h3>{t("platoonManagement.platoonStructure")}</h3>
             </div>
 
-            {!platoon?.commander ? (
-              <div className="table-placeholder">
-                {t("platoonManagement.noPlatoonCommander")}
-              </div>
-            ) : (
-              <div className="person-row">
-                <span className="rank">
-                  {t(`ranks.${platoon.commander.rank}`)}{" "}
+            {/* Commander */}
+            <div className="person-row">
+              <strong>{t("platoonManagement.platoonCommander")}:</strong>{" "}
+              {!platoon?.commander ? (
+                <span className="table-placeholder">
+                  {t("platoonManagement.noPlatoonCommander")}
                 </span>
-
+              ) : (
                 <span className="name">
+                  {t(`ranks.${platoon.commander.rank}`)}{" "}
                   {platoon.commander.first_name} {platoon.commander.last_name}
                 </span>
-              </div>
-            )}
-          </div>
-
-          {/* Platoon Sergeant */}
-          <div className="dashboard-card">
-            <div className="card-header">
-              <h3>{t("platoonManagement.sergeant")}</h3>
+              )}
             </div>
 
-            {platoon?.sergeant ? (
-              <div className="person-row">
-                <span className="rank">
-                  {t(`ranks.${platoon.sergeant.rank}`)}{" "}
-                </span>
-
+            {/* Sergeant */}
+            <div className="person-row">
+              <strong>{t("platoonManagement.sergeant")}:</strong>{" "}
+              {platoon?.sergeant ? (
                 <span className="name">
+                  {t(`ranks.${platoon.sergeant.rank}`)}{" "}
                   {platoon.sergeant.first_name} {platoon.sergeant.last_name}
                 </span>
-              </div>
-            ) : (
-              <div className="table-placeholder">
-                {t("platoonManagement.noSergeant")}
-              </div>
-            )}
-          </div>
+              ) : (
+                <>
+                  <span className="table-placeholder">
+                    {t("platoonManagement.noSergeant")}
+                  </span>
 
-          {/* Squads */}
-          <div className="dashboard-card">
-            <div className="card-header">
-              <h3>{t("platoonManagement.squads")}</h3>
+                  <button
+                    className="primary-button"
+                    style={{ marginRight: "10px" }}
+                    onClick={() => setModalType("sergeant")}
+                  >
+                    {t("platoonManagement.addSergeant")}
+                  </button>
+                </>
+              )}
             </div>
 
-            {squads.length
-              ? squads.map((squad) => (
+            {/* Squads */}
+            <div style={{ marginTop: "15px" }}>
+              <strong>{t("platoonManagement.squads")}:</strong>
+
+              {squads.length ? (
+                squads.map((squad) => (
                   <div key={squad.id} className="person-row">
-                    <span className="name">
+                    <span>
                       {t("platoonManagement.squad", { number: squad.number })}
                     </span>
 
@@ -216,11 +231,22 @@ function PlatoonManagement() {
                     </button>
                   </div>
                 ))
-              : squadsLoaded && (
-                  <div className="table-placeholder">
-                    {t("platoonManagement.noSquads")}
-                  </div>
-                )}
+              ) : (
+                <div className="table-placeholder">
+                  {t("platoonManagement.noSquads")}
+                </div>
+              )}
+
+              {/* Create squad button */}
+              <div style={{ marginTop: "15px" }}>
+                <button
+                  className="primary-button"
+                  onClick={() => setShowCreateSquad(true)}
+                >
+                  {t("platoonManagement.createSquad")}
+                </button>
+              </div>
+            </div>
           </div>
 
           {/* Back button */}

@@ -87,21 +87,25 @@
     "personnelManagement": "כ״א"
   },
 
-  "personnelManagement": {
-    "title": "ניהול כח אדם פלוגתי",
+"personnelManagement": {
+  "title": "ניהול כח אדם פלוגתי",
 
-    "companyHQ": "מפקדת פלוגה",
-    "companyHQDesc": "ניהול בעלי תפקידים פלוגתיים (סמ״פ, רס״פ, חובש וכו׳)",
-    "addCompanyRole": "הוסף בעל תפקיד",
+  "companyHQ": "מפקדת פלוגה",
+  "companyHQDesc": "ניהול בעלי תפקידים פלוגתיים (סמ״פ, רס״פ, חובש וכו׳)",
+  "addCompanyRole": "הוסף בעל תפקיד",
 
-    "platoons": "מחלקות",
-    "platoonDesc": "יצירת מחלקות ומינוי מ״מ וסמל",
-    "createPlatoon": "צור מחלקה",
+  "platoons": "מחלקות",
+  "platoonDesc": "יצירת מחלקות ומינוי מ״מ וסמל",
+  "createPlatoon": "צור מחלקה",
 
-    "squads": "כיתות",
-    "squadDesc": "יצירת כיתות בתוך מחלקות",
-    "createSquad": "צור כיתה"
-  },
+  "squads": "כיתות",
+  "squadDesc": "יצירת כיתות בתוך מחלקות",
+  "createSquad": "צור כיתה",
+
+  "totalSoldiers": "סד״כ",
+  "totalPlatoons": "מספר מחלקות",
+  "totalSquads": "מספר כיתות"
+},
 
 "platoonsManagement": {
   "title": "ניהול כ״א מחלקות",
@@ -147,6 +151,10 @@
   "createSquad": "צור כיתה",
   "noSquads": "אין כיתות במחלקה",
 
+  "totalSoldiers": "סה״כ חיילים במחלקה",
+  "totalSquads": "מספר כיתות",
+  "totalCommanders": "מפקדי כיתות",
+
   "squadDetails": "פרטי כיתה",
   "squadName": "שם כיתה",
   "squadDetailsRequired": "יש להזין פרטי כיתה",
@@ -154,7 +162,9 @@
   "commanderDetails": "פרטי מ״כ",
   "commanderDetailsRequired": "יש להזין פרטי מ״כ",
 
-  "squadCreated": "הכיתה נוצרה בהצלחה"
+  "squadCreated": "הכיתה נוצרה בהצלחה",
+
+  "platoonStructure": "מבנה המחלקה"
 },
 
 "createSquad": {

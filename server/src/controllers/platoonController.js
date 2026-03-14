@@ -262,11 +262,35 @@ async function addSoldier(req, res) {
     }
 }
 
+/* =========================
+   Get company personnel summary
+========================= */
+
+async function getCompanyPersonnelSummary(req, res) {
+    try {
+
+        const { companyId } = req.params;
+
+        const summary = await platoonService.getCompanyPersonnelSummary(companyId);
+
+        return res.json(summary);
+
+    } catch (err) {
+
+        console.error("Get company summary error:", err);
+
+        return res.status(500).json({
+            error: "Server error"
+        });
+    }
+}
+
 module.exports = {
     createPlatoon,
     getPlatoonsByCompany,
     getPlatoonById,
     addSergeant,
     addCommander,
-    addSoldier
+    addSoldier,
+    getCompanyPersonnelSummary
 };

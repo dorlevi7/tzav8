@@ -18,7 +18,17 @@ router.post("/platoon/:platoonId/commander", platoonController.addCommander);
 
 router.post("/platoon/:platoonId/soldier", platoonController.addSoldier);
 
+/* =========================
+   Company personnel summary
+========================= */
+
+router.get(
+    "/:companyId/summary",
+    platoonController.getCompanyPersonnelSummary
+);
+
 /* Get all platoons for company */
+
 router.get("/:companyId", platoonController.getPlatoonsByCompany);
 
 module.exports = router;
