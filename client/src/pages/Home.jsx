@@ -38,7 +38,7 @@ function Home() {
   }
 
   return (
-    <div className="home-container">
+    <div className="page-container">
       <div className="home-content">
         <div className="home-header">
           <h1>{t("home.title")}</h1>

@@ -374,3 +374,28 @@ body.lang-switching #root {
     background: var(--accent-color);
     color: white;
 }
+
+/* =========================
+   Page Layout
+========================= */
+
+.page-container {
+    width: 100%;
+    margin-top: 15px;
+    /* המרחק מה-navbar */
+
+    display: flex;
+    justify-content: center;
+
+    padding: 0 16px;
+
+    background-color: var(--background-color);
+}
+
+@media (max-width: 700px) {
+    .page-container {
+        margin-top: 20px;
+        padding: 0 12px;
+        min-height: calc(100vh - 20px);
+    }
+}

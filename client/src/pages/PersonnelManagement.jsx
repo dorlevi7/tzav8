@@ -60,7 +60,7 @@ function PersonnelManagement() {
   }
 
   return (
-    <div className="personnel-management-container">
+    <div className="page-container">
       <div className="personnel-management-content">
         <div className="personnel-management-header">
           <h1>{t("personnelManagement.title")}</h1>

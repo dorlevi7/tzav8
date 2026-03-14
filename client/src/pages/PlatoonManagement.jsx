@@ -135,7 +135,7 @@ function PlatoonManagement() {
 
   return (
     <>
-      <div className="personnel-management-container">
+      <div className="page-container">
         <div className="personnel-management-content">
           {/* Header */}
           <div className="personnel-management-header">
