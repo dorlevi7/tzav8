@@ -1,5 +1,3 @@
-import "../styles/pages/PersonnelManagement.css";
-
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
@@ -61,9 +59,9 @@ function PersonnelManagement() {
 
   return (
     <div className="page-container">
-      <div className="personnel-management-content">
-        <div className="personnel-management-header">
-          <h1>{t("personnelManagement.title")}</h1>
+      <div className="page-content">
+        <div className="page-header">
+          <h1 className="page-title">{t("personnelManagement.title")}</h1>
         </div>
 
         {/* ========================
@@ -97,9 +95,9 @@ function PersonnelManagement() {
            Navigation Cards
         ======================== */}
 
-        <div className="dashboard-grid">
+        <div className="cards-grid">
           {/* Platoons */}
-          <div className="dashboard-card">
+          <div className="card">
             <h3>{t("personnelManagement.platoons")}</h3>
 
             <div className="card-actions">
@@ -117,7 +115,7 @@ function PersonnelManagement() {
           </div>
 
           {/* Company HQ */}
-          <div className="dashboard-card">
+          <div className="card">
             <h3>{t("personnelManagement.companyHQ")}</h3>
 
             <div className="card-actions">

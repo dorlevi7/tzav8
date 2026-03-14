@@ -1,5 +1,3 @@
-import "../styles/pages/PersonnelManagement.css";
-
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
@@ -77,9 +75,9 @@ function PlatoonsManagement() {
   return (
     <>
       <div className="page-container">
-        <div className="personnel-management-content">
-          <div className="personnel-management-header">
-            <h1>{t("platoonsManagement.title")}</h1>
+        <div className="page-content">
+          <div className="page-header">
+            <h1 className="page-title">{t("platoonsManagement.title")}</h1>
           </div>
 
           {/* ========================
@@ -131,9 +129,9 @@ function PlatoonsManagement() {
           ======================== */}
 
           {platoons.length > 0 && (
-            <div className="dashboard-grid">
+            <div className="cards-grid">
               {platoons.map((platoon) => (
-                <div className="dashboard-card" key={platoon.id}>
+                <div className="card" key={platoon.id}>
                   <h3>
                     {t("platoonsManagement.platoon", {
                       number: platoon.number,
@@ -161,7 +159,7 @@ function PlatoonsManagement() {
 
               {/* Add platoon card */}
 
-              <div className="dashboard-card add-card">
+              <div className="card add-card">
                 <button
                   className="primary-button"
                   onClick={() => setShowCreateModal(true)}
@@ -174,7 +172,7 @@ function PlatoonsManagement() {
 
           {/* Back button */}
 
-          <div style={{ marginTop: "0px", textAlign: "center" }}>
+          <div className="page-actions">
             <button className="secondary-button" onClick={() => navigate(-1)}>
               ← {t("common.back")}
             </button>

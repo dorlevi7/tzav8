@@ -84,6 +84,58 @@ button {
     cursor: pointer;
 }
 
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* =========================
+   Buttons
+========================= */
+
+.primary-button {
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--border-radius);
+
+    background-color: var(--accent-color);
+    color: var(--color-white);
+
+    border: none;
+
+    cursor: pointer;
+
+    transition:
+        background-color var(--transition-fast),
+        transform var(--transition-fast);
+}
+
+.primary-button:hover {
+    background-color: var(--accent-hover);
+    transform: translateY(-2px);
+}
+
+.secondary-button {
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--border-radius);
+
+    background-color: transparent;
+
+    border: 1px solid var(--border-color);
+
+    color: var(--text-primary);
+
+    cursor: pointer;
+
+    transition:
+        background-color var(--transition-fast),
+        transform var(--transition-fast);
+}
+
+.secondary-button:hover {
+    background-color: var(--background-color);
+    transform: translateY(-2px);
+}
+
 /* =========================
    Scrollbar (Military Styled)
 ========================= */
@@ -467,11 +519,19 @@ body.lang-switching #root {
 
     box-shadow: var(--shadow-sm);
 
+    text-align: center;
+    /* ← הוסף את זה */
+
     transition:
         background-color var(--transition-fast),
         border-color var(--transition-fast),
         transform var(--transition-fast),
         box-shadow var(--transition-fast);
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
 }
 
 .card:hover {
@@ -483,12 +543,24 @@ body.lang-switching #root {
     margin-bottom: 0;
     font-size: var(--font-size-lg);
     color: var(--primary-color);
+
+    text-align: center;
 }
 
 .card p {
     margin-bottom: 0;
     color: var(--text-secondary);
     word-break: break-word;
+}
+
+/* =========================
+   Add Card
+========================= */
+
+.add-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /* =========================
@@ -505,4 +577,71 @@ body.lang-switching #root {
         grid-column: auto;
     }
 
+}
+
+/* =========================
+   Card Actions
+========================= */
+
+.card-actions {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+/* =========================
+   Summary / Stats
+========================= */
+
+.personnel-summary {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 40px;
+}
+
+.summary-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    min-width: 120px;
+}
+
+.summary-label {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+}
+
+.summary-value {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    color: var(--primary-color);
+}
+
+/* =========================
+   Page Actions
+========================= */
+
+.page-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 0;
+}
+
+/* =========================
+   Empty State
+========================= */
+
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+
+    padding: 30px;
+
+    text-align: center;
 }
