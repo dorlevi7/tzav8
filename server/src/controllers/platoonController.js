@@ -285,6 +285,31 @@ async function getCompanyPersonnelSummary(req, res) {
     }
 }
 
+/* =========================
+   Get platoon personnel summary
+   (only users assigned to platoons)
+========================= */
+
+async function getCompanyPlatoonPersonnelSummary(req, res) {
+    try {
+
+        const { companyId } = req.params;
+
+        const summary =
+            await platoonService.getCompanyPlatoonPersonnelSummary(companyId);
+
+        return res.json(summary);
+
+    } catch (err) {
+
+        console.error("Get platoon personnel summary error:", err);
+
+        return res.status(500).json({
+            error: "Server error"
+        });
+    }
+}
+
 module.exports = {
     createPlatoon,
     getPlatoonsByCompany,
@@ -292,5 +317,6 @@ module.exports = {
     addSergeant,
     addCommander,
     addSoldier,
-    getCompanyPersonnelSummary
+    getCompanyPersonnelSummary,
+    getCompanyPlatoonPersonnelSummary
 };

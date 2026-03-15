@@ -27,6 +27,16 @@ router.get(
     platoonController.getCompanyPersonnelSummary
 );
 
+/* =========================
+   Platoon personnel summary
+   (only users assigned to platoons)
+========================= */
+
+router.get(
+    "/:companyId/platoon-summary",
+    platoonController.getCompanyPlatoonPersonnelSummary
+);
+
 /* Get all platoons for company */
 
 router.get("/:companyId", platoonController.getPlatoonsByCompany);

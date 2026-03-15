@@ -510,6 +510,43 @@ async function getCompanyPersonnelSummary(companyId) {
     return result.rows[0];
 }
 
+/* =========================
+   GET PLATOON PERSONNEL SUMMARY
+   (only users assigned to platoons)
+========================= */
+
+async function getCompanyPlatoonPersonnelSummary(companyId) {
+
+    const result = await pool.query(
+        `
+        SELECT
+            (
+                SELECT COUNT(*)
+                FROM users
+                WHERE company_id = $1
+                AND platoon_id IS NOT NULL
+                AND is_active = true
+            ) AS total_soldiers,
+
+            (
+                SELECT COUNT(*)
+                FROM platoons
+                WHERE company_id = $1
+            ) AS total_platoons,
+
+            (
+                SELECT COUNT(*)
+                FROM squads s
+                JOIN platoons p ON s.platoon_id = p.id
+                WHERE p.company_id = $1
+            ) AS total_squads
+        `,
+        [companyId]
+    );
+
+    return result.rows[0];
+}
+
 module.exports = {
     createPlatoon,
     getPlatoonsByCompany,
@@ -517,5 +554,6 @@ module.exports = {
     addSergeant,
     addCommander,
     addSoldier,
-    getCompanyPersonnelSummary
+    getCompanyPersonnelSummary,
+    getCompanyPlatoonPersonnelSummary
 };

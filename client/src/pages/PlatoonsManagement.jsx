@@ -47,7 +47,7 @@ function PlatoonsManagement() {
 
       /* summary */
       const summaryRes = await fetch(
-        `${API_URL}/api/platoons/${companyId}/summary`,
+        `${API_URL}/api/platoons/${companyId}/platoon-summary`,
       );
       const summaryData = await summaryRes.json();
       setSummary(summaryData);
