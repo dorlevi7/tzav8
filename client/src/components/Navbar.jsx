@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import "../styles/navbar.css";
+import { ROUTES } from "../constants/routes";
 
 function Navbar({ theme, setTheme }) {
   const [scrolled, setScrolled] = useState(false);
@@ -41,7 +42,7 @@ function Navbar({ theme, setTheme }) {
 
   const handleLogout = () => {
     localStorage.removeItem("user");
-    navigate("/login");
+    navigate(ROUTES.LOGIN);
   };
 
   const toggleLanguage = () => {
@@ -61,6 +62,11 @@ function Navbar({ theme, setTheme }) {
   const nextFlag = i18n.language === "he" ? "🇺🇸" : "🇮🇱";
 
   const closeMenu = () => setMobileMenuOpen(false);
+
+const handlePMNavigation = () => {
+  const user = JSON.parse(localStorage.getItem("user"));
+  navigate(ROUTES.PM_ROUTE(user));
+};
 
   return (
     <>
@@ -97,17 +103,17 @@ function Navbar({ theme, setTheme }) {
             </button>
 
             {/* Personnel management (desktop only) */}
-            <Link
-              to="/personnel-management"
+            <button
+              onClick={handlePMNavigation}
               className="personnel-management-button desktop-only"
             >
               {t("navbar.personnelManagement")}
-            </Link>
+            </button>
 
             {/* DB debug (development only) */}
             {isDev && (
               <Link
-                to="/db-debug"
+                to={ROUTES.DB_DEBUG}
                 className="personnel-management-button desktop-only"
               >
                 🗄 DB
@@ -125,7 +131,7 @@ function Navbar({ theme, setTheme }) {
           </div>
 
           {/* Logo */}
-          <Link to="/home" className="logo">
+          <Link to={ROUTES.HOME} className="logo">
             Tzav8
           </Link>
         </div>
@@ -133,13 +139,18 @@ function Navbar({ theme, setTheme }) {
         {/* Mobile dropdown */}
         {mobileMenuOpen && (
           <div className="mobile-dropdown">
-            <Link to="/personnel-management" onClick={closeMenu}>
+            <button
+              onClick={() => {
+                closeMenu();
+                handlePMNavigation();
+              }}
+            >
               {t("navbar.personnelManagement")}
-            </Link>
+            </button>
 
             {/* DB debug in mobile menu (development only) */}
             {isDev && (
-              <Link to="/db-debug" onClick={closeMenu}>
+              <Link to={ROUTES.DB_DEBUG} onClick={closeMenu}>
                 🗄 DB Debug
               </Link>
             )}
