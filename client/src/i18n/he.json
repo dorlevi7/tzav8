@@ -55,7 +55,10 @@
     "companyName": "שם הפלוגה",
     "companyPhone": "טלפון הפלוגה",
     "battalionName": "שם הגדוד",
-    "battalionNumber": "מספר הגדוד"
+    "battalionNumber": "מספר הגדוד",
+    "emailExists": "האימייל כבר קיים",
+    "personalNumberExists": "המספר האישי כבר קיים",
+    "companyNotFound": "לא נמצאה פלוגה"
   },
 
   "ranks": {

@@ -9,6 +9,8 @@ import { useLoading } from "../context/LoadingContext";
 import AddPersonnelModal from "../components/modals/AddPersonnelModal";
 import CreateSquadModal from "../components/modals/CreateSquadModal";
 
+import toast from "react-hot-toast";
+
 /* Miluim ranks – Sergeant and above */
 const MILUIM_RANKS = [
   "sergeant",
@@ -92,15 +94,25 @@ function PlatoonManagement() {
         body: JSON.stringify(data),
       });
 
+      const resData = await response.json();
+
+      const errorMap = {
+        "Username already exists": "auth.usernameExists",
+        "Email already exists": "auth.emailExists",
+        "Personal number already exists": "auth.personalNumberExists",
+      };
+
       if (!response.ok) {
-        const err = await response.json();
-        throw new Error(err.error || "Failed to save personnel");
+        const key = errorMap[resData?.error];
+        toast.error(key ? t(key) : t("auth.serverError"));
+        return;
       }
 
       closeModal();
       await loadAllData();
     } catch (err) {
       console.error("Save personnel error:", err);
+      toast.error(t("auth.serverError"));
     } finally {
       setLoading(false);
     }

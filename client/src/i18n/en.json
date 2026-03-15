@@ -55,7 +55,10 @@
     "companyName": "Company name",
     "companyPhone": "Company phone",
     "battalionName": "Battalion name",
-    "battalionNumber": "Battalion number"
+    "battalionNumber": "Battalion number",
+    "emailExists": "Email already exists",
+    "personalNumberExists": "Personal number already exists",
+    "companyNotFound": "Company not found"
   },
 
   "ranks": {

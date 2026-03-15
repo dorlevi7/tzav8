@@ -39,7 +39,7 @@ function CreatePlatoonModal({ onClose, onSave, nextPlatoonNumber }) {
     const user = JSON.parse(localStorage.getItem("user"));
 
     if (!user?.companyId) {
-      toast.error("Company not found");
+      toast.error(t("auth.companyNotFound"));
       return;
     }
 
@@ -70,13 +70,19 @@ function CreatePlatoonModal({ onClose, onSave, nextPlatoonNumber }) {
 
       const data = await response.json();
 
-      if (!response.ok) {
-        if (data.error === "Username already exists") {
-          toast.error(t("auth.usernameExists"));
-          return;
-        }
+      const errorMap = {
+        "Username already exists": "auth.usernameExists",
+        "Email already exists": "auth.emailExists",
+        "Personal number already exists": "auth.personalNumberExists",
+      };
 
-        toast.error(t("auth.serverError"));
+      if (!response.ok) {
+        const errorMessage = data?.error;
+
+        const key = errorMap[errorMessage];
+
+        toast.error(key ? t(key) : t("auth.serverError"));
+
         return;
       }
 

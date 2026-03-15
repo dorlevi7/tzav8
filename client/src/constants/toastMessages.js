@@ -7,7 +7,10 @@ export const TOAST_MESSAGES = {
 
     SIGNUP_SUCCESS: "המשתמש נוצר בהצלחה",
     SIGNUP_ERROR: "לא ניתן ליצור משתמש",
-    USERNAME_EXISTS: "שם המשתמש כבר קיים, נסה שם אחר",
+
+    USERNAME_EXISTS: "שם המשתמש כבר קיים",
+    EMAIL_EXISTS: "האימייל כבר קיים",
+    PERSONAL_NUMBER_EXISTS: "המספר האישי כבר קיים",
 
     // Users
     USER_CREATED: "משתמש נוצר בהצלחה",

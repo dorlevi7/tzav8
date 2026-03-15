@@ -1,11 +1,48 @@
 const platoonService = require("../services/platoonService");
 
 /* =========================
+   Handle duplicate DB errors
+========================= */
+
+function handleDuplicateError(err, res) {
+
+    if (err.code !== "23505") return false;
+
+    if (err.constraint === "users_username_key") {
+        res.status(409).json({
+            error: "Username already exists"
+        });
+        return true;
+    }
+
+    if (err.constraint === "users_email_key") {
+        res.status(409).json({
+            error: "Email already exists"
+        });
+        return true;
+    }
+
+    if (err.constraint === "users_personal_number_key") {
+        res.status(409).json({
+            error: "Personal number already exists"
+        });
+        return true;
+    }
+
+    res.status(409).json({
+        error: "Duplicate value"
+    });
+
+    return true;
+}
+
+/* =========================
    Create platoon
 ========================= */
 
 async function createPlatoon(req, res) {
     try {
+
         const platoon = await platoonService.createPlatoon(req.body);
 
         return res.status(201).json({
@@ -17,30 +54,7 @@ async function createPlatoon(req, res) {
 
         console.error("Create platoon error:", err);
 
-        if (err.code === "23505") {
-
-            if (err.constraint === "users_username_key") {
-                return res.status(400).json({
-                    error: "Username already exists"
-                });
-            }
-
-            if (err.constraint === "users_email_key") {
-                return res.status(400).json({
-                    error: "Email already exists"
-                });
-            }
-
-            if (err.constraint === "users_personal_number_key") {
-                return res.status(400).json({
-                    error: "Personal number already exists"
-                });
-            }
-
-            return res.status(400).json({
-                error: "Duplicate value"
-            });
-        }
+        if (handleDuplicateError(err, res)) return;
 
         return res.status(500).json({
             error: "Server error"
@@ -57,7 +71,8 @@ async function getPlatoonsByCompany(req, res) {
 
         const { companyId } = req.params;
 
-        const platoons = await platoonService.getPlatoonsByCompany(companyId);
+        const platoons =
+            await platoonService.getPlatoonsByCompany(companyId);
 
         return res.json(platoons);
 
@@ -80,7 +95,8 @@ async function getPlatoonById(req, res) {
 
         const { platoonId } = req.params;
 
-        const platoon = await platoonService.getPlatoonById(platoonId);
+        const platoon =
+            await platoonService.getPlatoonById(platoonId);
 
         if (!platoon) {
             return res.status(404).json({
@@ -109,10 +125,11 @@ async function addSergeant(req, res) {
 
         const { platoonId } = req.params;
 
-        const sergeant = await platoonService.addSergeant(
-            platoonId,
-            req.body
-        );
+        const sergeant =
+            await platoonService.addSergeant(
+                platoonId,
+                req.body
+            );
 
         return res.status(201).json({
             message: "Sergeant added successfully",
@@ -123,30 +140,7 @@ async function addSergeant(req, res) {
 
         console.error("Add sergeant error:", err);
 
-        if (err.code === "23505") {
-
-            if (err.constraint === "users_username_key") {
-                return res.status(400).json({
-                    error: "Username already exists"
-                });
-            }
-
-            if (err.constraint === "users_email_key") {
-                return res.status(400).json({
-                    error: "Email already exists"
-                });
-            }
-
-            if (err.constraint === "users_personal_number_key") {
-                return res.status(400).json({
-                    error: "Personal number already exists"
-                });
-            }
-
-            return res.status(400).json({
-                error: "Duplicate value"
-            });
-        }
+        if (handleDuplicateError(err, res)) return;
 
         return res.status(500).json({
             error: "Server error"
@@ -163,10 +157,11 @@ async function addCommander(req, res) {
 
         const { platoonId } = req.params;
 
-        const commander = await platoonService.addCommander(
-            platoonId,
-            req.body
-        );
+        const commander =
+            await platoonService.addCommander(
+                platoonId,
+                req.body
+            );
 
         return res.status(201).json({
             message: "Commander added successfully",
@@ -177,30 +172,7 @@ async function addCommander(req, res) {
 
         console.error("Add commander error:", err);
 
-        if (err.code === "23505") {
-
-            if (err.constraint === "users_username_key") {
-                return res.status(400).json({
-                    error: "Username already exists"
-                });
-            }
-
-            if (err.constraint === "users_email_key") {
-                return res.status(400).json({
-                    error: "Email already exists"
-                });
-            }
-
-            if (err.constraint === "users_personal_number_key") {
-                return res.status(400).json({
-                    error: "Personal number already exists"
-                });
-            }
-
-            return res.status(400).json({
-                error: "Duplicate value"
-            });
-        }
+        if (handleDuplicateError(err, res)) return;
 
         return res.status(500).json({
             error: "Server error"
@@ -217,10 +189,11 @@ async function addSoldier(req, res) {
 
         const { platoonId } = req.params;
 
-        const soldier = await platoonService.addSoldier(
-            platoonId,
-            req.body
-        );
+        const soldier =
+            await platoonService.addSoldier(
+                platoonId,
+                req.body
+            );
 
         return res.status(201).json({
             message: "Soldier added successfully",
@@ -231,30 +204,7 @@ async function addSoldier(req, res) {
 
         console.error("Add soldier error:", err);
 
-        if (err.code === "23505") {
-
-            if (err.constraint === "users_username_key") {
-                return res.status(400).json({
-                    error: "Username already exists"
-                });
-            }
-
-            if (err.constraint === "users_email_key") {
-                return res.status(400).json({
-                    error: "Email already exists"
-                });
-            }
-
-            if (err.constraint === "users_personal_number_key") {
-                return res.status(400).json({
-                    error: "Personal number already exists"
-                });
-            }
-
-            return res.status(400).json({
-                error: "Duplicate value"
-            });
-        }
+        if (handleDuplicateError(err, res)) return;
 
         return res.status(500).json({
             error: "Server error"
@@ -271,7 +221,8 @@ async function getCompanyPersonnelSummary(req, res) {
 
         const { companyId } = req.params;
 
-        const summary = await platoonService.getCompanyPersonnelSummary(companyId);
+        const summary =
+            await platoonService.getCompanyPersonnelSummary(companyId);
 
         return res.json(summary);
 
@@ -287,7 +238,6 @@ async function getCompanyPersonnelSummary(req, res) {
 
 /* =========================
    Get platoon personnel summary
-   (only users assigned to platoons)
 ========================= */
 
 async function getCompanyPlatoonPersonnelSummary(req, res) {
