@@ -60,6 +60,9 @@ function PlatoonManagement() {
       const platoonData = await platoonRes.json();
       const squadsData = await squadsRes.json();
 
+console.log("Platoon data:", platoonData);
+console.log("Squads data:", squadsData);
+
       setPlatoon(platoonData);
       setSquads(squadsData);
     } catch (err) {
@@ -131,11 +134,26 @@ function PlatoonManagement() {
      Platoon Summary
   ========================= */
 
-  const totalSoldiers =
-    (platoon?.soldiers?.length || 0) +
-    (platoon?.commanders?.length || 0) +
-    (platoon?.sergeant ? 1 : 0) +
-    (platoon?.commander ? 1 : 0);
+  const squadPersonnel = squads.reduce((sum, squad) => {
+    const soldiersCount = squad.soldiers?.length || 0;
+    const commanderCount = squad.commander ? 1 : 0;
+
+  console.log("Squad:", squad.number);
+  console.log("Commander:", squad.commander);
+  console.log("Soldiers:", squad.soldiers);
+  console.log("Soldiers count:", soldiersCount);
+  console.log("Commander count:", commanderCount);
+
+    return sum + soldiersCount + commanderCount;
+  }, 0);
+
+  const totalPersonnel =
+    squadPersonnel + (platoon?.sergeant ? 1 : 0) + (platoon?.commander ? 1 : 0);
+
+console.log("Squad personnel:", squadPersonnel);
+console.log("Sergeant:", platoon?.sergeant);
+console.log("Commander:", platoon?.commander);
+console.log("Total personnel:", totalPersonnel);
 
   const totalSquads = squads.length;
   const totalCommanders = platoon?.commanders?.length || 0;
@@ -165,7 +183,7 @@ function PlatoonManagement() {
                 <span className="summary-label">
                   {t("platoonManagement.totalSoldiers")}
                 </span>
-                <span className="summary-value">{totalSoldiers}</span>
+                <span className="summary-value">{totalPersonnel}</span>
               </div>
 
               <div className="summary-item">

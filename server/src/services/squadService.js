@@ -6,20 +6,63 @@ const bcrypt = require("bcrypt");
 ========================= */
 
 async function getSquadsByPlatoon(platoonId) {
+
     const result = await pool.query(
         `
-    SELECT
-      id,
-      number,
-      name
-    FROM squads
-    WHERE platoon_id = $1
-    ORDER BY number
-    `,
+        SELECT
+          id,
+          number,
+          name
+        FROM squads
+        WHERE platoon_id = $1
+        ORDER BY number
+        `,
         [platoonId]
     );
 
-    return result.rows;
+    const squads = result.rows;
+
+    for (const squad of squads) {
+
+        /* Get squad commander */
+
+        const commanderResult = await pool.query(
+            `
+            SELECT
+              id,
+              rank,
+              first_name,
+              last_name
+            FROM users
+            WHERE squad_id = $1
+            AND position_level = 'squad_commander'
+            LIMIT 1
+            `,
+            [squad.id]
+        );
+
+        squad.commander = commanderResult.rows[0] || null;
+
+        /* Get soldiers */
+
+        const soldiersResult = await pool.query(
+            `
+            SELECT
+              id,
+              rank,
+              first_name,
+              last_name
+            FROM users
+            WHERE squad_id = $1
+            AND position_level = 'soldier'
+            `,
+            [squad.id]
+        );
+
+        squad.soldiers = soldiersResult.rows;
+    }
+
+    return squads;
 }
 
 /* =========================

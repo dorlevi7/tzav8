@@ -33,15 +33,32 @@ function PersonnelManagement() {
       setLoading(true);
 
       const user = JSON.parse(localStorage.getItem("user"));
+      console.log("User from localStorage:", user);
+
       const companyId = user?.companyId;
+      console.log("Company ID:", companyId);
 
       const response = await fetch(
         `${API_URL}/api/platoons/${companyId}/summary`,
       );
 
+      console.log(
+        "Summary endpoint:",
+        `${API_URL}/api/platoons/${companyId}/summary`,
+      );
+      console.log("Response status:", response.status);
+
       const data = await response.json();
 
+      console.log("===== SUMMARY API RESPONSE =====");
+      console.log(data);
+      console.log("Total soldiers:", data.total_soldiers);
+      console.log("Total platoons:", data.total_platoons);
+      console.log("Total squads:", data.total_squads);
+
       setSummary(data);
+      console.log("Summary state updated:", data);
+      
     } catch (err) {
       console.error("Failed to load personnel summary:", err);
     } finally {
