@@ -89,7 +89,7 @@ async function createPlatoon(data) {
                 platoon_id,
                 squad_id
             )
-            VALUES ($1,$2,$3,$4,$5,$6,$7,$8,'soldier',$9,'platoon',NULL,NULL)
+            VALUES ($1,$2,$3,$4,$5,$6,$7,$8,'soldier',$9,'platoon_commander',NULL,NULL)
             RETURNING id
             `,
             [
@@ -260,7 +260,13 @@ async function getPlatoonById(platoonId) {
             squad_id
         FROM users
         WHERE platoon_id = $1
-        ORDER BY position_level
+        ORDER BY
+        CASE
+            WHEN position_level = 'platoon_commander' THEN 1
+            WHEN position_level = 'platoon_sergeant' THEN 2
+            WHEN position_level = 'squad_commander' THEN 3
+            WHEN position_level = 'soldier' THEN 4
+        END
         `,
         [platoonId]
     );
@@ -271,16 +277,14 @@ async function getPlatoonById(platoonId) {
 
     const sergeant =
         personnel.find(
-            (p) =>
-                p.position_level === "platoon" &&
-                p.id !== platoon.commander_id
+            (p) => p.position_level === "platoon_sergeant"
         ) || null;
 
     /* squad commanders */
 
     const commanders = personnel.filter(
         (p) =>
-            p.position_level === "squad" &&
+            p.position_level === "squad_commander" &&
             p.squad_id !== null
     );
 
@@ -288,7 +292,7 @@ async function getPlatoonById(platoonId) {
 
     const soldiers = personnel.filter(
         (p) =>
-            p.position_level === "squad" &&
+            p.position_level === "soldier" &&
             p.squad_id === null
     );
 
@@ -342,7 +346,7 @@ async function addSergeant(platoonId, data) {
             platoon_id,
             squad_id
         )
-        VALUES ($1,$2,$3,$4,$5,$6,$7,$8,'soldier',$9,'platoon',$10,NULL)
+        VALUES ($1,$2,$3,$4,$5,$6,$7,$8,'soldier',$9,'platoon_sergeant',$10,NULL)
         RETURNING id
         `,
         [
@@ -402,7 +406,7 @@ async function addCommander(platoonId, data) {
             platoon_id,
             squad_id
         )
-        VALUES ($1,$2,$3,$4,$5,$6,$7,$8,'soldier',$9,'squad',$10,$11)
+        VALUES ($1,$2,$3,$4,$5,$6,$7,$8,'soldier',$9,'squad_commander',$10,$11)
         RETURNING id
         `,
         [
@@ -463,7 +467,7 @@ async function addSoldier(platoonId, data) {
             platoon_id,
             squad_id
         )
-        VALUES ($1,$2,$3,$4,$5,$6,$7,$8,'soldier',$9,'squad',$10,$11)
+        VALUES ($1,$2,$3,$4,$5,$6,$7,$8,'soldier',$9,'soldier',$10,$11)
         RETURNING id
         `,
         [

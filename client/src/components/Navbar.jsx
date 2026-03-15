@@ -12,6 +12,10 @@ function Navbar({ theme, setTheme }) {
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
 
+  // Current user
+  const storedUser = localStorage.getItem("user");
+  const user = storedUser ? JSON.parse(storedUser) : null;
+
   // Detect development mode (Vite)
   const isDev = import.meta.env.DEV;
 
@@ -63,10 +67,9 @@ function Navbar({ theme, setTheme }) {
 
   const closeMenu = () => setMobileMenuOpen(false);
 
-const handlePMNavigation = () => {
-  const user = JSON.parse(localStorage.getItem("user"));
-  navigate(ROUTES.PM_ROUTE(user));
-};
+  const handlePMNavigation = () => {
+    navigate(ROUTES.PM_ROUTE(user));
+  };
 
   return (
     <>
@@ -103,12 +106,14 @@ const handlePMNavigation = () => {
             </button>
 
             {/* Personnel management (desktop only) */}
-            <button
-              onClick={handlePMNavigation}
-              className="personnel-management-button desktop-only"
-            >
-              {t("navbar.personnelManagement")}
-            </button>
+            {ROUTES.CAN_SEE_PM(user) && (
+              <button
+                onClick={handlePMNavigation}
+                className="personnel-management-button desktop-only"
+              >
+                {t("navbar.personnelManagement")}
+              </button>
+            )}
 
             {/* DB debug (development only) */}
             {isDev && (
@@ -139,14 +144,16 @@ const handlePMNavigation = () => {
         {/* Mobile dropdown */}
         {mobileMenuOpen && (
           <div className="mobile-dropdown">
-            <button
-              onClick={() => {
-                closeMenu();
-                handlePMNavigation();
-              }}
-            >
-              {t("navbar.personnelManagement")}
-            </button>
+            {ROUTES.CAN_SEE_PM(user) && (
+              <button
+                onClick={() => {
+                  closeMenu();
+                  handlePMNavigation();
+                }}
+              >
+                {t("navbar.personnelManagement")}
+              </button>
+            )}
 
             {/* DB debug in mobile menu (development only) */}
             {isDev && (

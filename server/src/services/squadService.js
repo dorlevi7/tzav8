@@ -28,9 +28,7 @@ async function getSquadsByPlatoon(platoonId) {
 
 async function getSquadById(squadId) {
 
-    /* =========================
-       Get squad info
-    ========================= */
+    /* Get squad info */
 
     const squadResult = await pool.query(
         `
@@ -51,9 +49,7 @@ async function getSquadById(squadId) {
 
     const squad = squadResult.rows[0];
 
-    /* =========================
-       Get squad commander
-    ========================= */
+    /* Get squad commander */
 
     const commanderResult = await pool.query(
         `
@@ -64,7 +60,7 @@ async function getSquadById(squadId) {
       last_name
     FROM users
     WHERE squad_id = $1
-    AND position_level = 'squad'
+    AND position_level = 'squad_commander'
     LIMIT 1
     `,
         [squadId]
@@ -72,9 +68,7 @@ async function getSquadById(squadId) {
 
     squad.commander = commanderResult.rows[0] || null;
 
-    /* =========================
-       Get soldiers
-    ========================= */
+    /* Get soldiers */
 
     const soldiersResult = await pool.query(
         `
@@ -85,7 +79,7 @@ async function getSquadById(squadId) {
       last_name
     FROM users
     WHERE squad_id = $1
-    AND position_level = 'squad'
+    AND position_level = 'soldier'
     `,
         [squadId]
     );
@@ -118,9 +112,7 @@ async function createSquad({
 
         await client.query("BEGIN");
 
-        /* =========================
-           Get next squad number
-        ========================= */
+        /* Get next squad number */
 
         const numberResult = await client.query(
             `
@@ -133,9 +125,7 @@ async function createSquad({
 
         const squadNumber = numberResult.rows[0].next_number;
 
-        /* =========================
-           Create squad
-        ========================= */
+        /* Create squad */
 
         const squadResult = await client.query(
             `
@@ -148,15 +138,11 @@ async function createSquad({
 
         const squadId = squadResult.rows[0].id;
 
-        /* =========================
-           Hash password
-        ========================= */
+        /* Hash password */
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        /* =========================
-           Get company for platoon
-        ========================= */
+        /* Get company id */
 
         const platoonInfo = await client.query(
             `
@@ -169,9 +155,7 @@ async function createSquad({
 
         const companyId = platoonInfo.rows[0].company_id;
 
-        /* =========================
-           Create squad commander
-        ========================= */
+        /* Create squad commander */
 
         await client.query(
             `
@@ -191,7 +175,7 @@ async function createSquad({
         platoon_id,
         squad_id
       )
-      VALUES ($1,$2,$3,$4,$5,$6,$7,$8,'soldier',$9,'squad',$10,$11)
+      VALUES ($1,$2,$3,$4,$5,$6,$7,$8,'soldier',$9,'squad_commander',$10,$11)
       `,
             [
                 username,
@@ -246,9 +230,7 @@ async function addSoldier({
 
         await client.query("BEGIN");
 
-        /* =========================
-           Get platoon
-        ========================= */
+        /* Get platoon id */
 
         const squadInfo = await client.query(
             `
@@ -261,9 +243,7 @@ async function addSoldier({
 
         const platoonId = squadInfo.rows[0].platoon_id;
 
-        /* =========================
-           Get company
-        ========================= */
+        /* Get company id */
 
         const platoonInfo = await client.query(
             `
@@ -276,15 +256,11 @@ async function addSoldier({
 
         const companyId = platoonInfo.rows[0].company_id;
 
-        /* =========================
-           Hash password
-        ========================= */
+        /* Hash password */
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        /* =========================
-           Create soldier
-        ========================= */
+        /* Create soldier */
 
         const result = await client.query(
             `
@@ -304,7 +280,7 @@ async function addSoldier({
         platoon_id,
         squad_id
       )
-      VALUES ($1,$2,$3,$4,$5,$6,$7,$8,'soldier',$9,'squad',$10,$11)
+      VALUES ($1,$2,$3,$4,$5,$6,$7,$8,'soldier',$9,'soldier',$10,$11)
       RETURNING id
       `,
             [

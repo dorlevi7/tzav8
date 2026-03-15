@@ -10,173 +10,223 @@ async function init() {
         =============================== */
 
         await pool.query(`
-      CREATE EXTENSION IF NOT EXISTS "pgcrypto";
-    `);
+        CREATE EXTENSION IF NOT EXISTS "pgcrypto";
+        `);
 
         /* ===============================
            Companies table
         =============================== */
 
         await pool.query(`
-      CREATE TABLE IF NOT EXISTS companies (
-        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        CREATE TABLE IF NOT EXISTS companies (
+            id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
 
-        company_name VARCHAR(100) NOT NULL,
-        battalion_name VARCHAR(100),
-        battalion_number VARCHAR(20),
+            company_name VARCHAR(100) NOT NULL,
+            battalion_name VARCHAR(100),
+            battalion_number VARCHAR(20),
 
-        phone VARCHAR(20),
+            phone VARCHAR(20),
 
-        platoons_count INTEGER NOT NULL DEFAULT 0,
+            platoons_count INTEGER NOT NULL DEFAULT 0,
 
-        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-        updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-      );
-    `);
+            created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+            updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+        );
+        `);
 
         /* ===============================
            Platoons table
         =============================== */
 
         await pool.query(`
-      CREATE TABLE IF NOT EXISTS platoons (
+        CREATE TABLE IF NOT EXISTS platoons (
 
-        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+            id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
 
-        company_id UUID NOT NULL REFERENCES companies(id) ON DELETE CASCADE,
+            company_id UUID NOT NULL REFERENCES companies(id) ON DELETE CASCADE,
 
-        number INTEGER NOT NULL,
-        name VARCHAR(100),
+            number INTEGER NOT NULL,
+            name VARCHAR(100),
 
-        commander_id UUID,
+            commander_id UUID,
 
-        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-        updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+            created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+            updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
 
-        UNIQUE(company_id, number)
+            UNIQUE(company_id, number)
 
-      );
-    `);
+        );
+        `);
 
         /* ===============================
            Squads table
         =============================== */
 
         await pool.query(`
-      CREATE TABLE IF NOT EXISTS squads (
+        CREATE TABLE IF NOT EXISTS squads (
 
-        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+            id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
 
-        platoon_id UUID NOT NULL REFERENCES platoons(id) ON DELETE CASCADE,
+            platoon_id UUID NOT NULL REFERENCES platoons(id) ON DELETE CASCADE,
 
-        number INTEGER NOT NULL,
-        name VARCHAR(100),
+            number INTEGER NOT NULL,
+            name VARCHAR(100),
 
-        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-        updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+            created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+            updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
 
-        UNIQUE(platoon_id, number)
+            UNIQUE(platoon_id, number)
 
-      );
-    `);
+        );
+        `);
 
         /* ===============================
            Users table
         =============================== */
 
         await pool.query(`
-      CREATE TABLE IF NOT EXISTS users (
+        CREATE TABLE IF NOT EXISTS users (
 
-        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+            id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
 
-        username VARCHAR(50) NOT NULL UNIQUE,
-        password_hash TEXT NOT NULL,
+            username VARCHAR(50) NOT NULL UNIQUE,
+            password_hash TEXT NOT NULL,
 
-        first_name VARCHAR(50),
-        last_name VARCHAR(50),
-        rank VARCHAR(50),
-        personal_number VARCHAR(20),
+            first_name VARCHAR(50),
+            last_name VARCHAR(50),
+            rank VARCHAR(50),
+            personal_number VARCHAR(20) UNIQUE,
 
-        email VARCHAR(100),
-        phone VARCHAR(20),
+            email VARCHAR(100) UNIQUE,
+            phone VARCHAR(20),
 
-        role VARCHAR(20) NOT NULL DEFAULT 'soldier',
+            role VARCHAR(20) NOT NULL DEFAULT 'soldier',
 
-        company_id UUID REFERENCES companies(id),
+            company_id UUID REFERENCES companies(id),
 
-        position_level VARCHAR(20) NOT NULL,
+            position_level VARCHAR(30) NOT NULL,
 
-        platoon_id UUID REFERENCES platoons(id),
-        squad_id UUID REFERENCES squads(id),
+            platoon_id UUID REFERENCES platoons(id),
+            squad_id UUID REFERENCES squads(id),
 
-        is_active BOOLEAN NOT NULL DEFAULT TRUE,
+            is_active BOOLEAN NOT NULL DEFAULT TRUE,
 
-        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-        updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+            created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+            updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
 
-        CONSTRAINT role_check CHECK (
-          role IN ('admin','soldier')
-        ),
+            CONSTRAINT role_check CHECK (
+                role IN ('admin','soldier')
+            ),
 
-        CONSTRAINT level_check CHECK (
-          position_level IN ('company','platoon','squad')
-        ),
+            CONSTRAINT level_check CHECK (
+                position_level IN (
+                    'company',
+                    'platoon_commander',
+                    'platoon_sergeant',
+                    'squad_commander',
+                    'soldier'
+                )
+            ),
 
-        CONSTRAINT hierarchy_check CHECK (
-          squad_id IS NULL OR platoon_id IS NOT NULL
-        )
+            CONSTRAINT hierarchy_check CHECK (
+                squad_id IS NULL OR platoon_id IS NOT NULL
+            )
 
-      );
-    `);
+        );
+        `);
 
         /* ===============================
-           Add FK for platoon commander
+           FK for platoon commander
         =============================== */
 
         await pool.query(`
-      ALTER TABLE platoons
-      ADD CONSTRAINT IF NOT EXISTS platoon_commander_fk
-      FOREIGN KEY (commander_id)
-      REFERENCES users(id);
-    `);
+        ALTER TABLE platoons
+        ADD CONSTRAINT IF NOT EXISTS platoon_commander_fk
+        FOREIGN KEY (commander_id)
+        REFERENCES users(id);
+        `);
+
+        /* ===============================
+           Prevent duplicate commanders
+        =============================== */
+
+        await pool.query(`
+        CREATE UNIQUE INDEX IF NOT EXISTS one_platoon_commander
+        ON users(platoon_id)
+        WHERE position_level = 'platoon_commander';
+        `);
+
+        await pool.query(`
+        CREATE UNIQUE INDEX IF NOT EXISTS one_platoon_sergeant
+        ON users(platoon_id)
+        WHERE position_level = 'platoon_sergeant';
+        `);
+
+        await pool.query(`
+        CREATE UNIQUE INDEX IF NOT EXISTS one_squad_commander
+        ON users(squad_id)
+        WHERE position_level = 'squad_commander';
+        `);
+
+        /* ===============================
+           Performance indexes
+        =============================== */
+
+        await pool.query(`
+        CREATE INDEX IF NOT EXISTS idx_users_company
+        ON users(company_id);
+        `);
+
+        await pool.query(`
+        CREATE INDEX IF NOT EXISTS idx_users_platoon
+        ON users(platoon_id);
+        `);
+
+        await pool.query(`
+        CREATE INDEX IF NOT EXISTS idx_users_squad
+        ON users(squad_id);
+        `);
 
         /* ===============================
            update_updated_at trigger
         =============================== */
 
         await pool.query(`
-      CREATE OR REPLACE FUNCTION update_updated_at_column()
-      RETURNS TRIGGER AS $$
-      BEGIN
-        NEW.updated_at = NOW();
-        RETURN NEW;
-      END;
-      $$ LANGUAGE plpgsql;
-    `);
+        CREATE OR REPLACE FUNCTION update_updated_at_column()
+        RETURNS TRIGGER AS $$
+        BEGIN
+            NEW.updated_at = NOW();
+            RETURN NEW;
+        END;
+        $$ LANGUAGE plpgsql;
+        `);
 
         await pool.query(`
-      DO $$
-      BEGIN
-        IF NOT EXISTS (
-          SELECT 1
-          FROM pg_trigger
-          WHERE tgname = 'set_updated_at'
-        ) THEN
-          CREATE TRIGGER set_updated_at
-          BEFORE UPDATE ON users
-          FOR EACH ROW
-          EXECUTE FUNCTION update_updated_at_column();
-        END IF;
-      END
-      $$;
-    `);
+        DO $$
+        BEGIN
+            IF NOT EXISTS (
+                SELECT 1
+                FROM pg_trigger
+                WHERE tgname = 'set_updated_at'
+            ) THEN
+                CREATE TRIGGER set_updated_at
+                BEFORE UPDATE ON users
+                FOR EACH ROW
+                EXECUTE FUNCTION update_updated_at_column();
+            END IF;
+        END
+        $$;
+        `);
 
         console.log("Database initialized successfully");
+
         process.exit(0);
 
     } catch (err) {
+
         console.error("Error initializing database:", err);
         process.exit(1);
+
     }
 }
 

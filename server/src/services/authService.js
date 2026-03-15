@@ -10,14 +10,12 @@ async function createUser(data) {
     const {
         username,
         password,
-
         firstName,
         lastName,
         rank,
         personalNumber,
         email,
         phone,
-
         companyName,
         battalionName,
         battalionNumber,
@@ -32,9 +30,7 @@ async function createUser(data) {
 
         const passwordHash = await bcrypt.hash(password, 10);
 
-        /* =========================
-           1. Create Company
-        ========================= */
+        /* Create company */
 
         const companyResult = await client.query(
             `
@@ -48,9 +44,7 @@ async function createUser(data) {
 
         const companyId = companyResult.rows[0].id;
 
-        /* =========================
-           2. Create Admin User (Company Commander)
-        ========================= */
+        /* Create company commander */
 
         const userResult = await client.query(
             `
@@ -109,7 +103,18 @@ async function loginUser(username, password) {
 
     const result = await pool.query(
         `
-        SELECT *
+        SELECT
+            id,
+            username,
+            password_hash,
+            role,
+            company_id,
+            first_name,
+            last_name,
+            rank,
+            position_level,
+            platoon_id,
+            squad_id
         FROM users
         WHERE username = $1
         `,
@@ -119,13 +124,17 @@ async function loginUser(username, password) {
     const user = result.rows[0];
 
     if (!user) {
-        throw new Error("Invalid username or password");
+        const error = new Error("Invalid username or password");
+        error.status = 401;
+        throw error;
     }
 
     const passwordMatch = await bcrypt.compare(password, user.password_hash);
 
     if (!passwordMatch) {
-        throw new Error("Invalid username or password");
+        const error = new Error("Invalid username or password");
+        error.status = 401;
+        throw error;
     }
 
     return {
