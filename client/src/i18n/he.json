@@ -167,6 +167,18 @@
   "platoonStructure": "מבנה המחלקה"
 },
 
+"squadManagement": {
+  "title": "ניהול כיתה",
+  "commander": "מפקד כיתה (מ״כ)",
+  "noCommander": "אין מפקד כיתה",
+  "soldiers": "חיילים",
+  "noSoldiers": "אין חיילים בכיתה",
+  "totalSoldiers": "סד״כ בכיתה",
+  "hasCommander": "מפקד כיתה",
+  "squadStructure": "מבנה הכיתה",
+  "addSoldier": "הוסף חייל"
+},
+
 "createSquad": {
   "title": "יצירת כיתה",
 

@@ -167,6 +167,18 @@
   "platoonStructure": "Platoon Structure"
 },
 
+"squadManagement": {
+  "title": "Squad Management",
+  "commander": "Squad Commander",
+  "noCommander": "No squad commander",
+  "soldiers": "Soldiers",
+  "noSoldiers": "No soldiers in squad",
+  "totalSoldiers": "Total soldiers in squad",
+  "hasCommander": "Squad commander",
+  "squadStructure": "Squad structure",
+  "addSoldier": "Add Soldier"
+},
+
 "createSquad": {
   "title": "Create Squad",
 

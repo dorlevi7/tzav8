@@ -21,4 +21,10 @@ router.get("/:squadId", squadController.getSquadById);
 
 router.post("/create", squadController.createSquad);
 
+/* =========================
+   Add soldier to squad
+========================= */
+
+router.post("/:squadId/soldiers", squadController.addSoldier);
+
 module.exports = router;
