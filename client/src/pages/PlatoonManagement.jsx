@@ -178,45 +178,43 @@ function PlatoonManagement() {
 
             {/* Commander */}
             <div className="info-section">
-              <div className="info-row">
-                <strong>{t("platoonManagement.platoonCommander")}:</strong>{" "}
-                {!platoon?.commander ? (
-                  <span className="table-placeholder">
-                    {t("platoonManagement.noPlatoonCommander")}
-                  </span>
-                ) : (
-                  <span className="name">
-                    {t(`ranks.${platoon.commander.rank}`)}{" "}
-                    {platoon.commander.first_name} {platoon.commander.last_name}
-                  </span>
-                )}
-              </div>
+              <strong>{t("platoonManagement.platoonCommander")}:</strong>
+
+              {!platoon?.commander ? (
+                <div className="table-placeholder">
+                  {t("platoonManagement.noPlatoonCommander")}
+                </div>
+              ) : (
+                <div className="name">
+                  {t(`ranks.${platoon.commander.rank}`)}{" "}
+                  {platoon.commander.first_name} {platoon.commander.last_name}
+                </div>
+              )}
             </div>
 
             {/* Sergeant */}
             <div className="info-section">
-              <div className="info-row">
-                <strong>{t("platoonManagement.sergeant")}:</strong>{" "}
-                {platoon?.sergeant ? (
-                  <span className="name">
-                    {t(`ranks.${platoon.sergeant.rank}`)}{" "}
-                    {platoon.sergeant.first_name} {platoon.sergeant.last_name}
-                  </span>
-                ) : (
-                  <>
-                    <span className="table-placeholder">
-                      {t("platoonManagement.noSergeant")}
-                    </span>
+              <strong>{t("platoonManagement.sergeant")}:</strong>
 
-                    <button
-                      className="primary-button inline-action"
-                      onClick={() => setModalType("sergeant")}
-                    >
-                      {t("platoonManagement.addSergeant")}
-                    </button>
-                  </>
-                )}
-              </div>
+              {platoon?.sergeant ? (
+                <div className="name">
+                  {t(`ranks.${platoon.sergeant.rank}`)}{" "}
+                  {platoon.sergeant.first_name} {platoon.sergeant.last_name}
+                </div>
+              ) : (
+                <>
+                  <div className="table-placeholder">
+                    {t("platoonManagement.noSergeant")}
+                  </div>
+
+                  <button
+                    className="primary-button inline-action"
+                    onClick={() => setModalType("sergeant")}
+                  >
+                    {t("platoonManagement.addSergeant")}
+                  </button>
+                </>
+              )}
             </div>
 
             {/* Squads */}

@@ -138,19 +138,18 @@ function SquadManagement() {
 
             {/* Squad Commander */}
             <div className="info-section">
-              <div className="info-row">
-                <strong>{t("squadManagement.commander")}:</strong>{" "}
-                {squad.commander ? (
-                  <span className="name">
-                    {t(`ranks.${squad.commander.rank}`)}{" "}
-                    {squad.commander.first_name} {squad.commander.last_name}
-                  </span>
-                ) : (
-                  <span className="table-placeholder">
-                    {t("squadManagement.noCommander")}
-                  </span>
-                )}
-              </div>
+              <strong>{t("squadManagement.commander")}:</strong>
+
+              {squad.commander ? (
+                <div className="name">
+                  {t(`ranks.${squad.commander.rank}`)}{" "}
+                  {squad.commander.first_name} {squad.commander.last_name}
+                </div>
+              ) : (
+                <div className="table-placeholder">
+                  {t("squadManagement.noCommander")}
+                </div>
+              )}
             </div>
 
             {/* Soldiers */}
