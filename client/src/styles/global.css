@@ -724,6 +724,28 @@ body.lang-switching #root {
     box-shadow: var(--shadow-sm);
 }
 
+.item-row-center {
+    width: 100%;
+    max-width: 320px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+
+    padding: 10px 14px;
+
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+
+    background-color: var(--background-color);
+
+    transition:
+        box-shadow var(--transition-fast),
+        transform var(--transition-fast);
+}
+
 /* =========================
    Section Action
 ========================= */

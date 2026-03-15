@@ -160,7 +160,7 @@ function SquadManagement() {
               <div className="items-list">
                 {soldiersOnly.length ? (
                   soldiersOnly.map((s) => (
-                    <div key={s.id} className="item-row">
+                    <div key={s.id} className="item-row-center">
                       {t(`ranks.${s.rank}`)} {s.first_name} {s.last_name}
                     </div>
                   ))
