@@ -319,6 +319,10 @@
     justify-content: center;
 }
 
+.inline-button {
+    margin-inline-start: 10px;
+}
+
 /* =========================
    Responsiveness
 ========================= */

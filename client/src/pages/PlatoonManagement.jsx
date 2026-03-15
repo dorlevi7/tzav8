@@ -1,4 +1,3 @@
-import "../styles/pages/PersonnelManagement.css";
 
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
@@ -136,48 +135,48 @@ function PlatoonManagement() {
   return (
     <>
       <div className="page-container">
-        <div className="personnel-management-content">
+        <div className="page-content">
           {/* Header */}
-          <div className="personnel-management-header">
-            <h1>{t("platoonManagement.title")}</h1>
+          <div className="page-header">
+            <h1 className="page-title">{t("platoonManagement.title")}</h1>
           </div>
 
           {/* ========================
              Platoon Summary
           ======================== */}
 
-          <div className="personnel-summary">
-            <div className="summary-item">
-              <span className="summary-label">
-                {t("platoonManagement.totalSoldiers")}
-              </span>
-              <span className="summary-value">{totalSoldiers}</span>
-            </div>
+          <div className="card">
+            <div className="personnel-summary">
+              <div className="summary-item">
+                <span className="summary-label">
+                  {t("platoonManagement.totalSoldiers")}
+                </span>
+                <span className="summary-value">{totalSoldiers}</span>
+              </div>
 
-            <div className="summary-item">
-              <span className="summary-label">
-                {t("platoonManagement.totalSquads")}
-              </span>
-              <span className="summary-value">{totalSquads}</span>
-            </div>
+              <div className="summary-item">
+                <span className="summary-label">
+                  {t("platoonManagement.totalSquads")}
+                </span>
+                <span className="summary-value">{totalSquads}</span>
+              </div>
 
-            <div className="summary-item">
-              <span className="summary-label">
-                {t("platoonManagement.totalCommanders")}
-              </span>
-              <span className="summary-value">{totalCommanders}</span>
+              <div className="summary-item">
+                <span className="summary-label">
+                  {t("platoonManagement.totalCommanders")}
+                </span>
+                <span className="summary-value">{totalCommanders}</span>
+              </div>
             </div>
           </div>
 
           {/* Platoon Structure */}
-          <div className="dashboard-card">
-            <div className="card-header">
-              <h3>{t("platoonManagement.platoonStructure")}</h3>
-            </div>
+          <div className="card">
+            <h3>{t("platoonManagement.platoonStructure")}</h3>
 
             {/* Commander */}
-            <div className="person-section">
-              <div className="person-row">
+            <div className="info-section">
+              <div className="info-row">
                 <strong>{t("platoonManagement.platoonCommander")}:</strong>{" "}
                 {!platoon?.commander ? (
                   <span className="table-placeholder">
@@ -193,8 +192,8 @@ function PlatoonManagement() {
             </div>
 
             {/* Sergeant */}
-            <div className="person-section">
-              <div className="person-row">
+            <div className="info-section">
+              <div className="info-row">
                 <strong>{t("platoonManagement.sergeant")}:</strong>{" "}
                 {platoon?.sergeant ? (
                   <span className="name">
@@ -208,8 +207,7 @@ function PlatoonManagement() {
                     </span>
 
                     <button
-                      className="primary-button"
-                      style={{ marginRight: "10px" }}
+                      className="primary-button inline-action"
                       onClick={() => setModalType("sergeant")}
                     >
                       {t("platoonManagement.addSergeant")}
@@ -220,13 +218,13 @@ function PlatoonManagement() {
             </div>
 
             {/* Squads */}
-            <div className="person-section squads-section">
-              <strong>{t("platoonManagement.squads")}:</strong>
+            <div className="info-section">
+              <strong>{t("platoonManagement.squads")}</strong>
 
-              <div className="squads-list">
+              <div className="items-list">
                 {squads.length ? (
                   squads.map((squad) => (
-                    <div key={squad.id} className="squad-row">
+                    <div key={squad.id} className="item-row">
                       <span>
                         {t("platoonManagement.squad", { number: squad.number })}
                       </span>
@@ -243,7 +241,7 @@ function PlatoonManagement() {
                 )}
               </div>
 
-              <div className="create-squad">
+              <div className="section-action">
                 <button
                   className="primary-button"
                   onClick={() => setShowCreateSquad(true)}
@@ -255,7 +253,7 @@ function PlatoonManagement() {
           </div>
 
           {/* Back button */}
-          <div style={{ marginTop: "0px", textAlign: "center" }}>
+          <div className="page-actions">
             <button className="secondary-button" onClick={() => navigate(-1)}>
               ← {t("common.back")}
             </button>

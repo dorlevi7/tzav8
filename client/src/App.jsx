@@ -18,6 +18,8 @@ import ProtectedRoute from "./components/ProtectedRoute";
 
 import DatabaseViewer from "./pages/DatabaseViewer";
 
+import SquadManagement from "./pages/SquadManagement";
+
 function App() {
   const { i18n } = useTranslation();
 
@@ -135,6 +137,16 @@ function App() {
               </ProtectedRoute>
             }
           />
+
+          <Route
+            path="/personnel/platoons/:platoonId/squads/:squadId"
+            element={
+              <ProtectedRoute>
+                <SquadManagement />
+              </ProtectedRoute>
+            }
+          />
+          
         </Route>
       </Routes>
     </>

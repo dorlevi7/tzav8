@@ -68,26 +68,28 @@ function PersonnelManagement() {
            Summary / General Info
         ======================== */}
 
-        <div className="personnel-summary">
-          <div className="summary-item">
-            <span className="summary-label">
-              {t("personnelManagement.totalSoldiers")}
-            </span>
-            <span className="summary-value">{summary.total_soldiers}</span>
-          </div>
+        <div className="card">
+          <div className="personnel-summary">
+            <div className="summary-item">
+              <span className="summary-label">
+                {t("personnelManagement.totalSoldiers")}
+              </span>
+              <span className="summary-value">{summary.total_soldiers}</span>
+            </div>
 
-          <div className="summary-item">
-            <span className="summary-label">
-              {t("personnelManagement.totalPlatoons")}
-            </span>
-            <span className="summary-value">{summary.total_platoons}</span>
-          </div>
+            <div className="summary-item">
+              <span className="summary-label">
+                {t("personnelManagement.totalPlatoons")}
+              </span>
+              <span className="summary-value">{summary.total_platoons}</span>
+            </div>
 
-          <div className="summary-item">
-            <span className="summary-label">
-              {t("personnelManagement.totalSquads")}
-            </span>
-            <span className="summary-value">{summary.total_squads}</span>
+            <div className="summary-item">
+              <span className="summary-label">
+                {t("personnelManagement.totalSquads")}
+              </span>
+              <span className="summary-value">{summary.total_squads}</span>
+            </div>
           </div>
         </div>
 
