@@ -24,6 +24,79 @@ async function getSquadsByPlatoon(platoonId) {
 }
 
 /* =========================
+   GET SQUAD BY ID
+========================= */
+
+async function getSquadById(squadId) {
+
+    /* =========================
+       Get squad info
+    ========================= */
+
+    const squadResult = await pool.query(
+        `
+        SELECT
+            id,
+            number,
+            name,
+            platoon_id
+        FROM squads
+        WHERE id = $1
+        `,
+        [squadId]
+    );
+
+    if (squadResult.rows.length === 0) {
+        return null;
+    }
+
+    const squad = squadResult.rows[0];
+
+    /* =========================
+       Get squad commander
+    ========================= */
+
+    const commanderResult = await pool.query(
+        `
+        SELECT
+            id,
+            rank,
+            first_name,
+            last_name
+        FROM users
+        WHERE squad_id = $1
+        AND position_level = 'squad'
+        LIMIT 1
+        `,
+        [squadId]
+    );
+
+    squad.commander = commanderResult.rows[0] || null;
+
+    /* =========================
+       Get soldiers
+    ========================= */
+
+    const soldiersResult = await pool.query(
+        `
+        SELECT
+            id,
+            rank,
+            first_name,
+            last_name
+        FROM users
+        WHERE squad_id = $1
+        AND position_level = 'squad'
+        `,
+        [squadId]
+    );
+
+    squad.soldiers = soldiersResult.rows;
+
+    return squad;
+}
+
+/* =========================
    CREATE SQUAD
 ========================= */
 
@@ -154,5 +227,6 @@ async function createSquad({
 
 module.exports = {
     getSquadsByPlatoon,
+    getSquadById,
     createSquad
 };

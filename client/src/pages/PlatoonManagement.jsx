@@ -229,7 +229,14 @@ function PlatoonManagement() {
                         {t("platoonManagement.squad", { number: squad.number })}
                       </span>
 
-                      <button className="primary-button" disabled>
+                      <button
+                        className="primary-button"
+                        onClick={() =>
+                          navigate(
+                            `/personnel/platoons/${platoonId}/squads/${squad.id}`,
+                          )
+                        }
+                      >
                         {t("common.manage")}
                       </button>
                     </div>
