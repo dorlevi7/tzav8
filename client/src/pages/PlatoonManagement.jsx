@@ -138,7 +138,9 @@ function PlatoonManagement() {
         <div className="page-content">
           {/* Header */}
           <div className="page-header">
-            <h1 className="page-title">{t("platoonManagement.title")}</h1>
+            <h1 className="page-title">
+              {t("platoonManagement.title")} {platoon.number}
+            </h1>{" "}
           </div>
 
           {/* ========================
