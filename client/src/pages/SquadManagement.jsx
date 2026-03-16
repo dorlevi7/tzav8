@@ -37,12 +37,6 @@ function SquadManagement() {
       const res = await fetch(`${API_URL}/api/squads/${squadId}`);
       const data = await res.json();
 
-      console.log("===== SQUAD API RESPONSE =====");
-      console.log(data);
-      console.log("Commander:", data.commander);
-      console.log("Soldiers:", data.soldiers);
-      console.log("All keys:", Object.keys(data));
-
       setSquad(data);
     } catch (err) {
       console.error("Failed to load squad:", err);
@@ -93,10 +87,6 @@ function SquadManagement() {
   const soldiersOnly =
     squad?.soldiers?.filter((s) => s.id !== squad?.commander?.id) || [];
 
-  console.log("===== SOLDIERS FILTER =====");
-  console.log("All soldiers:", squad?.soldiers);
-  console.log("Filtered soldiers:", soldiersOnly);
-
   /* =========================
      Squad Summary
   ========================= */
@@ -104,14 +94,9 @@ function SquadManagement() {
   const soldiersCount = squad?.soldiers?.length || 0;
   const commanderCount = squad?.commander ? 1 : 0;
 
-  console.log("===== PERSONNEL COUNT =====");
-  console.log("Soldiers count:", soldiersCount);
-  console.log("Commander exists:", squad?.commander);
-  console.log("Commander count:", commanderCount);
 
   const totalPersonnel = soldiersCount + commanderCount;
 
-  console.log("Total personnel:", totalPersonnel);
 
   return (
     <>

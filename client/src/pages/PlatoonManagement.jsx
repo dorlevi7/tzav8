@@ -60,9 +60,6 @@ function PlatoonManagement() {
       const platoonData = await platoonRes.json();
       const squadsData = await squadsRes.json();
 
-console.log("Platoon data:", platoonData);
-console.log("Squads data:", squadsData);
-
       setPlatoon(platoonData);
       setSquads(squadsData);
     } catch (err) {
@@ -138,22 +135,11 @@ console.log("Squads data:", squadsData);
     const soldiersCount = squad.soldiers?.length || 0;
     const commanderCount = squad.commander ? 1 : 0;
 
-  console.log("Squad:", squad.number);
-  console.log("Commander:", squad.commander);
-  console.log("Soldiers:", squad.soldiers);
-  console.log("Soldiers count:", soldiersCount);
-  console.log("Commander count:", commanderCount);
-
     return sum + soldiersCount + commanderCount;
   }, 0);
 
   const totalPersonnel =
     squadPersonnel + (platoon?.sergeant ? 1 : 0) + (platoon?.commander ? 1 : 0);
-
-console.log("Squad personnel:", squadPersonnel);
-console.log("Sergeant:", platoon?.sergeant);
-console.log("Commander:", platoon?.commander);
-console.log("Total personnel:", totalPersonnel);
 
   const totalSquads = squads.length;
   const totalCommanders = platoon?.commanders?.length || 0;

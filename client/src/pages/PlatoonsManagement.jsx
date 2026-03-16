@@ -37,50 +37,29 @@ function PlatoonsManagement() {
     try {
       setLoading(true);
 
-      console.log("===== LOAD PLATOONS DATA START =====");
-
       const user = JSON.parse(localStorage.getItem("user"));
-      console.log("User from localStorage:", user);
 
       const companyId = user?.companyId;
-      console.log("Company ID:", companyId);
 
       /* platoons */
 
       const platoonsEndpoint = `${API_URL}/api/platoons/${companyId}`;
-      console.log("Platoons endpoint:", platoonsEndpoint);
 
       const platoonsRes = await fetch(platoonsEndpoint);
-      console.log("Platoons response status:", platoonsRes.status);
 
       const platoonsData = await platoonsRes.json();
-
-      console.log("===== PLATOONS API RESPONSE =====");
-      console.log(platoonsData);
-      console.log("Number of platoons:", platoonsData.length);
 
       setPlatoons(platoonsData);
 
       /* summary */
 
       const summaryEndpoint = `${API_URL}/api/platoons/${companyId}/platoon-summary`;
-      console.log("Summary endpoint:", summaryEndpoint);
 
       const summaryRes = await fetch(summaryEndpoint);
-      console.log("Summary response status:", summaryRes.status);
 
       const summaryData = await summaryRes.json();
 
-      console.log("===== SUMMARY API RESPONSE =====");
-      console.log(summaryData);
-
-      console.log("Total soldiers:", summaryData.total_soldiers);
-      console.log("Total platoons:", summaryData.total_platoons);
-      console.log("Total squads:", summaryData.total_squads);
-
       setSummary(summaryData);
-
-      console.log("===== LOAD PLATOONS DATA END =====");
     } catch (err) {
       console.error("Failed to load platoons:", err);
     } finally {
@@ -93,9 +72,6 @@ function PlatoonsManagement() {
   ======================== */
 
   const nextPlatoonNumber = platoons.length + 1;
-
-  console.log("Current platoons length:", platoons.length);
-  console.log("Next platoon number:", nextPlatoonNumber);
 
   /* ========================
      Don't render screen while loading
