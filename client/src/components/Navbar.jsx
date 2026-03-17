@@ -89,7 +89,7 @@ function Navbar({ theme, setTheme }) {
 
             {/* Theme toggle */}
             <button
-              className="theme-toggle"
+              className="nav-button"
               onClick={toggleTheme}
               aria-label="Toggle theme"
             >
@@ -98,7 +98,7 @@ function Navbar({ theme, setTheme }) {
 
             {/* Language toggle */}
             <button
-              className="lang-button"
+              className="nav-button"
               onClick={toggleLanguage}
               aria-label="Change language"
             >
@@ -109,7 +109,7 @@ function Navbar({ theme, setTheme }) {
             {ROUTES.CAN_SEE_PM(user) && (
               <button
                 onClick={handlePMNavigation}
-                className="personnel-management-button desktop-only"
+                className="nav-button desktop-only"
               >
                 {t("navbar.personnelManagement")}
               </button>
@@ -119,7 +119,7 @@ function Navbar({ theme, setTheme }) {
             {isDev && (
               <Link
                 to={ROUTES.DB_DEBUG}
-                className="personnel-management-button desktop-only"
+                className="desktop-only"
               >
                 🗄 DB
               </Link>

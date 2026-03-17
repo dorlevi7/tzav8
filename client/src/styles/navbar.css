@@ -109,7 +109,7 @@
    Theme Toggle
 ========================= */
 
-.theme-toggle {
+.nav-button {
     width: 40px;
     height: 40px;
 
@@ -169,7 +169,7 @@
    Language Switch
 ========================= */
 
-.lang-button {
+.nav-button {
     width: 40px;
     height: 40px;
 
