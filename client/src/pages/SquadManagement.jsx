@@ -7,7 +7,7 @@ import { useLoading } from "../context/LoadingContext";
 
 import AddPersonnelModal from "../components/modals/AddPersonnelModal";
 
-const SOLDIER_RANKS = ["corporal", "sergeant", "staffSergeant"];
+import { NON_OFFICER_RANKS } from "../constants/ranks";
 
 function SquadManagement() {
   const { t } = useTranslation();
@@ -200,7 +200,7 @@ function SquadManagement() {
         <AddPersonnelModal
           title={t("squadManagement.addSoldier")}
           role="soldier"
-          rankOptions={SOLDIER_RANKS}
+          rankOptions={NON_OFFICER_RANKS}
           onClose={() => setShowAddSoldier(false)}
           onSave={handleSave}
         />

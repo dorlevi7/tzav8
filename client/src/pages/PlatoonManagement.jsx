@@ -11,16 +11,7 @@ import CreateSquadModal from "../components/modals/CreateSquadModal";
 
 import toast from "react-hot-toast";
 
-/* Miluim ranks – Sergeant and above */
-const MILUIM_RANKS = [
-  "sergeant",
-  "staffSergeant",
-  "sergeantFirstClass",
-  "masterSergeant",
-  "seniorMasterSergeant",
-  "chiefMasterSergeant",
-  "warrantOfficer",
-];
+import { NON_OFFICER_RANKS } from "../constants/ranks";
 
 function PlatoonManagement() {
   const { t } = useTranslation();
@@ -122,7 +113,7 @@ function PlatoonManagement() {
     modalType === "sergeant"
       ? {
           title: t("platoonManagement.addSergeant"),
-          rankOptions: MILUIM_RANKS,
+          rankOptions: NON_OFFICER_RANKS,
           role: "sergeant",
         }
       : null;

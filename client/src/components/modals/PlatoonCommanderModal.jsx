@@ -3,14 +3,7 @@ import { useTranslation } from "react-i18next";
 import Modal from "../ui/Modal";
 import Dropdown from "../ui/Dropdown";
 
-const OFFICER_RANKS = [
-  "secondLieutenant",
-  "firstLieutenant",
-  "captain",
-  "major",
-  "lieutenantColonel",
-  "colonel",
-];
+import { OFFICER_RANKS } from "../../constants/ranks";
 
 function PlatoonCommanderModal({ onClose, onSave }) {
   const { t } = useTranslation();

@@ -3,12 +3,7 @@ import { useTranslation } from "react-i18next";
 import Modal from "../ui/Modal";
 import Dropdown from "../ui/Dropdown";
 
-const NCO_RANKS = [
-  "corporal",
-  "sergeant",
-  "staffSergeant",
-  "sergeantFirstClass",
-];
+import { NON_OFFICER_RANKS } from "../../constants/ranks";
 
 function SquadCommanderModal({ onClose, onSave }) {
   const { t } = useTranslation();
@@ -83,7 +78,7 @@ function SquadCommanderModal({ onClose, onSave }) {
       />
 
       <Dropdown
-        options={NCO_RANKS}
+        options={NON_OFFICER_RANKS}
         value={form.rank}
         placeholder={t("auth.rank")}
         onChange={handleRankChange}

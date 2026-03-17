@@ -9,16 +9,7 @@ import { useLoading } from "../context/LoadingContext";
 
 import AddPersonnelModal from "../components/modals/AddPersonnelModal";
 
-/* Miluim ranks – Sergeant and above */
-const MILUIM_RANKS = [
-  "sergeant",
-  "staffSergeant",
-  "sergeantFirstClass",
-  "masterSergeant",
-  "seniorMasterSergeant",
-  "chiefMasterSergeant",
-  "warrantOfficer",
-];
+import { OFFICER_RANKS, NON_OFFICER_RANKS } from "../constants/ranks";
 
 function CreateSquad() {
   const { t } = useTranslation();
@@ -93,20 +84,20 @@ function CreateSquad() {
      Modal config
   ========================= */
 
-  const modalConfig =
-    modalType === "commander"
+const modalConfig =
+  modalType === "commander"
+    ? {
+        title: t("createSquad.addCommander"),
+        rankOptions: OFFICER_RANKS,
+        role: "commander",
+      }
+    : modalType === "soldier"
       ? {
-          title: t("createSquad.addCommander"),
-          rankOptions: MILUIM_RANKS,
-          role: "commander",
+          title: t("createSquad.addSoldier"),
+          rankOptions: NON_OFFICER_RANKS,
+          role: "soldier",
         }
-      : modalType === "soldier"
-        ? {
-            title: t("createSquad.addSoldier"),
-            rankOptions: MILUIM_RANKS,
-            role: "soldier",
-          }
-        : null;
+      : null;
 
   return (
     <>
