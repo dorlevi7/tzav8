@@ -13,6 +13,8 @@ import toast from "react-hot-toast";
 
 import { NON_OFFICER_RANKS } from "../constants/ranks";
 
+import { errorMap } from "../utils/errorMap";
+
 function PlatoonManagement() {
   const { t } = useTranslation();
   const { setLoading } = useLoading();
@@ -86,12 +88,6 @@ function PlatoonManagement() {
       });
 
       const resData = await response.json();
-
-      const errorMap = {
-        "Username already exists": "auth.usernameExists",
-        "Email already exists": "auth.emailExists",
-        "Personal number already exists": "auth.personalNumberExists",
-      };
 
       if (!response.ok) {
         const key = errorMap[resData?.error];

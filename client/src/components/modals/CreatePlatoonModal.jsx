@@ -9,6 +9,8 @@ import PlatoonCommanderModal from "./PlatoonCommanderModal";
 
 import { useLoading } from "../../context/LoadingContext";
 
+import { errorMap } from "../../utils/errorMap";
+
 function CreatePlatoonModal({ onClose, onSave, nextPlatoonNumber }) {
   const { t } = useTranslation();
   const { setLoading } = useLoading();
@@ -69,12 +71,6 @@ function CreatePlatoonModal({ onClose, onSave, nextPlatoonNumber }) {
       });
 
       const data = await response.json();
-
-      const errorMap = {
-        "Username already exists": "auth.usernameExists",
-        "Email already exists": "auth.emailExists",
-        "Personal number already exists": "auth.personalNumberExists",
-      };
 
       if (!response.ok) {
         const errorMessage = data?.error;
