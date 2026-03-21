@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import usePageTitle from "../hooks/usePageTitle";
 import { useLoading } from "../context/LoadingContext";
+import Loader from "../components/Loader";
 
 function CompanyHQManagement() {
   const { t } = useTranslation();
@@ -22,9 +23,7 @@ function CompanyHQManagement() {
     return () => clearTimeout(timer);
   }, [setLoading]);
 
-  if (loading) {
-    return null;
-  }
+  if (loading) return <Loader />;
 
   return (
     <div className="page-container">
@@ -40,7 +39,6 @@ function CompanyHQManagement() {
 
             <div className="card-actions">
               <button className="primary-button">{t("common.manage")}</button>
-
               <button className="secondary-button">{t("common.view")}</button>
             </div>
           </div>
@@ -50,13 +48,10 @@ function CompanyHQManagement() {
 
             <div className="card-actions">
               <button className="primary-button">{t("common.manage")}</button>
-
               <button className="secondary-button">{t("common.view")}</button>
             </div>
           </div>
         </div>
-
-        {/* Back button */}
 
         <div className="page-actions">
           <button className="secondary-button" onClick={() => navigate(-1)}>

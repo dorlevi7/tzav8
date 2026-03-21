@@ -1,6 +1,8 @@
 const pool = require("../../config/db");
 const bcrypt = require("bcrypt");
 
+const handleDbError = require("../utils/dbErrors");
+
 /* =========================
    GET SQUADS BY PLATOON
 ========================= */
@@ -240,10 +242,8 @@ async function createSquad({
         return { squadId };
 
     } catch (err) {
-
         await client.query("ROLLBACK");
-        throw err;
-
+        handleDbError(err);
     } finally {
 
         client.release();
@@ -283,6 +283,10 @@ async function addSoldier({
       `,
             [squadId]
         );
+
+        if (squadInfo.rows.length === 0) {
+            throw new Error("Squad not found");
+        }
 
         const platoonId = squadInfo.rows[0].platoon_id;
 
@@ -346,10 +350,8 @@ async function addSoldier({
         return result.rows[0];
 
     } catch (err) {
-
         await client.query("ROLLBACK");
-        throw err;
-
+        handleDbError(err);
     } finally {
 
         client.release();

@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import toast from "react-hot-toast";
+
 import Modal from "../ui/Modal";
 
 function PlatoonDetailsModal({ onClose, onSave, nextPlatoonNumber }) {
@@ -17,6 +19,13 @@ function PlatoonDetailsModal({ onClose, onSave, nextPlatoonNumber }) {
   };
 
   const handleSubmit = () => {
+    /* ✅ Validation */
+    if (!form.name) {
+      toast.error(t("platoonsManagement.platoonDetailsRequired"));
+      return;
+    }
+
+    /* ✅ Submit */
     onSave({
       ...form,
       number: nextPlatoonNumber,

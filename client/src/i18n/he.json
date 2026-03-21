@@ -58,7 +58,8 @@
     "battalionNumber": "מספר הגדוד",
     "emailExists": "האימייל כבר קיים",
     "personalNumberExists": "המספר האישי כבר קיים",
-    "companyNotFound": "לא נמצאה פלוגה"
+    "companyNotFound": "לא נמצאה פלוגה",
+    "invalidCredentials": "שם משתמש או סיסמה שגויים"
   },
 
   "ranks": {
@@ -167,7 +168,9 @@
 
   "squadCreated": "הכיתה נוצרה בהצלחה",
 
-  "platoonStructure": "מבנה המחלקה"
+  "platoonStructure": "מבנה המחלקה",
+  "addSoldierRequired": "יש למלא את כל פרטי החייל",
+  "addSergeantRequired": "יש למלא את כל פרטי הסמל"
 },
 
 "squadManagement": {
@@ -209,6 +212,12 @@
   "staffOfficers": "קציני מטה",
   "hqSoldiers": "חיילי מפקדה",
   "description": "ניהול כוח האדם במפקדת הפלוגה ובעלי התפקידים בפלוגה"
+},
+
+"errors": {
+  "invalidReference": "נתונים לא תקינים",
+  "duplicateValue": "ערך כבר קיים",
+  "missingCompany": "לא נמצא מזהה פלוגה"
 }
 
 }

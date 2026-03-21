@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import toast from "react-hot-toast";
+
 import Modal from "../ui/Modal";
 
 function AddSoldierModal({ onClose, onSave }) {
@@ -23,6 +25,7 @@ function AddSoldierModal({ onClose, onSave }) {
   };
 
   const handleSubmit = () => {
+    /* ✅ Validation */
     if (
       !form.username ||
       !form.password ||
@@ -30,9 +33,11 @@ function AddSoldierModal({ onClose, onSave }) {
       !form.lastName ||
       !form.personalNumber
     ) {
+      toast.error(t("platoonManagement.addSoldierRequired"));
       return;
     }
 
+    /* ✅ Submit */
     onSave(form);
   };
 

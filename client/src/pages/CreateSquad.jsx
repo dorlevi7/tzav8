@@ -11,6 +11,9 @@ import AddPersonnelModal from "../components/modals/AddPersonnelModal";
 
 import { OFFICER_RANKS, NON_OFFICER_RANKS } from "../constants/ranks";
 
+import toast from "react-hot-toast";
+import { errorMap } from "../utils/errorMap";
+
 function CreateSquad() {
   const { t } = useTranslation();
   const { setLoading } = useLoading();
@@ -51,6 +54,17 @@ function CreateSquad() {
 
   const createSquad = async () => {
     try {
+      /* ✅ Validation */
+      if (!squadNumber) {
+        toast.error(t("createSquad.squadDetailsRequired"));
+        return;
+      }
+
+      if (!commander) {
+        toast.error(t("createSquad.commanderDetailsRequired"));
+        return;
+      }
+
       setLoading(true);
 
       const response = await fetch(
@@ -68,13 +82,27 @@ function CreateSquad() {
         },
       );
 
+      let resData = null;
+
+      try {
+        resData = await response.json();
+      } catch {}
+
+      /* ✅ Error handling */
       if (!response.ok) {
-        throw new Error("Failed to create squad");
+        const key = errorMap[resData?.error];
+
+        toast.error(key ? t(key) : resData?.error || t("auth.serverError"));
+        return;
       }
+
+      /* ✅ Success */
+      toast.success(t("createSquad.squadCreated"));
 
       navigate(`/personnel/platoons/${platoonId}`);
     } catch (err) {
       console.error("Create squad error:", err);
+      toast.error(t("auth.serverError"));
     } finally {
       setLoading(false);
     }
@@ -84,20 +112,20 @@ function CreateSquad() {
      Modal config
   ========================= */
 
-const modalConfig =
-  modalType === "commander"
-    ? {
-        title: t("createSquad.addCommander"),
-        rankOptions: OFFICER_RANKS,
-        role: "commander",
-      }
-    : modalType === "soldier"
+  const modalConfig =
+    modalType === "commander"
       ? {
-          title: t("createSquad.addSoldier"),
-          rankOptions: NON_OFFICER_RANKS,
-          role: "soldier",
+          title: t("createSquad.addCommander"),
+          rankOptions: OFFICER_RANKS,
+          role: "commander",
         }
-      : null;
+      : modalType === "soldier"
+        ? {
+            title: t("createSquad.addSoldier"),
+            rankOptions: NON_OFFICER_RANKS,
+            role: "soldier",
+          }
+        : null;
 
   return (
     <>

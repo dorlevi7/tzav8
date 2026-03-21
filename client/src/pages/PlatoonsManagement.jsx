@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 import usePageTitle from "../hooks/usePageTitle";
 import { useLoading } from "../context/LoadingContext";
 
 import CreatePlatoonModal from "../components/modals/CreatePlatoonModal";
+import Loader from "../components/Loader";
+import { errorMap } from "../utils/errorMap";
 
 function PlatoonsManagement() {
   const { t } = useTranslation();
@@ -33,39 +36,74 @@ function PlatoonsManagement() {
    LOAD ALL DATA
 ======================== */
 
-  const loadData = async () => {
-    try {
-      setLoading(true);
+const loadData = async () => {
+  try {
+    setLoading(true);
 
-      const user = JSON.parse(localStorage.getItem("user"));
+    const user = JSON.parse(localStorage.getItem("user"));
 
-      const companyId = user?.companyId;
-
-      /* platoons */
-
-      const platoonsEndpoint = `${API_URL}/api/platoons/${companyId}`;
-
-      const platoonsRes = await fetch(platoonsEndpoint);
-
-      const platoonsData = await platoonsRes.json();
-
-      setPlatoons(platoonsData);
-
-      /* summary */
-
-      const summaryEndpoint = `${API_URL}/api/platoons/${companyId}/platoon-summary`;
-
-      const summaryRes = await fetch(summaryEndpoint);
-
-      const summaryData = await summaryRes.json();
-
-      setSummary(summaryData);
-    } catch (err) {
-      console.error("Failed to load platoons:", err);
-    } finally {
-      setLoading(false);
+    if (!user?.companyId) {
+      throw new Error("Missing company ID");
     }
-  };
+
+    const companyId = user.companyId;
+
+    /* ========================
+       Load platoons
+    ======================== */
+
+    const platoonsRes = await fetch(`${API_URL}/api/platoons/${companyId}`);
+
+    let platoonsData;
+
+    try {
+      platoonsData = await platoonsRes.json();
+    } catch {
+      platoonsData = [];
+    }
+
+    if (!platoonsRes.ok) {
+      throw new Error(platoonsData?.error || "Failed to load platoons");
+    }
+
+    setPlatoons(platoonsData);
+
+    /* ========================
+       Load summary
+    ======================== */
+
+    const summaryRes = await fetch(
+      `${API_URL}/api/platoons/${companyId}/platoon-summary`,
+    );
+
+    let summaryData;
+
+    try {
+      summaryData = await summaryRes.json();
+    } catch {
+      summaryData = {};
+    }
+
+    if (!summaryRes.ok) {
+      throw new Error(summaryData?.error || "Failed to load summary");
+    }
+
+    setSummary(summaryData);
+  } catch (err) {
+    console.error("Failed to load platoons:", err);
+    const key = errorMap[err.message];
+
+    toast.error(
+      key
+        ? t(key)
+        : err.message && !err.message.includes("Failed")
+          ? err.message
+          : t("auth.serverError"),
+    );
+  } finally {
+    setLoading(false);
+  }
+};
 
   /* ========================
      Calculate next platoon number
@@ -77,9 +115,7 @@ function PlatoonsManagement() {
      Don't render screen while loading
   ======================== */
 
-  if (loading) {
-    return null;
-  }
+  if (loading) return <Loader />;
 
   return (
     <>

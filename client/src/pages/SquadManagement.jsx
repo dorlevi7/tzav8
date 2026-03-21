@@ -9,6 +9,10 @@ import AddPersonnelModal from "../components/modals/AddPersonnelModal";
 
 import { NON_OFFICER_RANKS } from "../constants/ranks";
 
+import toast from "react-hot-toast";
+import { errorMap } from "../utils/errorMap";
+import Loader from "../components/Loader";
+
 function SquadManagement() {
   const { t } = useTranslation();
   const { setLoading } = useLoading();
@@ -35,11 +39,28 @@ function SquadManagement() {
       setLoading(true);
 
       const res = await fetch(`${API_URL}/api/squads/${squadId}`);
-      const data = await res.json();
+      let data = null;
+
+      try {
+        data = await res.json();
+      } catch {}
+
+      if (!res.ok) {
+        throw new Error(data?.error || "Failed to load squad");
+      }
 
       setSquad(data);
     } catch (err) {
       console.error("Failed to load squad:", err);
+      const key = errorMap[err.message];
+
+      toast.error(
+        key
+          ? t(key)
+          : err.message && !err.message.includes("Failed")
+            ? err.message
+            : t("auth.serverError"),
+      );
     } finally {
       setLoading(false);
     }
@@ -64,21 +85,29 @@ function SquadManagement() {
         },
       );
 
+      let resData = null;
+
+      try {
+        resData = await response.json();
+      } catch {}
+
       if (!response.ok) {
-        const err = await response.json();
-        throw new Error(err.error || "Failed to add soldier");
+        const key = errorMap[resData?.error];
+        toast.error(key ? t(key) : resData?.error || t("auth.serverError"));
+        return;
       }
 
       setShowAddSoldier(false);
       await loadSquad();
     } catch (err) {
       console.error("Save soldier error:", err);
+      toast.error(t("auth.serverError"));
     } finally {
       setLoading(false);
     }
   };
 
-  if (!squad) return null;
+  if (!squad) return <Loader />;
 
   /* =========================
      Filter soldiers (exclude commander)

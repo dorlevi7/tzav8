@@ -8,6 +8,7 @@ import SquadDetailsModal from "./SquadDetailsModal";
 import SquadCommanderModal from "./SquadCommanderModal";
 
 import { useLoading } from "../../context/LoadingContext";
+import { errorMap } from "../../utils/errorMap";
 
 function CreateSquadModal({ onClose, onSave, nextSquadNumber, platoonId }) {
   const { t } = useTranslation();
@@ -61,18 +62,27 @@ function CreateSquadModal({ onClose, onSave, nextSquadNumber, platoonId }) {
         }),
       });
 
-      const data = await response.json();
+      let data = null;
 
+      try {
+        data = await response.json();
+      } catch {}
+
+      /* ✅ Unified error handling */
       if (!response.ok) {
-        if (data.error === "Username already exists") {
-          toast.error(t("auth.usernameExists"));
-          return;
-        }
+        const key = errorMap[data?.error];
 
-        toast.error(t("auth.serverError"));
+        toast.error(
+          key
+            ? t(key)
+            : data?.error && !data.error.includes("Failed")
+              ? data.error
+              : t("auth.serverError"),
+        );
         return;
       }
 
+      /* ✅ Success */
       toast.success(t("platoonManagement.squadCreated"));
 
       onSave({

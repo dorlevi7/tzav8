@@ -1,6 +1,8 @@
 const pool = require("../../config/db");
 const bcrypt = require("bcrypt");
 
+const handleDbError = require("../utils/dbErrors");
+
 /* =========================
    GET PLATOON INFO
 ========================= */
@@ -165,10 +167,8 @@ async function createPlatoon(data) {
         };
 
     } catch (err) {
-
         await client.query("ROLLBACK");
-        throw err;
-
+        handleDbError(err);
     } finally {
 
         client.release();
@@ -328,42 +328,48 @@ async function addSergeant(platoonId, data) {
 
     const passwordHash = await bcrypt.hash(password, 10);
 
-    const result = await pool.query(
-        `
-        INSERT INTO users
-        (
-            username,
-            password_hash,
-            first_name,
-            last_name,
-            rank,
-            personal_number,
-            email,
-            phone,
-            role,
-            company_id,
-            position_level,
-            platoon_id,
-            squad_id
-        )
-        VALUES ($1,$2,$3,$4,$5,$6,$7,$8,'soldier',$9,'platoon_sergeant',$10,NULL)
-        RETURNING id
-        `,
-        [
-            username,
-            passwordHash,
-            firstName,
-            lastName,
-            rank,
-            personalNumber,
-            email,
-            phone,
-            platoonInfo.company_id,
-            platoonId
-        ]
-    );
+    try {
 
-    return result.rows[0];
+        const result = await pool.query(
+            `
+            INSERT INTO users
+            (
+                username,
+                password_hash,
+                first_name,
+                last_name,
+                rank,
+                personal_number,
+                email,
+                phone,
+                role,
+                company_id,
+                position_level,
+                platoon_id,
+                squad_id
+            )
+            VALUES ($1,$2,$3,$4,$5,$6,$7,$8,'soldier',$9,'platoon_sergeant',$10,NULL)
+            RETURNING id
+            `,
+            [
+                username,
+                passwordHash,
+                firstName,
+                lastName,
+                rank,
+                personalNumber,
+                email,
+                phone,
+                platoonInfo.company_id,
+                platoonId
+            ]
+        );
+
+        return result.rows[0];
+
+    } catch (err) {
+        handleDbError(err);
+    }
 }
 
 /* =========================
@@ -388,43 +394,49 @@ async function addCommander(platoonId, data) {
 
     const passwordHash = await bcrypt.hash(password, 10);
 
-    const result = await pool.query(
-        `
-        INSERT INTO users
-        (
-            username,
-            password_hash,
-            first_name,
-            last_name,
-            rank,
-            personal_number,
-            email,
-            phone,
-            role,
-            company_id,
-            position_level,
-            platoon_id,
-            squad_id
-        )
-        VALUES ($1,$2,$3,$4,$5,$6,$7,$8,'soldier',$9,'squad_commander',$10,$11)
-        RETURNING id
-        `,
-        [
-            username,
-            passwordHash,
-            firstName,
-            lastName,
-            rank,
-            personalNumber,
-            email,
-            phone,
-            platoonInfo.company_id,
-            platoonId,
-            squadId
-        ]
-    );
+    try {
 
-    return result.rows[0];
+        const result = await pool.query(
+            `
+            INSERT INTO users
+            (
+                username,
+                password_hash,
+                first_name,
+                last_name,
+                rank,
+                personal_number,
+                email,
+                phone,
+                role,
+                company_id,
+                position_level,
+                platoon_id,
+                squad_id
+            )
+            VALUES ($1,$2,$3,$4,$5,$6,$7,$8,'soldier',$9,'squad_commander',$10,$11)
+            RETURNING id
+            `,
+            [
+                username,
+                passwordHash,
+                firstName,
+                lastName,
+                rank,
+                personalNumber,
+                email,
+                phone,
+                platoonInfo.company_id,
+                platoonId,
+                squadId
+            ]
+        );
+
+        return result.rows[0];
+
+    } catch (err) {
+        handleDbError(err);
+    }
 }
 
 /* =========================
@@ -449,43 +461,49 @@ async function addSoldier(platoonId, data) {
 
     const passwordHash = await bcrypt.hash(password, 10);
 
-    const result = await pool.query(
-        `
-        INSERT INTO users
-        (
-            username,
-            password_hash,
-            first_name,
-            last_name,
-            rank,
-            personal_number,
-            email,
-            phone,
-            role,
-            company_id,
-            position_level,
-            platoon_id,
-            squad_id
-        )
-        VALUES ($1,$2,$3,$4,$5,$6,$7,$8,'soldier',$9,'soldier',$10,$11)
-        RETURNING id
-        `,
-        [
-            username,
-            passwordHash,
-            firstName,
-            lastName,
-            rank,
-            personalNumber,
-            email,
-            phone,
-            platoonInfo.company_id,
-            platoonId,
-            squadId
-        ]
-    );
+    try {
 
-    return result.rows[0];
+        const result = await pool.query(
+            `
+            INSERT INTO users
+            (
+                username,
+                password_hash,
+                first_name,
+                last_name,
+                rank,
+                personal_number,
+                email,
+                phone,
+                role,
+                company_id,
+                position_level,
+                platoon_id,
+                squad_id
+            )
+            VALUES ($1,$2,$3,$4,$5,$6,$7,$8,'soldier',$9,'soldier',$10,$11)
+            RETURNING id
+            `,
+            [
+                username,
+                passwordHash,
+                firstName,
+                lastName,
+                rank,
+                personalNumber,
+                email,
+                phone,
+                platoonInfo.company_id,
+                platoonId,
+                squadId
+            ]
+        );
+
+        return result.rows[0];
+
+    } catch (err) {
+        handleDbError(err);
+    }
 }
 
 /* =========================

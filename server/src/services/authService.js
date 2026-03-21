@@ -1,6 +1,8 @@
 const pool = require("../../config/db");
 const bcrypt = require("bcrypt");
 
+const handleDbError = require("../utils/dbErrors");
+
 /* =========================
    SIGNUP
 ========================= */
@@ -85,10 +87,9 @@ async function createUser(data) {
         return userResult.rows[0];
 
     } catch (err) {
-
         await client.query("ROLLBACK");
-        throw err;
-
+        handleDbError(err);
+        throw err; // fallback (safety net)
     } finally {
 
         client.release();

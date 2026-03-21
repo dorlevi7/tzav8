@@ -1,40 +1,5 @@
 const platoonService = require("../services/platoonService");
-
-/* =========================
-   Handle duplicate DB errors
-========================= */
-
-function handleDuplicateError(err, res) {
-
-    if (err.code !== "23505") return false;
-
-    if (err.constraint === "users_username_key") {
-        res.status(409).json({
-            error: "Username already exists"
-        });
-        return true;
-    }
-
-    if (err.constraint === "users_email_key") {
-        res.status(409).json({
-            error: "Email already exists"
-        });
-        return true;
-    }
-
-    if (err.constraint === "users_personal_number_key") {
-        res.status(409).json({
-            error: "Personal number already exists"
-        });
-        return true;
-    }
-
-    res.status(409).json({
-        error: "Duplicate value"
-    });
-
-    return true;
-}
+const handleError = require("../utils/handleControllerError");
 
 /* =========================
    Create platoon
@@ -51,14 +16,7 @@ async function createPlatoon(req, res) {
         });
 
     } catch (err) {
-
-        console.error("Create platoon error:", err);
-
-        if (handleDuplicateError(err, res)) return;
-
-        return res.status(500).json({
-            error: "Server error"
-        });
+        return handleError(err, res, "Create platoon error");
     }
 }
 
@@ -77,12 +35,7 @@ async function getPlatoonsByCompany(req, res) {
         return res.json(platoons);
 
     } catch (err) {
-
-        console.error("Get platoons error:", err);
-
-        return res.status(500).json({
-            error: "Server error"
-        });
+        return handleError(err, res, "Get platoons error");
     }
 }
 
@@ -107,12 +60,7 @@ async function getPlatoonById(req, res) {
         return res.json(platoon);
 
     } catch (err) {
-
-        console.error("Get platoon error:", err);
-
-        return res.status(500).json({
-            error: "Server error"
-        });
+        return handleError(err, res, "Get platoon error");
     }
 }
 
@@ -137,14 +85,7 @@ async function addSergeant(req, res) {
         });
 
     } catch (err) {
-
-        console.error("Add sergeant error:", err);
-
-        if (handleDuplicateError(err, res)) return;
-
-        return res.status(500).json({
-            error: "Server error"
-        });
+        return handleError(err, res, "Add sergeant error");
     }
 }
 
@@ -169,14 +110,7 @@ async function addCommander(req, res) {
         });
 
     } catch (err) {
-
-        console.error("Add commander error:", err);
-
-        if (handleDuplicateError(err, res)) return;
-
-        return res.status(500).json({
-            error: "Server error"
-        });
+        return handleError(err, res, "Add commander error");
     }
 }
 
@@ -201,14 +135,7 @@ async function addSoldier(req, res) {
         });
 
     } catch (err) {
-
-        console.error("Add soldier error:", err);
-
-        if (handleDuplicateError(err, res)) return;
-
-        return res.status(500).json({
-            error: "Server error"
-        });
+        return handleError(err, res, "Add soldier error");
     }
 }
 
@@ -227,12 +154,7 @@ async function getCompanyPersonnelSummary(req, res) {
         return res.json(summary);
 
     } catch (err) {
-
-        console.error("Get company summary error:", err);
-
-        return res.status(500).json({
-            error: "Server error"
-        });
+        return handleError(err, res, "Get company summary error");
     }
 }
 
@@ -251,12 +173,7 @@ async function getCompanyPlatoonPersonnelSummary(req, res) {
         return res.json(summary);
 
     } catch (err) {
-
-        console.error("Get platoon personnel summary error:", err);
-
-        return res.status(500).json({
-            error: "Server error"
-        });
+        return handleError(err, res, "Get platoon personnel summary error");
     }
 }
 

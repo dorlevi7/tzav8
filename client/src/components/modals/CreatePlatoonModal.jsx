@@ -8,7 +8,6 @@ import PlatoonDetailsModal from "./PlatoonDetailsModal";
 import PlatoonCommanderModal from "./PlatoonCommanderModal";
 
 import { useLoading } from "../../context/LoadingContext";
-
 import { errorMap } from "../../utils/errorMap";
 
 function CreatePlatoonModal({ onClose, onSave, nextPlatoonNumber }) {
@@ -70,18 +69,28 @@ function CreatePlatoonModal({ onClose, onSave, nextPlatoonNumber }) {
         }),
       });
 
-      const data = await response.json();
+      let data = null;
 
+      try {
+        data = await response.json();
+      } catch {}
+
+      /* ✅ Unified error handling */
       if (!response.ok) {
-        const errorMessage = data?.error;
+        const key = errorMap[data?.error];
 
-        const key = errorMap[errorMessage];
-
-        toast.error(key ? t(key) : t("auth.serverError"));
+        toast.error(
+          key
+            ? t(key)
+            : data?.error && !data.error.includes("Failed")
+              ? data.error
+              : t("auth.serverError"),
+        );
 
         return;
       }
 
+      /* ✅ Success */
       toast.success(t("platoonsManagement.platoonCreated"));
 
       onSave({

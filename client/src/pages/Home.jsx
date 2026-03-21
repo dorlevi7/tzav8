@@ -1,15 +1,25 @@
-
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
 import usePageTitle from "../hooks/usePageTitle";
 import { useLoading } from "../context/LoadingContext";
+import Loader from "../components/Loader";
 
 function Home() {
   const { t } = useTranslation();
   const { loading, setLoading } = useLoading();
 
-  const user = JSON.parse(localStorage.getItem("user")) || {};
+  /* ========================
+     Safe user parsing
+  ======================== */
+
+  let user = {};
+
+  try {
+    user = JSON.parse(localStorage.getItem("user")) || {};
+  } catch {
+    user = {};
+  }
 
   usePageTitle(t("home.title"));
 
@@ -29,12 +39,10 @@ function Home() {
       : user.username;
 
   /* ========================
-     Don't render screen while loading
+     Loader
   ======================== */
 
-  if (loading) {
-    return null;
-  }
+  if (loading) return <Loader />;
 
   return (
     <div className="page-container">
@@ -57,7 +65,7 @@ function Home() {
               {user && (
                 <>
                   <p>
-                    <strong>{t("home.name")}:</strong> {fullName}
+                    <strong>{t("home.name")}:</strong> {fullName || "-"}
                   </p>
 
                   <p>
@@ -66,7 +74,7 @@ function Home() {
                   </p>
 
                   <p>
-                    <strong>{t("home.role")}:</strong> {user.role}
+                    <strong>{t("home.role")}:</strong> {user.role || "-"}
                   </p>
 
                   <p>
@@ -75,7 +83,7 @@ function Home() {
                   </p>
 
                   <p>
-                    <strong>{t("home.userId")}:</strong> {user.id}
+                    <strong>{t("home.userId")}:</strong> {user.id || "-"}
                   </p>
                 </>
               )}

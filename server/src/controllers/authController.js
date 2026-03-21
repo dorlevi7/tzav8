@@ -1,29 +1,25 @@
 const authService = require("../services/authService");
+const handleError = require("../utils/handleControllerError");
+
+/* =========================
+   SIGNUP
+========================= */
 
 async function signup(req, res) {
     try {
 
         const user = await authService.createUser(req.body);
 
-        res.status(201).json(user);
+        return res.status(201).json(user);
 
     } catch (err) {
-
-        console.error("Signup error:", err);
-
-        // duplicate username in postgres
-        if (err.code === "23505") {
-            return res.status(400).json({
-                error: "Username already exists"
-            });
-        }
-
-        res.status(500).json({
-            error: "Server error"
-        });
-
+        return handleError(err, res, "Signup error");
     }
 }
+
+/* =========================
+   LOGIN
+========================= */
 
 async function login(req, res) {
     try {
@@ -32,16 +28,10 @@ async function login(req, res) {
 
         const user = await authService.loginUser(username, password);
 
-        res.json(user);
+        return res.json(user);
 
     } catch (err) {
-
-        console.error("Login error:", err);
-
-        res.status(401).json({
-            error: "Invalid username or password"
-        });
-
+        return handleError(err, res, "Login error");
     }
 }
 

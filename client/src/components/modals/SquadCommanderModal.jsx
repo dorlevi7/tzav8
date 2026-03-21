@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import toast from "react-hot-toast";
+
 import Modal from "../ui/Modal";
 import Dropdown from "../ui/Dropdown";
 
@@ -34,15 +36,19 @@ function SquadCommanderModal({ onClose, onSave }) {
   };
 
   const handleSubmit = () => {
+    /* ✅ Validation */
     if (
       !form.username ||
       !form.password ||
       !form.firstName ||
       !form.lastName ||
       !form.rank
-    )
+    ) {
+      toast.error(t("platoonManagement.commanderDetailsRequired"));
       return;
+    }
 
+    /* ✅ Submit */
     onSave(form);
   };
 

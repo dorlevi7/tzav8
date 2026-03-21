@@ -14,6 +14,7 @@ import toast from "react-hot-toast";
 import { NON_OFFICER_RANKS } from "../constants/ranks";
 
 import { errorMap } from "../utils/errorMap";
+import Loader from "../components/Loader";
 
 function PlatoonManagement() {
   const { t } = useTranslation();
@@ -50,13 +51,37 @@ function PlatoonManagement() {
         fetch(`${API_URL}/api/squads/platoon/${platoonId}`),
       ]);
 
-      const platoonData = await platoonRes.json();
-      const squadsData = await squadsRes.json();
+      /* Parse JSON safely */
+
+      let platoonData = null;
+      let squadsData = null;
+
+      try {
+        platoonData = await platoonRes.json();
+      } catch {}
+
+      try {
+        squadsData = await squadsRes.json();
+      } catch {}
+
+      /* Handle errors */
+
+      if (!platoonRes.ok) {
+        throw new Error(platoonData?.error || "Failed to load platoon");
+      }
+
+      if (!squadsRes.ok) {
+        throw new Error(squadsData?.error || "Failed to load squads");
+      }
 
       setPlatoon(platoonData);
       setSquads(squadsData);
     } catch (err) {
       console.error("Failed to load platoon data:", err);
+
+      const key = errorMap[err.message];
+
+      toast.error(key ? t(key) : err.message || t("auth.serverError"));
     } finally {
       setSquadsLoaded(true);
       setLoading(false);
@@ -79,6 +104,12 @@ function PlatoonManagement() {
         endpoint = `${API_URL}/api/platoons/platoon/${platoonId}/sergeant`;
       }
 
+      if (!endpoint) {
+        console.error("Missing endpoint for role:", data.role);
+        toast.error(t("auth.serverError"));
+        return;
+      }
+
       const response = await fetch(endpoint, {
         method: "POST",
         headers: {
@@ -87,11 +118,15 @@ function PlatoonManagement() {
         body: JSON.stringify(data),
       });
 
-      const resData = await response.json();
+      let resData = null;
+
+      try {
+        resData = await response.json();
+      } catch {}
 
       if (!response.ok) {
         const key = errorMap[resData?.error];
-        toast.error(key ? t(key) : t("auth.serverError"));
+        toast.error(key ? t(key) : resData?.error || t("auth.serverError"));
         return;
       }
 
@@ -132,7 +167,7 @@ function PlatoonManagement() {
   const totalCommanders = platoon?.commanders?.length || 0;
 
   if (!platoon || !squadsLoaded) {
-    return null;
+    return <Loader />;
   }
 
   return (

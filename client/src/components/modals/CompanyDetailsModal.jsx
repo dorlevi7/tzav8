@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import toast from "react-hot-toast";
+
 import Modal from "../ui/Modal";
 
 function CompanyDetailsModal({ onClose, onSave }) {
@@ -20,10 +22,13 @@ function CompanyDetailsModal({ onClose, onSave }) {
   };
 
   const handleSubmit = () => {
+    /* ✅ Validation */
     if (!form.companyName || !form.battalionName || !form.battalionNumber) {
+      toast.error(t("auth.companyDetailsRequired"));
       return;
     }
 
+    /* ✅ Submit */
     onSave(form);
   };
 
@@ -32,24 +37,28 @@ function CompanyDetailsModal({ onClose, onSave }) {
       <input
         name="companyName"
         placeholder={t("auth.companyName")}
+        value={form.companyName}
         onChange={handleChange}
       />
 
       <input
         name="battalionName"
         placeholder={t("auth.battalionName")}
+        value={form.battalionName}
         onChange={handleChange}
       />
 
       <input
         name="battalionNumber"
         placeholder={t("auth.battalionNumber")}
+        value={form.battalionNumber}
         onChange={handleChange}
       />
 
       <input
         name="companyPhone"
         placeholder={t("auth.companyPhone")}
+        value={form.companyPhone}
         onChange={handleChange}
       />
 

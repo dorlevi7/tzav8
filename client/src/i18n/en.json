@@ -58,7 +58,8 @@
     "battalionNumber": "Battalion number",
     "emailExists": "Email already exists",
     "personalNumberExists": "Personal number already exists",
-    "companyNotFound": "Company not found"
+    "companyNotFound": "Company not found",
+    "invalidCredentials": "Invalid username or password"
   },
 
   "ranks": {
@@ -167,7 +168,9 @@
 
   "squadCreated": "Squad created successfully",
 
-  "platoonStructure": "Platoon Structure"
+  "platoonStructure": "Platoon Structure",
+  "addSoldierRequired": "All soldier details are required",
+  "addSergeantRequired": "All sergeant details are required"
 },
 
 "squadManagement": {
@@ -210,6 +213,12 @@
   "hqSoldiers": "HQ Soldiers",
   "description": "Manage headquarters personnel and company staff roles"
 
+},
+
+"errors": {
+  "invalidReference": "Invalid reference data",
+  "duplicateValue": "Duplicate value",
+  "missingCompany": "Missing company ID"
 }
 
 }

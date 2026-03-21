@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import toast from "react-hot-toast";
+
 import Modal from "../ui/Modal";
 
 function SquadDetailsModal({ onClose, onSave, nextSquadNumber }) {
@@ -17,6 +19,13 @@ function SquadDetailsModal({ onClose, onSave, nextSquadNumber }) {
   };
 
   const handleSubmit = () => {
+    /* ✅ Validation */
+    if (!form.name) {
+      toast.error(t("platoonManagement.squadDetailsRequired"));
+      return;
+    }
+
+    /* ✅ Submit */
     onSave({
       ...form,
       number: nextSquadNumber,
@@ -25,11 +34,13 @@ function SquadDetailsModal({ onClose, onSave, nextSquadNumber }) {
 
   return (
     <Modal title={t("platoonManagement.squadDetails")} onClose={onClose}>
+      {/* Squad number (auto) */}
       <input
         value={t("platoonManagement.squad", { number: nextSquadNumber })}
         disabled
       />
 
+      {/* Squad name */}
       <input
         name="name"
         placeholder={t("platoonManagement.squadName")}
@@ -37,6 +48,7 @@ function SquadDetailsModal({ onClose, onSave, nextSquadNumber }) {
         onChange={handleChange}
       />
 
+      {/* Save button */}
       <button onClick={handleSubmit}>{t("common.save")}</button>
     </Modal>
   );

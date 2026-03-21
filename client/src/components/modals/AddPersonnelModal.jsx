@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import toast from "react-hot-toast";
+
 import Modal from "../ui/Modal";
 import Dropdown from "../ui/Dropdown";
 
@@ -32,6 +34,7 @@ function AddPersonnelModal({ title, rankOptions, role, onClose, onSave }) {
   };
 
   const handleSubmit = () => {
+    /* ✅ Validation */
     if (
       !form.username ||
       !form.password ||
@@ -40,9 +43,11 @@ function AddPersonnelModal({ title, rankOptions, role, onClose, onSave }) {
       !form.rank ||
       !form.personalNumber
     ) {
+      toast.error(t("auth.validationError"));
       return;
     }
 
+    /* ✅ Submit */
     onSave({
       ...form,
       role,

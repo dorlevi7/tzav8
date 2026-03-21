@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 import usePageTitle from "../hooks/usePageTitle";
 import { useLoading } from "../context/LoadingContext";
+import Loader from "../components/Loader";
+import { errorMap } from "../utils/errorMap";
 
 function PersonnelManagement() {
   const { t } = useTranslation();
@@ -34,34 +37,43 @@ function PersonnelManagement() {
 
       const user = JSON.parse(localStorage.getItem("user"));
 
-      const companyId = user?.companyId;
-
-      if (!companyId) {
-        console.error("No companyId found in localStorage user");
-        return;
+      if (!user?.companyId) {
+        throw new Error("Missing company ID");
       }
 
-      const endpoint = `${API_URL}/api/platoons/${companyId}/summary`;
+      const companyId = user.companyId;
 
-      const response = await fetch(endpoint);
+      const response = await fetch(
+        `${API_URL}/api/platoons/${companyId}/summary`,
+      );
 
-      const data = await response.json();
+      let data = null;
+
+      try {
+        data = await response.json();
+      } catch {}
+
+      if (!response.ok) {
+        throw new Error(data?.error || "Failed to load summary");
+      }
 
       setSummary(data);
     } catch (err) {
       console.error("Failed to load personnel summary:", err);
+
+      const key = errorMap[err.message];
+
+      toast.error(key ? t(key) : err.message || t("auth.serverError"));
     } finally {
       setLoading(false);
     }
   };
 
   /* ========================
-     Don't render screen while loading
+     Loader
   ======================== */
 
-  if (loading) {
-    return null;
-  }
+  if (loading) return <Loader />;
 
   return (
     <div className="page-container">
@@ -70,10 +82,7 @@ function PersonnelManagement() {
           <h1 className="page-title">{t("personnelManagement.title")}</h1>
         </div>
 
-        {/* ========================
-           Summary / General Info
-        ======================== */}
-
+        {/* Summary */}
         <div className="card">
           <div className="personnel-summary">
             <div className="summary-item">
@@ -99,12 +108,8 @@ function PersonnelManagement() {
           </div>
         </div>
 
-        {/* ========================
-           Navigation Cards
-        ======================== */}
-
+        {/* Navigation */}
         <div className="cards-grid">
-          {/* Platoons */}
           <div className="card">
             <h3>{t("personnelManagement.platoons")}</h3>
 
@@ -122,7 +127,6 @@ function PersonnelManagement() {
             </div>
           </div>
 
-          {/* Company HQ */}
           <div className="card">
             <h3>{t("personnelManagement.companyHQ")}</h3>
 

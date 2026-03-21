@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import toast from "react-hot-toast";
+
 import Modal from "../ui/Modal";
 import Dropdown from "../ui/Dropdown";
 
@@ -32,15 +34,18 @@ function AdminDetailsModal({ onClose, onSave }) {
   };
 
   const handleSubmit = () => {
+    /* ✅ Validation */
     if (
       !form.firstName ||
       !form.lastName ||
       !form.rank ||
       !form.personalNumber
     ) {
+      toast.error(t("auth.adminDetailsRequired"));
       return;
     }
 
+    /* ✅ Submit */
     onSave(form);
   };
 

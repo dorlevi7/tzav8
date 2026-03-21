@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import toast from "react-hot-toast";
+
 import Modal from "../ui/Modal";
 import Dropdown from "../ui/Dropdown";
 
@@ -34,6 +36,7 @@ function AddSergeantModal({ onClose, onSave }) {
   };
 
   const handleSubmit = () => {
+    /* ✅ Validation */
     if (
       !form.username ||
       !form.password ||
@@ -42,9 +45,11 @@ function AddSergeantModal({ onClose, onSave }) {
       !form.rank ||
       !form.personalNumber
     ) {
+      toast.error(t("platoonManagement.addSergeantRequired"));
       return;
     }
 
+    /* ✅ Submit */
     onSave(form);
   };
 

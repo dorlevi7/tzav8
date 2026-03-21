@@ -10,6 +10,8 @@ import CompanyDetailsModal from "../components/modals/CompanyDetailsModal";
 import usePageTitle from "../hooks/usePageTitle";
 import { useLoading } from "../context/LoadingContext";
 
+import { errorMap } from "../utils/errorMap";
+
 function Signup({ theme, setTheme }) {
   const navigate = useNavigate();
   const API_URL = import.meta.env.VITE_API_URL;
@@ -24,6 +26,10 @@ function Signup({ theme, setTheme }) {
 
   const [showAdminModal, setShowAdminModal] = useState(false);
   const [showCompanyModal, setShowCompanyModal] = useState(false);
+
+  /* =========================
+     Handle submit
+  ========================= */
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -62,20 +68,21 @@ function Signup({ theme, setTheme }) {
         }),
       });
 
-      const data = await response.json();
+      let data;
+
+      try {
+        data = await response.json();
+      } catch {
+        data = {};
+      }
 
       if (!response.ok) {
-        if (data.error === "Username already exists") {
-          toast.error(t("auth.usernameExists"));
-          return;
-        }
-
-        toast.error(t("auth.serverError"));
+        const key = errorMap[data?.error];
+        toast.error(key ? t(key) : data?.error || t("auth.serverError"));
         return;
       }
 
       toast.success(t("auth.signupSuccess"));
-
       navigate("/login");
     } catch (err) {
       console.error("Signup error:", err);

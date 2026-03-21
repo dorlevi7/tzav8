@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import AuthCard from "../components/AuthCard";
 import usePageTitle from "../hooks/usePageTitle";
 import { useLoading } from "../context/LoadingContext";
+import { errorMap } from "../utils/errorMap";
 
 function Login({ theme, setTheme }) {
   const navigate = useNavigate();
@@ -42,13 +43,16 @@ function Login({ theme, setTheme }) {
         }),
       });
 
-      const data = await response.json();
+      let data = null;
+
+      try {
+        data = await response.json();
+      } catch {}
 
       if (!response.ok) {
-        throw new Error(data.error || "Login failed");
+        throw new Error(data?.error || "Login failed");
       }
 
-      // Save user in localStorage
       localStorage.setItem("user", JSON.stringify(data));
 
       toast.success(t("auth.loginSuccess"));
@@ -57,8 +61,12 @@ function Login({ theme, setTheme }) {
     } catch (err) {
       console.error("Login error:", err);
 
-      setError(t("auth.loginError"));
-      toast.error(t("auth.loginError"));
+      const key = errorMap[err.message];
+
+      const message = key ? t(key) : err.message || t("auth.loginError");
+
+      setError(message);
+      toast.error(message);
     } finally {
       setLoading(false);
     }

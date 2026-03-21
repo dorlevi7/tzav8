@@ -1,4 +1,5 @@
 const squadService = require("../services/squadService");
+const handleError = require("../utils/handleControllerError");
 
 /* =========================
    Get squads by platoon
@@ -12,11 +13,7 @@ async function getSquadsByPlatoon(req, res) {
 
         return res.json(squads);
     } catch (err) {
-        console.error("Get squads error:", err);
-
-        return res.status(500).json({
-            error: "Server error",
-        });
+        return handleError(err, res, "Get squads error");
     }
 }
 
@@ -38,11 +35,7 @@ async function getSquadById(req, res) {
 
         return res.json(squad);
     } catch (err) {
-        console.error("Get squad error:", err);
-
-        return res.status(500).json({
-            error: "Server error",
-        });
+        return handleError(err, res, "Get squad error");
     }
 }
 
@@ -61,11 +54,7 @@ async function createSquad(req, res) {
 
         return res.status(201).json(squad);
     } catch (err) {
-        console.error("Create squad error:", err);
-
-        return res.status(500).json({
-            error: "Server error",
-        });
+        return handleError(err, res, "Create squad error");
     }
 }
 
@@ -84,11 +73,7 @@ async function addSoldier(req, res) {
 
         return res.status(201).json(soldier);
     } catch (err) {
-        console.error("Add soldier error:", err);
-
-        return res.status(500).json({
-            error: "Server error",
-        });
+        return handleError(err, res, "Add soldier error");
     }
 }
 
